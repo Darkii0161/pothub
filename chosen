@@ -1,0 +1,948 @@
+-- Gui to Lua
+-- Version: 3.2
+
+if not game:IsLoaded() then
+	repeat task.wait(0.05) until game:IsLoaded()
+end
+
+for i, v in pairs(game.Players.LocalPlayer:WaitForChild("PlayerGui"):GetDescendants()) do
+	if v.Name == "I6bONBw25jq2b220Lf" then
+		print("Pot script has already been loaded, cannot be ran again")
+		return
+	end
+end
+print("Game is loaded!".." Running Pot Script.")
+
+local gameName = ""
+
+if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 then
+	gameName = "Rogue Lineage Copy"
+	print("Found Supported Game: "..gameName)
+else
+	print("This game isn't supported by the Pot Script!.")
+	return
+end
+
+-- Services:
+
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+-- Instances:
+
+local HubGui = Instance.new("ScreenGui")
+local HubFrame = Instance.new("Frame")
+local Overlay = Instance.new("ImageLabel")
+local Background = Instance.new("ImageLabel")
+local Title = Instance.new("TextLabel")
+local DescSheet = Instance.new("Frame")
+local Pipe = Instance.new("ImageLabel")
+local Index = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+local Controls = Instance.new("TextButton")
+local Underline = Instance.new("Frame")
+local UIGradient = Instance.new("UIGradient")
+local Extras = Instance.new("TextButton")
+local Underline_2 = Instance.new("Frame")
+local UIGradient_2 = Instance.new("UIGradient")
+local Credits = Instance.new("TextButton")
+local Underline_3 = Instance.new("Frame")
+local UIGradient_3 = Instance.new("UIGradient")
+local Resting = Instance.new("TextButton")
+local Underline_4 = Instance.new("Frame")
+local UIGradient_4 = Instance.new("UIGradient")
+local Desc = Instance.new("TextLabel")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local Headings = Instance.new("Folder")
+local Main_2 = Instance.new("Frame")
+local Overlay_2 = Instance.new("ImageLabel")
+local Background_2 = Instance.new("ImageLabel")
+local Title_2 = Instance.new("TextLabel")
+local DescSheet_2 = Instance.new("Frame")
+local Pipe_2 = Instance.new("ImageLabel")
+local LeftControlDesc = Instance.new("TextLabel")
+local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
+local RightControlDesc = Instance.new("TextLabel")
+local UITextSizeConstraint_3 = Instance.new("UITextSizeConstraint")
+local Return = Instance.new("TextButton")
+local Underline_5 = Instance.new("Frame")
+local UIGradient_5 = Instance.new("UIGradient")
+local Extras_2 = Instance.new("Frame")
+local Overlay_3 = Instance.new("ImageLabel")
+local Background_3 = Instance.new("ImageLabel")
+local Title_3 = Instance.new("TextLabel")
+local DescSheet_3 = Instance.new("Frame")
+local Pipe_3 = Instance.new("ImageLabel")
+local Desc_2 = Instance.new("TextLabel")
+local UITextSizeConstraint_4 = Instance.new("UITextSizeConstraint")
+local Return_2 = Instance.new("TextButton")
+local Underline_6 = Instance.new("Frame")
+local UIGradient_6 = Instance.new("UIGradient")
+local Resting_2 = Instance.new("Frame")
+local Overlay_4 = Instance.new("ImageLabel")
+local Background_4 = Instance.new("ImageLabel")
+local Title_4 = Instance.new("TextLabel")
+local DescSheet_4 = Instance.new("Frame")
+local Pipe_4 = Instance.new("ImageLabel")
+local Desc_3 = Instance.new("TextLabel")
+local UITextSizeConstraint_5 = Instance.new("UITextSizeConstraint")
+local Return_3 = Instance.new("TextButton")
+local Underline_7 = Instance.new("Frame")
+local UIGradient_7 = Instance.new("UIGradient")
+local Credits_2 = Instance.new("Frame")
+local Overlay_5 = Instance.new("ImageLabel")
+local Background_5 = Instance.new("ImageLabel")
+local Title_5 = Instance.new("TextLabel")
+local DescSheet_5 = Instance.new("Frame")
+local Pipe_5 = Instance.new("ImageLabel")
+local Desc_4 = Instance.new("TextLabel")
+local UITextSizeConstraint_6 = Instance.new("UITextSizeConstraint")
+local Return_4 = Instance.new("TextButton")
+local Underline_8 = Instance.new("Frame")
+local UIGradient_8 = Instance.new("UIGradient")
+
+--Name Gen:
+
+local function randomString(length)
+	local chars = {}
+	for i = 1, length do
+		local randomCharType = math.random(1, 3) -- Choose a random character type (1 = lowercase letter, 2 = uppercase letter, 3 = number)
+		local randomChar
+		if randomCharType == 1 then
+			randomChar = string.char(math.random(97, 122)) -- Generate a random lowercase letter
+		elseif randomCharType == 2 then
+			randomChar = string.char(math.random(65, 90)) -- Generate a random uppercase letter
+		else
+			randomChar = string.char(math.random(48, 57)) -- Generate a random digit
+		end
+		table.insert(chars, randomChar)
+	end
+	return table.concat(chars)
+end
+
+local randomText = randomString(12) -- Generate a random string of length 12
+
+-- Main Transparency Tween:
+
+--[[local function TextTween(ChosenText)
+	local TextTRTween = TweenService:Create(ChosenText, TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, 1), {
+		Transparency = 1
+	})
+	TextTRTween:Play()
+end]]
+
+--Properties:
+
+HubGui.Name = randomText
+HubGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+HubGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+HubGui.DisplayOrder = 5
+HubGui.ResetOnSpawn = false
+
+local detFolder = Instance.new("Folder")
+detFolder.Name = "I6bONBw25jq2b220Lf"
+detFolder.Parent = HubGui
+
+HubFrame.Name = "HubFrame"
+HubFrame.Parent = HubGui
+HubFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+HubFrame.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
+HubFrame.BackgroundTransparency = 0.100
+HubFrame.BorderSizePixel = 0
+HubFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+HubFrame.Size = UDim2.new(0, 280, 0, 200)
+
+Overlay.Name = "Overlay"
+Overlay.Parent = HubFrame
+Overlay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Overlay.BackgroundTransparency = 1.000
+Overlay.BorderSizePixel = 0
+Overlay.Position = UDim2.new(0, -3, 0, -3)
+Overlay.Size = UDim2.new(1, 6, 1, 6)
+Overlay.ZIndex = 2
+Overlay.Image = "http://www.roblox.com/asset/?id=4280422108"
+Overlay.ImageColor3 = Color3.fromRGB(183, 197, 211)
+Overlay.ScaleType = Enum.ScaleType.Slice
+Overlay.SliceCenter = Rect.new(14, 14, 18, 18)
+
+Background.Name = "Background"
+Background.Parent = HubFrame
+Background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background.BackgroundTransparency = 1.000
+Background.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Background.BorderSizePixel = 0
+Background.Size = UDim2.new(1, 0, 1, 0)
+Background.Image = "http://www.roblox.com/asset/?id=4280494932"
+Background.ImageColor3 = Color3.fromRGB(4, 5, 6)
+Background.ImageTransparency = 0.870
+Background.ScaleType = Enum.ScaleType.Tile
+Background.TileSize = UDim2.new(0, 32, 0, 32)
+
+Title.Name = "Title"
+Title.Parent = HubFrame
+Title.AnchorPoint = Vector2.new(0.5, 0)
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.Position = UDim2.new(0.5, 0, 0, 0)
+Title.Size = UDim2.new(0.899999976, 0, 0, 30)
+Title.Font = Enum.Font.SourceSansBold
+Title.Text = "Welcome"
+Title.TextColor3 = Color3.fromRGB(250, 255, 222)
+Title.TextSize = 16.000
+Title.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Title.TextStrokeTransparency = 0.500
+Title.TextTransparency = 0.100
+Title.TextWrapped = true
+
+DescSheet.Name = "DescSheet"
+DescSheet.Parent = HubFrame
+DescSheet.AnchorPoint = Vector2.new(0.5, 1)
+DescSheet.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
+DescSheet.BorderSizePixel = 0
+DescSheet.Position = UDim2.new(0.5, 0, 1, 0)
+DescSheet.Size = UDim2.new(1, 0, 1, -30)
+
+Pipe.Name = "Pipe"
+Pipe.Parent = DescSheet
+Pipe.AnchorPoint = Vector2.new(0, 1)
+Pipe.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Pipe.BackgroundTransparency = 1.000
+Pipe.BorderSizePixel = 0
+Pipe.Position = UDim2.new(0, 0, 0, 1)
+Pipe.Size = UDim2.new(1, 0, 0, 5)
+Pipe.Image = "http://www.roblox.com/asset/?id=5035647017"
+Pipe.ImageColor3 = Color3.fromRGB(183, 197, 211)
+
+Index.Name = "Index"
+Index.Visible = false
+Index.Parent = HubFrame
+Index.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Index.BackgroundTransparency = 1.000
+Index.Position = UDim2.new(0, 0, 0, 85)
+Index.Size = UDim2.new(1, 0, 1, -95)
+
+UIListLayout.Parent = Index
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 4)
+
+Desc.Name = "Desc"
+Desc.Parent = HubFrame
+Desc.AnchorPoint = Vector2.new(0.5, 0)
+Desc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Desc.BackgroundTransparency = 1.000
+Desc.Position = UDim2.new(0.5, 0, 0, 47)
+Desc.Size = UDim2.new(0.899999976, 0, 0, 28)
+Desc.Font = Enum.Font.SourceSans
+Desc.Text = "Script Loading"
+Desc.TextColor3 = Color3.fromRGB(28, 36, 35)
+Desc.TextScaled = true
+Desc.TextSize = 14.000
+Desc.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Desc.TextTransparency = 0.100
+Desc.TextWrapped = true
+
+UITextSizeConstraint.Parent = Desc
+UITextSizeConstraint.MaxTextSize = 14
+UITextSizeConstraint.MinTextSize = 12
+
+
+local totalwaitTime = 15
+local loadwaitTime = 0
+while true do
+	task.wait(0.5)
+	if loadwaitTime >= totalwaitTime then
+		print("Loading has Finished".."--Pot")
+		--TextTween(Desc)
+		--task.wait(0.3)
+		Desc.Text = "Loading has Finished. Inserting layers."
+		break
+	end
+	Desc.Text = "Script Loading."
+	loadwaitTime = loadwaitTime + 1
+	task.wait(0.5)
+	Desc.Text = "Script Loading.."
+	loadwaitTime = loadwaitTime + 1
+	task.wait(0.5)
+	Desc.Text = "Script Loading..."
+	loadwaitTime = loadwaitTime + 1
+end
+
+Controls.Name = "Main"
+Controls.Parent = Index
+Controls.Active = false
+Controls.AnchorPoint = Vector2.new(0.5, 0)
+Controls.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Controls.BackgroundTransparency = 1.000
+Controls.Position = UDim2.new(0.5, 0, 0, 50)
+Controls.Selectable = false
+Controls.Size = UDim2.new(0.899999976, 0, 0, 20)
+Controls.Font = Enum.Font.SourceSansSemibold
+Controls.Text = "Main Stuff"
+Controls.TextColor3 = Color3.fromRGB(28, 36, 35)
+Controls.TextSize = 15.000
+Controls.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Controls.TextTransparency = 0.100
+Controls.TextWrapped = true
+
+Underline.Name = "Underline"
+Underline.Parent = Controls
+Underline.AnchorPoint = Vector2.new(0.5, 0)
+Underline.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline.BackgroundTransparency = 0.900
+Underline.Position = UDim2.new(0.5, 0, 1, 0)
+Underline.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient.Parent = Underline
+
+Extras.Name = "Extras"
+Extras.Parent = Index
+Extras.Active = false
+Extras.AnchorPoint = Vector2.new(0.5, 0)
+Extras.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Extras.BackgroundTransparency = 1.000
+Extras.LayoutOrder = 1
+Extras.Position = UDim2.new(0.5, 0, 0, 50)
+Extras.Selectable = false
+Extras.Size = UDim2.new(0.899999976, 0, 0, 20)
+Extras.Font = Enum.Font.SourceSansSemibold
+Extras.Text = "Extra Features"
+Extras.TextColor3 = Color3.fromRGB(28, 36, 35)
+Extras.TextSize = 15.000
+Extras.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Extras.TextTransparency = 0.100
+Extras.TextWrapped = true
+
+Underline_2.Name = "Underline"
+Underline_2.Parent = Extras
+Underline_2.AnchorPoint = Vector2.new(0.5, 0)
+Underline_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline_2.BackgroundTransparency = 0.900
+Underline_2.Position = UDim2.new(0.5, 0, 1, 0)
+Underline_2.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient_2.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_2.Parent = Underline_2
+
+Credits.Name = "Credits"
+Credits.Parent = Index
+Credits.Active = false
+Credits.AnchorPoint = Vector2.new(0.5, 0)
+Credits.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Credits.BackgroundTransparency = 1.000
+Credits.LayoutOrder = 3
+Credits.Position = UDim2.new(0.5, 0, 0, 50)
+Credits.Selectable = false
+Credits.Size = UDim2.new(0.899999976, 0, 0, 20)
+Credits.Font = Enum.Font.SourceSansSemibold
+Credits.Text = "Credits & Info"
+Credits.TextColor3 = Color3.fromRGB(28, 36, 35)
+Credits.TextSize = 15.000
+Credits.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Credits.TextTransparency = 0.100
+Credits.TextWrapped = true
+
+Underline_3.Name = "Underline"
+Underline_3.Parent = Credits
+Underline_3.AnchorPoint = Vector2.new(0.5, 0)
+Underline_3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline_3.BackgroundTransparency = 0.900
+Underline_3.Position = UDim2.new(0.5, 0, 1, 0)
+Underline_3.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient_3.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_3.Parent = Underline_3
+
+Resting.Name = "Resting"
+Resting.Visible = false -- Invisible for now because i dont have ideas rn -- Pot
+Resting.Parent = Index
+Resting.Active = false
+Resting.AnchorPoint = Vector2.new(0.5, 0)
+Resting.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Resting.BackgroundTransparency = 1.000
+Resting.LayoutOrder = 2
+Resting.Position = UDim2.new(0.5, 0, 0, 50)
+Resting.Selectable = false
+Resting.Size = UDim2.new(0.899999976, 0, 0, 20)
+Resting.Font = Enum.Font.SourceSansSemibold
+Resting.Text = "Campfires & Resting"
+Resting.TextColor3 = Color3.fromRGB(28, 36, 35)
+Resting.TextSize = 15.000
+Resting.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Resting.TextTransparency = 0.100
+Resting.TextWrapped = true
+
+Underline_4.Name = "Underline"
+Underline_4.Parent = Resting
+Underline_4.AnchorPoint = Vector2.new(0.5, 0)
+Underline_4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline_4.BackgroundTransparency = 0.900
+Underline_4.Position = UDim2.new(0.5, 0, 1, 0)
+Underline_4.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient_4.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_4.Parent = Underline_4
+
+task.wait(2.5)
+Desc.Text = "Fully Loaded!"
+task.wait(0.6)
+Desc.Text = 'Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab. This GUI is a WIP so there "may" be a lot more added.'
+Index.Visible = true -- Opens all the options after loaded
+
+Headings.Name = "Headings"
+Headings.Parent = HubGui
+
+Main_2.Name = "Main"
+Main_2.Parent = Headings
+Main_2.AnchorPoint = Vector2.new(0.5, 0.5)
+Main_2.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
+Main_2.BackgroundTransparency = 0.100
+Main_2.BorderSizePixel = 0
+Main_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+Main_2.Size = UDim2.new(0, 300, 0, 260)
+Main_2.Visible = false
+
+Overlay_2.Name = "Overlay"
+Overlay_2.Parent = Main_2
+Overlay_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Overlay_2.BackgroundTransparency = 1.000
+Overlay_2.BorderSizePixel = 0
+Overlay_2.Position = UDim2.new(0, -3, 0, -3)
+Overlay_2.Size = UDim2.new(1, 6, 1, 6)
+Overlay_2.ZIndex = 2
+Overlay_2.Image = "http://www.roblox.com/asset/?id=4280422108"
+Overlay_2.ImageColor3 = Color3.fromRGB(183, 197, 211)
+Overlay_2.ScaleType = Enum.ScaleType.Slice
+Overlay_2.SliceCenter = Rect.new(14, 14, 18, 18)
+
+Background_2.Name = "Background"
+Background_2.Parent = Main_2
+Background_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background_2.BackgroundTransparency = 1.000
+Background_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Background_2.BorderSizePixel = 0
+Background_2.Size = UDim2.new(1, 0, 1, 0)
+Background_2.Image = "http://www.roblox.com/asset/?id=4280494932"
+Background_2.ImageColor3 = Color3.fromRGB(4, 5, 6)
+Background_2.ImageTransparency = 0.870
+Background_2.ScaleType = Enum.ScaleType.Tile
+Background_2.TileSize = UDim2.new(0, 32, 0, 32)
+
+Title_2.Name = "Title"
+Title_2.Parent = Main_2
+Title_2.AnchorPoint = Vector2.new(0.5, 0)
+Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title_2.BackgroundTransparency = 1.000
+Title_2.Position = UDim2.new(0.5, 0, 0, 0)
+Title_2.Size = UDim2.new(0.899999976, 0, 0, 30)
+Title_2.Font = Enum.Font.SourceSansBold
+Title_2.Text = "Main Stuff"
+Title_2.TextColor3 = Color3.fromRGB(250, 255, 222)
+Title_2.TextSize = 16.000
+Title_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Title_2.TextStrokeTransparency = 0.500
+Title_2.TextTransparency = 0.100
+Title_2.TextWrapped = true
+
+DescSheet_2.Name = "DescSheet"
+DescSheet_2.Parent = Main_2
+DescSheet_2.AnchorPoint = Vector2.new(0.5, 1)
+DescSheet_2.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
+DescSheet_2.BorderSizePixel = 0
+DescSheet_2.Position = UDim2.new(0.5, 0, 1, 0)
+DescSheet_2.Size = UDim2.new(1, 0, 1, -30)
+
+Pipe_2.Name = "Pipe"
+Pipe_2.Parent = DescSheet_2
+Pipe_2.AnchorPoint = Vector2.new(0, 1)
+Pipe_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Pipe_2.BackgroundTransparency = 1.000
+Pipe_2.BorderSizePixel = 0
+Pipe_2.Position = UDim2.new(0, 0, 0, 1)
+Pipe_2.Size = UDim2.new(1, 0, 0, 5)
+Pipe_2.Image = "http://www.roblox.com/asset/?id=5035647017"
+Pipe_2.ImageColor3 = Color3.fromRGB(183, 197, 211)
+
+LeftControlDesc.Name = "LeftControlDesc"
+LeftControlDesc.Parent = Main_2
+LeftControlDesc.AnchorPoint = Vector2.new(0.5, 0)
+LeftControlDesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LeftControlDesc.BackgroundTransparency = 1.000
+LeftControlDesc.Position = UDim2.new(0.25, 0, 0, 47)
+LeftControlDesc.Size = UDim2.new(0.449999988, 0, 1, -60)
+LeftControlDesc.Font = Enum.Font.SourceSans
+LeftControlDesc.Text = "<b>M1</b> - Light Attack\\n<b>M2</b> - Feint/Cancel\\n<b>M3 / R</b> - Critical Attack\\n<b>E</b> - Interact\\n<b>F</b> - Parry\\n<b>F</b> (Hold) - Block\\n\\n<b>Y</b> - Switch Stance\\n<b>T</b> - Taunt\\n\\n<b>V</b> - Carry KO'd Enemy\\n<b>B</b> - Execute KO'd Enemy"
+LeftControlDesc.TextColor3 = Color3.fromRGB(28, 36, 35)
+LeftControlDesc.TextScaled = true
+LeftControlDesc.TextSize = 14.000
+LeftControlDesc.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+LeftControlDesc.TextTransparency = 0.100
+LeftControlDesc.TextWrapped = true
+LeftControlDesc.TextYAlignment = Enum.TextYAlignment.Top
+
+UITextSizeConstraint_2.Parent = LeftControlDesc
+UITextSizeConstraint_2.MaxTextSize = 14
+UITextSizeConstraint_2.MinTextSize = 12
+
+RightControlDesc.Name = "RightControlDesc"
+RightControlDesc.Parent = Main_2
+RightControlDesc.AnchorPoint = Vector2.new(0.5, 0)
+RightControlDesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+RightControlDesc.BackgroundTransparency = 1.000
+RightControlDesc.Position = UDim2.new(0.75, 0, 0, 47)
+RightControlDesc.Size = UDim2.new(0.449999988, 0, 1, -60)
+RightControlDesc.Font = Enum.Font.SourceSans
+RightControlDesc.Text = "<b>W x2</b> - Sprint\\n<b>Q</b> - Roll\\n<b>Ctrl</b> - Crouch\\n<b>Ctrl</b> (Sprinting) - Slide\\n\\n<b>TAB</b> - Journal/Backpack\\n<b>X</b> - Gesture\\n<b>P</b> - Toggle Cosmetic\\n<b>N</b> - Equip Glider"
+RightControlDesc.TextColor3 = Color3.fromRGB(28, 36, 35)
+RightControlDesc.TextScaled = true
+RightControlDesc.TextSize = 14.000
+RightControlDesc.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+RightControlDesc.TextTransparency = 0.100
+RightControlDesc.TextWrapped = true
+RightControlDesc.TextYAlignment = Enum.TextYAlignment.Top
+
+UITextSizeConstraint_3.Parent = RightControlDesc
+UITextSizeConstraint_3.MaxTextSize = 14
+UITextSizeConstraint_3.MinTextSize = 12
+
+Return.Name = "Return"
+Return.Parent = Main_2
+Return.Active = false
+Return.AnchorPoint = Vector2.new(0.5, 1)
+Return.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Return.BackgroundTransparency = 1.000
+Return.LayoutOrder = 1
+Return.Position = UDim2.new(0.5, 0, 1, -10)
+Return.Selectable = false
+Return.Size = UDim2.new(0.5, 0, 0, 20)
+Return.Font = Enum.Font.SourceSansSemibold
+Return.Text = "Return"
+Return.TextColor3 = Color3.fromRGB(28, 36, 35)
+Return.TextSize = 15.000
+Return.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Return.TextTransparency = 0.100
+Return.TextWrapped = true
+Return.MouseButton1Down:connect(function()
+	for i, r in pairs(Headings:GetChildren()) do
+		r.Visible = false
+	end
+end)
+
+Underline_5.Name = "Underline"
+Underline_5.Parent = Return
+Underline_5.AnchorPoint = Vector2.new(0.5, 0)
+Underline_5.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline_5.BackgroundTransparency = 0.900
+Underline_5.Position = UDim2.new(0.5, 0, 1, 0)
+Underline_5.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient_5.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_5.Parent = Underline_5
+
+Extras_2.Name = "Extras"
+Extras_2.Parent = Headings
+Extras_2.AnchorPoint = Vector2.new(0.5, 0.5)
+Extras_2.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
+Extras_2.BackgroundTransparency = 0.100
+Extras_2.BorderSizePixel = 0
+Extras_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+Extras_2.Size = UDim2.new(0, 400, 0, 370)
+Extras_2.Visible = false
+
+Overlay_3.Name = "Overlay"
+Overlay_3.Parent = Extras_2
+Overlay_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Overlay_3.BackgroundTransparency = 1.000
+Overlay_3.BorderSizePixel = 0
+Overlay_3.Position = UDim2.new(0, -3, 0, -3)
+Overlay_3.Size = UDim2.new(1, 6, 1, 6)
+Overlay_3.ZIndex = 2
+Overlay_3.Image = "http://www.roblox.com/asset/?id=4280422108"
+Overlay_3.ImageColor3 = Color3.fromRGB(183, 197, 211)
+Overlay_3.ScaleType = Enum.ScaleType.Slice
+Overlay_3.SliceCenter = Rect.new(14, 14, 18, 18)
+
+Background_3.Name = "Background"
+Background_3.Parent = Extras_2
+Background_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background_3.BackgroundTransparency = 1.000
+Background_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Background_3.BorderSizePixel = 0
+Background_3.Size = UDim2.new(1, 0, 1, 0)
+Background_3.Image = "http://www.roblox.com/asset/?id=4280494932"
+Background_3.ImageColor3 = Color3.fromRGB(4, 5, 6)
+Background_3.ImageTransparency = 0.870
+Background_3.ScaleType = Enum.ScaleType.Tile
+Background_3.TileSize = UDim2.new(0, 32, 0, 32)
+
+Title_3.Name = "Title"
+Title_3.Parent = Extras_2
+Title_3.AnchorPoint = Vector2.new(0.5, 0)
+Title_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title_3.BackgroundTransparency = 1.000
+Title_3.Position = UDim2.new(0.5, 0, 0, 0)
+Title_3.Size = UDim2.new(0.899999976, 0, 0, 30)
+Title_3.Font = Enum.Font.SourceSansBold
+Title_3.Text = "Extra Features"
+Title_3.TextColor3 = Color3.fromRGB(250, 255, 222)
+Title_3.TextSize = 16.000
+Title_3.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Title_3.TextStrokeTransparency = 0.500
+Title_3.TextTransparency = 0.100
+Title_3.TextWrapped = true
+
+DescSheet_3.Name = "DescSheet"
+DescSheet_3.Parent = Extras_2
+DescSheet_3.AnchorPoint = Vector2.new(0.5, 1)
+DescSheet_3.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
+DescSheet_3.BorderSizePixel = 0
+DescSheet_3.Position = UDim2.new(0.5, 0, 1, 0)
+DescSheet_3.Size = UDim2.new(1, 0, 1, -30)
+
+Pipe_3.Name = "Pipe"
+Pipe_3.Parent = DescSheet_3
+Pipe_3.AnchorPoint = Vector2.new(0, 1)
+Pipe_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Pipe_3.BackgroundTransparency = 1.000
+Pipe_3.BorderSizePixel = 0
+Pipe_3.Position = UDim2.new(0, 0, 0, 1)
+Pipe_3.Size = UDim2.new(1, 0, 0, 5)
+Pipe_3.Image = "http://www.roblox.com/asset/?id=5035647017"
+Pipe_3.ImageColor3 = Color3.fromRGB(183, 197, 211)
+
+Desc_2.Name = "Desc"
+Desc_2.Parent = Extras_2
+Desc_2.AnchorPoint = Vector2.new(0.5, 0)
+Desc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Desc_2.BackgroundTransparency = 1.000
+Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
+Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
+Desc_2.Font = Enum.Font.SourceSans
+Desc_2.Text = "In order to increase your attributes, you need to use the relevant <b>Training Gear</b>.\\n\\nUsing <b>Training Gear</b> will enable you to <i>Invest</i> your attributes once you meet Training Requirements. Training is increased passively by doing things related to that attribute.\\n\\nFor example, eating poisonous foods will train your <b>Fortitude</b>, which you can <i>Invest</i> using a <b>Boulder</b> or a <b>Training Vest</b>. <b>Weapons</b> can be trained by engaging in combat and using a <b>Weapon Manual</b>.\\n\\nYou can use Training Gear before or after passive training to invest the attribute.\\n\\nSome Training Gear will let you train your attribute by using the gear repeatedly. This is slow, however, and recommended during down-time such as when sailing or resting.\\n\\nYou get <b>15 Investment Points</b> per <b>Power</b>, and using them all up and meeting Experience Requirements will give you a Power Up."
+Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
+Desc_2.TextScaled = true
+Desc_2.TextSize = 14.000
+Desc_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Desc_2.TextTransparency = 0.100
+Desc_2.TextWrapped = true
+Desc_2.TextYAlignment = Enum.TextYAlignment.Top
+
+UITextSizeConstraint_4.Parent = Desc_2
+UITextSizeConstraint_4.MaxTextSize = 14
+UITextSizeConstraint_4.MinTextSize = 12
+
+Return_2.Name = "Return"
+Return_2.Parent = Extras_2
+Return_2.Active = false
+Return_2.AnchorPoint = Vector2.new(0.5, 1)
+Return_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Return_2.BackgroundTransparency = 1.000
+Return_2.LayoutOrder = 1
+Return_2.Position = UDim2.new(0.5, 0, 1, -10)
+Return_2.Selectable = false
+Return_2.Size = UDim2.new(0.5, 0, 0, 20)
+Return_2.Font = Enum.Font.SourceSansSemibold
+Return_2.Text = "Return"
+Return_2.TextColor3 = Color3.fromRGB(28, 36, 35)
+Return_2.TextSize = 15.000
+Return_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Return_2.TextTransparency = 0.100
+Return_2.TextWrapped = true
+Return_2.MouseButton1Down:connect(function()
+	for i, r in pairs(Headings:GetChildren()) do
+		r.Visible = false
+	end
+end)
+
+Underline_6.Name = "Underline"
+Underline_6.Parent = Return_2
+Underline_6.AnchorPoint = Vector2.new(0.5, 0)
+Underline_6.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline_6.BackgroundTransparency = 0.900
+Underline_6.Position = UDim2.new(0.5, 0, 1, 0)
+Underline_6.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient_6.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_6.Parent = Underline_6
+
+Resting_2.Name = "Resting"
+Resting_2.Parent = Headings
+Resting_2.AnchorPoint = Vector2.new(0.5, 0.5)
+Resting_2.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
+Resting_2.BackgroundTransparency = 0.100
+Resting_2.BorderSizePixel = 0
+Resting_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+Resting_2.Size = UDim2.new(0, 350, 0, 320)
+Resting_2.Visible = false
+
+Overlay_4.Name = "Overlay"
+Overlay_4.Parent = Resting_2
+Overlay_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Overlay_4.BackgroundTransparency = 1.000
+Overlay_4.BorderSizePixel = 0
+Overlay_4.Position = UDim2.new(0, -3, 0, -3)
+Overlay_4.Size = UDim2.new(1, 6, 1, 6)
+Overlay_4.ZIndex = 2
+Overlay_4.Image = "http://www.roblox.com/asset/?id=4280422108"
+Overlay_4.ImageColor3 = Color3.fromRGB(183, 197, 211)
+Overlay_4.ScaleType = Enum.ScaleType.Slice
+Overlay_4.SliceCenter = Rect.new(14, 14, 18, 18)
+
+Background_4.Name = "Background"
+Background_4.Parent = Resting_2
+Background_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background_4.BackgroundTransparency = 1.000
+Background_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Background_4.BorderSizePixel = 0
+Background_4.Size = UDim2.new(1, 0, 1, 0)
+Background_4.Image = "http://www.roblox.com/asset/?id=4280494932"
+Background_4.ImageColor3 = Color3.fromRGB(4, 5, 6)
+Background_4.ImageTransparency = 0.870
+Background_4.ScaleType = Enum.ScaleType.Tile
+Background_4.TileSize = UDim2.new(0, 32, 0, 32)
+
+Title_4.Name = "Title"
+Title_4.Parent = Resting_2
+Title_4.AnchorPoint = Vector2.new(0.5, 0)
+Title_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title_4.BackgroundTransparency = 1.000
+Title_4.Position = UDim2.new(0.5, 0, 0, 0)
+Title_4.Size = UDim2.new(0.899999976, 0, 0, 30)
+Title_4.Font = Enum.Font.SourceSansBold
+Title_4.Text = "Resting"
+Title_4.TextColor3 = Color3.fromRGB(250, 255, 222)
+Title_4.TextSize = 16.000
+Title_4.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Title_4.TextStrokeTransparency = 0.500
+Title_4.TextTransparency = 0.100
+Title_4.TextWrapped = true
+
+DescSheet_4.Name = "DescSheet"
+DescSheet_4.Parent = Resting_2
+DescSheet_4.AnchorPoint = Vector2.new(0.5, 1)
+DescSheet_4.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
+DescSheet_4.BorderSizePixel = 0
+DescSheet_4.Position = UDim2.new(0.5, 0, 1, 0)
+DescSheet_4.Size = UDim2.new(1, 0, 1, -30)
+
+Pipe_4.Name = "Pipe"
+Pipe_4.Parent = DescSheet_4
+Pipe_4.AnchorPoint = Vector2.new(0, 1)
+Pipe_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Pipe_4.BackgroundTransparency = 1.000
+Pipe_4.BorderSizePixel = 0
+Pipe_4.Position = UDim2.new(0, 0, 0, 1)
+Pipe_4.Size = UDim2.new(1, 0, 0, 5)
+Pipe_4.Image = "http://www.roblox.com/asset/?id=5035647017"
+Pipe_4.ImageColor3 = Color3.fromRGB(183, 197, 211)
+
+Desc_3.Name = "Desc"
+Desc_3.Parent = Resting_2
+Desc_3.AnchorPoint = Vector2.new(0.5, 0)
+Desc_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Desc_3.BackgroundTransparency = 1.000
+Desc_3.Position = UDim2.new(0.5, 0, 0, 47)
+Desc_3.Size = UDim2.new(0.899999976, 0, 1, -60)
+Desc_3.Font = Enum.Font.SourceSans
+Desc_3.Text = "<b>Campfire Kits</b> can be crafted using <b>1 Wood</b> or <b>3 Sticks</b>.\\nA <b>Flint</b> can be crafted using <b>1 Coal</b> and <b>1 Rock</b>, or bought at a General Store.\\n\\nPlacing down a <b>Campfire Kit</b> and lighting it with a <b>Flint</b> will give you a place to rest and access the Rest Menu.\\n\\nResting will rapidly regenerate your Health, Ether, Reservoir, Blood, and Sanity. You also lose less Stomach and Water when resting at a Campfire.\\n\\nWhen resting, you can Unequip Equipment, view the stats on your Equipment and Weaponry, and view your Mantras.\\n\\nRecalling a Mantra in the Rest Menu will enable you to modify your Mantra at a <b>Mantra Table</b>."
+Desc_3.TextColor3 = Color3.fromRGB(28, 36, 35)
+Desc_3.TextScaled = true
+Desc_3.TextSize = 14.000
+Desc_3.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Desc_3.TextTransparency = 0.100
+Desc_3.TextWrapped = true
+Desc_3.TextYAlignment = Enum.TextYAlignment.Top
+
+UITextSizeConstraint_5.Parent = Desc_3
+UITextSizeConstraint_5.MaxTextSize = 14
+UITextSizeConstraint_5.MinTextSize = 12
+
+Return_3.Name = "Return"
+Return_3.Parent = Resting_2
+Return_3.Active = false
+Return_3.AnchorPoint = Vector2.new(0.5, 1)
+Return_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Return_3.BackgroundTransparency = 1.000
+Return_3.LayoutOrder = 1
+Return_3.Position = UDim2.new(0.5, 0, 1, -10)
+Return_3.Selectable = false
+Return_3.Size = UDim2.new(0.5, 0, 0, 20)
+Return_3.Font = Enum.Font.SourceSansSemibold
+Return_3.Text = "Return"
+Return_3.TextColor3 = Color3.fromRGB(28, 36, 35)
+Return_3.TextSize = 15.000
+Return_3.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Return_3.TextTransparency = 0.100
+Return_3.TextWrapped = true
+Return_3.MouseButton1Down:connect(function()
+	for i, r in pairs(Headings:GetChildren()) do
+		r.Visible = false
+	end
+end)
+
+Underline_7.Name = "Underline"
+Underline_7.Parent = Return_3
+Underline_7.AnchorPoint = Vector2.new(0.5, 0)
+Underline_7.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline_7.BackgroundTransparency = 0.900
+Underline_7.Position = UDim2.new(0.5, 0, 1, 0)
+Underline_7.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient_7.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_7.Parent = Underline_7
+
+Credits_2.Name = "Credits"
+Credits_2.Parent = Headings
+Credits_2.AnchorPoint = Vector2.new(0.5, 0.5)
+Credits_2.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
+Credits_2.BackgroundTransparency = 0.100
+Credits_2.BorderSizePixel = 0
+Credits_2.Position = UDim2.new(0.5, 0, 0.5, 0)
+Credits_2.Size = UDim2.new(0, 350, 0, 320)
+Credits_2.Visible = false
+
+Overlay_5.Name = "Overlay"
+Overlay_5.Parent = Credits_2
+Overlay_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Overlay_5.BackgroundTransparency = 1.000
+Overlay_5.BorderSizePixel = 0
+Overlay_5.Position = UDim2.new(0, -3, 0, -3)
+Overlay_5.Size = UDim2.new(1, 6, 1, 6)
+Overlay_5.ZIndex = 2
+Overlay_5.Image = "http://www.roblox.com/asset/?id=4280422108"
+Overlay_5.ImageColor3 = Color3.fromRGB(183, 197, 211)
+Overlay_5.ScaleType = Enum.ScaleType.Slice
+Overlay_5.SliceCenter = Rect.new(14, 14, 18, 18)
+
+Background_5.Name = "Background"
+Background_5.Parent = Credits_2
+Background_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Background_5.BackgroundTransparency = 1.000
+Background_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Background_5.BorderSizePixel = 0
+Background_5.Size = UDim2.new(1, 0, 1, 0)
+Background_5.Image = "http://www.roblox.com/asset/?id=4280494932"
+Background_5.ImageColor3 = Color3.fromRGB(4, 5, 6)
+Background_5.ImageTransparency = 0.870
+Background_5.ScaleType = Enum.ScaleType.Tile
+Background_5.TileSize = UDim2.new(0, 32, 0, 32)
+
+Title_5.Name = "Title"
+Title_5.Parent = Credits_2
+Title_5.AnchorPoint = Vector2.new(0.5, 0)
+Title_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title_5.BackgroundTransparency = 1.000
+Title_5.Position = UDim2.new(0.5, 0, 0, 0)
+Title_5.Size = UDim2.new(0.899999976, 0, 0, 30)
+Title_5.Font = Enum.Font.SourceSansBold
+Title_5.Text = "Credits & Info"
+Title_5.TextColor3 = Color3.fromRGB(250, 255, 222)
+Title_5.TextSize = 16.000
+Title_5.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Title_5.TextStrokeTransparency = 0.500
+Title_5.TextTransparency = 0.100
+Title_5.TextWrapped = true
+
+DescSheet_5.Name = "DescSheet"
+DescSheet_5.Parent = Credits_2
+DescSheet_5.AnchorPoint = Vector2.new(0.5, 1)
+DescSheet_5.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
+DescSheet_5.BorderSizePixel = 0
+DescSheet_5.Position = UDim2.new(0.5, 0, 1, 0)
+DescSheet_5.Size = UDim2.new(1, 0, 1, -30)
+
+Pipe_5.Name = "Pipe"
+Pipe_5.Parent = DescSheet_5
+Pipe_5.AnchorPoint = Vector2.new(0, 1)
+Pipe_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Pipe_5.BackgroundTransparency = 1.000
+Pipe_5.BorderSizePixel = 0
+Pipe_5.Position = UDim2.new(0, 0, 0, 1)
+Pipe_5.Size = UDim2.new(1, 0, 0, 5)
+Pipe_5.Image = "http://www.roblox.com/asset/?id=5035647017"
+Pipe_5.ImageColor3 = Color3.fromRGB(183, 197, 211)
+
+Desc_4.Name = "Desc"
+Desc_4.Parent = Credits_2
+Desc_4.AnchorPoint = Vector2.new(0.5, 0)
+Desc_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Desc_4.BackgroundTransparency = 1.000
+Desc_4.Position = UDim2.new(0.5, 0, 0, 47)
+Desc_4.Size = UDim2.new(0.899999976, 0, 1, -60)
+Desc_4.Font = Enum.Font.SourceSans
+Desc_4.Text = "To get a boat, head to the dock and find a <b>Shipwright</b>. Dinghies can be crafted for free, but you can only have one Dinghy in your Shipyard.\\n\\nWhen sailing, use <b>Z</b> and <b>C</b> to angle your Sails. Ships move faster when their sails are facing in the same direction as the wind. You can look at your ship's flag to tell the direction of the wind. Your flag should be perpendicular to your sails to give you the greatest speed boost.\\n\\n<b>Sea Highways</b> are marked as large gates with rushing rapids at their mouths. Entering a Highway through its gate will give you a considerable speed boost until you leave its borders.\\n\\nTo stick yourself to a boat and prevent sliding around, you can hold <b>X</b> and use a Gesture that loops, such as Lean Back. "
+Desc_4.TextColor3 = Color3.fromRGB(28, 36, 35)
+Desc_4.TextScaled = true
+Desc_4.TextSize = 14.000
+Desc_4.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Desc_4.TextTransparency = 0.100
+Desc_4.TextWrapped = true
+Desc_4.TextYAlignment = Enum.TextYAlignment.Top
+
+UITextSizeConstraint_6.Parent = Desc_4
+UITextSizeConstraint_6.MaxTextSize = 14
+UITextSizeConstraint_6.MinTextSize = 12
+
+Return_4.Name = "Return"
+Return_4.Parent = Credits_2
+Return_4.Active = false
+Return_4.AnchorPoint = Vector2.new(0.5, 1)
+Return_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Return_4.BackgroundTransparency = 1.000
+Return_4.LayoutOrder = 1
+Return_4.Position = UDim2.new(0.5, 0, 1, -10)
+Return_4.Selectable = false
+Return_4.Size = UDim2.new(0.5, 0, 0, 20)
+Return_4.Font = Enum.Font.SourceSansSemibold
+Return_4.Text = "Return"
+Return_4.TextColor3 = Color3.fromRGB(28, 36, 35)
+Return_4.TextSize = 15.000
+Return_4.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Return_4.TextTransparency = 0.100
+Return_4.TextWrapped = true
+Return_4.MouseButton1Down:connect(function()
+	for i, r in pairs(Headings:GetChildren()) do
+		r.Visible = false
+	end
+end)
+
+Underline_8.Name = "Underline"
+Underline_8.Parent = Return_4
+Underline_8.AnchorPoint = Vector2.new(0.5, 0)
+Underline_8.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Underline_8.BackgroundTransparency = 0.900
+Underline_8.Position = UDim2.new(0.5, 0, 1, 0)
+Underline_8.Size = UDim2.new(1, 0, 0, 1)
+
+UIGradient_8.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+UIGradient_8.Parent = Underline_8
+
+local on = false
+UserInputService.InputBegan:connect(function(player, p9)
+	if p9 then
+		return
+	end
+	if player.KeyCode == Enum.KeyCode.Tab then
+		HubGui.Enabled = not HubGui.Enabled
+		on = HubGui.Enabled
+	end
+end)
+
+coroutine.wrap(function()
+	task.wait(1)
+	while true do
+		task.wait(1.75)
+		if not game.Players.LocalPlayer.PlayerGui:FindFirstChild(HubGui.Name) then
+			game.Players.LocalPlayer:Kick("gui was deleted??")
+		end
+	end
+end)
+-- Scripts:
+
+--[[local function YPLIDNV_fake_script() -- HubGui.TutorialClient 
+	local script = Instance.new('LocalScript', HubGui)
+
+	
+end
+coroutine.wrap(YPLIDNV_fake_script)()]]
