@@ -923,7 +923,7 @@ UserInputService.InputBegan:connect(function(player, p9)
 	if p9 then
 		return
 	end
-	if player.KeyCode == Enum.KeyCode.Tab then
+	if player.KeyCode == Enum.KeyCode.RightAlt then
 		HubGui.Enabled = not HubGui.Enabled
 		on = HubGui.Enabled
 	end
