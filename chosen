@@ -18,6 +18,9 @@ local gameName = ""
 if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 then
 	gameName = "Rogue Lineage Copy"
 	print("Found Supported Game: "..gameName)
+elseif game.PlaceId == 12404070010 then
+	gameName = "Shinobi Storm Online Remastered -- Kuro Game"
+	print("Found Semi-Supported Game: "..gameName)
 else
 	print("This game isn't supported by the Pot Script!.")
 	return
@@ -121,12 +124,12 @@ local function randomString(length)
 end
 
 -- Function to type the text into the TextLabel
-local function typeText(textload, charDelay)
+local function typeText(chosentext,textload, charDelay)
 	spawn(function()
 		local typedText = ""
 		for i = 1, #textload do
 			typedText = typedText .. textload:sub(i, i) -- Add the next character to the typed text
-			Desc.Text = typedText -- Set the TextLabel's text to the typed text
+			chosentext.Text = typedText -- Set the TextLabel's text to the typed text
 			wait(charDelay) -- Wait for the character delay
 		end
 	end)
@@ -265,11 +268,11 @@ while true do
 	task.wait(0.5)
 	if loadwaitTime >= totalwaitTime then
 		print("Loading has Finished".."--Pot")
-		typeText("Loading has Finished. Inserting layers.", 0.02)
+		typeText(Desc,"Loading has Finished. Inserting layers.", 0.02)
 		break
 	end
 	if loadwaitTime == 0 then
-		typeText("Script Loading.", 0.015)
+		typeText(Desc,"Script Loading.", 0.015)
 	else
 		Desc.Text = "Script Loading."
 	end
@@ -479,11 +482,10 @@ UIGradient_4.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 
 UIGradient_4.Parent = Underline_4
 
 task.wait(2.5)
-typeText("Fully Loaded!", 0.02)
---Desc.Text = "Fully Loaded!"
+typeText(Desc,"Fully Loaded!", 0.02)
 task.wait(0.6)
-typeText('Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab.', 0.02)
---Desc.Text = 'Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab. This GUI is a WIP so there "may" be a lot more added.'
+typeText(Title,'Pot Hub', 0.03)
+typeText(Desc,'Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab.', 0.02)
 Index.Visible = true -- Opens all the options after loaded
 
 Headings.Name = "Headings"
@@ -1003,7 +1005,7 @@ Desc_4.BackgroundTransparency = 1.000
 Desc_4.Position = UDim2.new(0.5, 0, 0, 47)
 Desc_4.Size = UDim2.new(0.899999976, 0, 1, -60)
 Desc_4.Font = Enum.Font.SourceSans
-Desc_4.Text = "[Creator - Pot] -- This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts. Sincerely, Pot"
+Desc_4.Text = "[Creator - Pot] [Fully Supported Games - Newer Rogue Lineage Copys] [Semi Supported Games - Shinobi Storm Online Remastered] -- This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts. Sincerely, Pot"
 Desc_4.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc_4.TextScaled = true
 Desc_4.TextSize = 18.000
