@@ -39,7 +39,7 @@ local DescSheet = Instance.new("Frame")
 local Pipe = Instance.new("ImageLabel")
 local Index = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
-local Controls = Instance.new("TextButton")
+local Main = Instance.new("TextButton")
 local Underline = Instance.new("Frame")
 local UIGradient = Instance.new("UIGradient")
 local Extras = Instance.new("TextButton")
@@ -101,7 +101,7 @@ local Return_4 = Instance.new("TextButton")
 local Underline_8 = Instance.new("Frame")
 local UIGradient_8 = Instance.new("UIGradient")
 
---Name Gen:
+--SOme Functions:
 
 local function randomString(length)
 	local chars = {}
@@ -118,6 +118,18 @@ local function randomString(length)
 		table.insert(chars, randomChar)
 	end
 	return table.concat(chars)
+end
+
+-- Function to type the text into the TextLabel
+local function typeText(textload, charDelay)
+	spawn(function()
+		local typedText = ""
+		for i = 1, #textload do
+			typedText = typedText .. textload:sub(i, i) -- Add the next character to the typed text
+			Desc.Text = typedText -- Set the TextLabel's text to the typed text
+			wait(charDelay) -- Wait for the character delay
+		end
+	end)
 end
 
 local randomText = randomString(12) -- Generate a random string of length 12
@@ -234,7 +246,7 @@ Desc.BackgroundTransparency = 1.000
 Desc.Position = UDim2.new(0.5, 0, 0, 47)
 Desc.Size = UDim2.new(0.899999976, 0, 0, 28)
 Desc.Font = Enum.Font.SourceSans
-Desc.Text = "Script Loading"
+Desc.Text = ""
 Desc.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc.TextScaled = true
 Desc.TextSize = 14.000
@@ -253,12 +265,14 @@ while true do
 	task.wait(0.5)
 	if loadwaitTime >= totalwaitTime then
 		print("Loading has Finished".."--Pot")
-		--TextTween(Desc)
-		--task.wait(0.3)
-		Desc.Text = "Loading has Finished. Inserting layers."
+		typeText("Loading has Finished. Inserting layers.", 0.02)
 		break
 	end
-	Desc.Text = "Script Loading."
+	if loadwaitTime == 0 then
+		typeText("Script Loading.", 0.015)
+	else
+		Desc.Text = "Script Loading."
+	end
 	loadwaitTime = loadwaitTime + 1
 	task.wait(0.5)
 	Desc.Text = "Script Loading.."
@@ -268,25 +282,45 @@ while true do
 	loadwaitTime = loadwaitTime + 1
 end
 
-Controls.Name = "Main"
-Controls.Parent = Index
-Controls.Active = false
-Controls.AnchorPoint = Vector2.new(0.5, 0)
-Controls.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Controls.BackgroundTransparency = 1.000
-Controls.Position = UDim2.new(0.5, 0, 0, 50)
-Controls.Selectable = false
-Controls.Size = UDim2.new(0.899999976, 0, 0, 20)
-Controls.Font = Enum.Font.SourceSansSemibold
-Controls.Text = "Main Stuff"
-Controls.TextColor3 = Color3.fromRGB(28, 36, 35)
-Controls.TextSize = 15.000
-Controls.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-Controls.TextTransparency = 0.100
-Controls.TextWrapped = true
+Main.Name = "Main"
+Main.Parent = Index
+Main.Active = false
+Main.AnchorPoint = Vector2.new(0.5, 0)
+Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Main.BackgroundTransparency = 1.000
+Main.Position = UDim2.new(0.5, 0, 0, 50)
+Main.Selectable = false
+Main.Size = UDim2.new(0.899999976, 0, 0, 20)
+Main.Font = Enum.Font.SourceSansSemibold
+Main.Text = "Main Stuff"
+Main.TextColor3 = Color3.fromRGB(28, 36, 35)
+Main.TextSize = 15.000
+Main.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Main.TextTransparency = 0.100
+Main.TextWrapped = true
+Main.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Main
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
+	for i, r in pairs(Headings:GetChildren()) do
+		if r.Name ~= Main.Name then
+			r.Visible = false
+			Headings.Main.Visible = true
+		end
+	end
+end)
 
 Underline.Name = "Underline"
-Underline.Parent = Controls
+Underline.Parent = Main
 Underline.AnchorPoint = Vector2.new(0.5, 0)
 Underline.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Underline.BackgroundTransparency = 0.900
@@ -313,6 +347,26 @@ Extras.TextSize = 15.000
 Extras.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Extras.TextTransparency = 0.100
 Extras.TextWrapped = true
+Extras.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Extras
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
+	for i, r in pairs(Headings:GetChildren()) do
+		if r.Name ~= Extras.Name then
+			r.Visible = false
+			Headings.Extras.Visible = true
+		end
+	end
+end)
 
 Underline_2.Name = "Underline"
 Underline_2.Parent = Extras
@@ -342,6 +396,26 @@ Credits.TextSize = 15.000
 Credits.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Credits.TextTransparency = 0.100
 Credits.TextWrapped = true
+Credits.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Credits
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
+	for i, r in pairs(Headings:GetChildren()) do
+		if r.Name ~= Credits.Name then
+			r.Visible = false
+			Headings.Credits.Visible = true
+		end
+	end
+end)
 
 Underline_3.Name = "Underline"
 Underline_3.Parent = Credits
@@ -372,6 +446,26 @@ Resting.TextSize = 15.000
 Resting.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Resting.TextTransparency = 0.100
 Resting.TextWrapped = true
+Resting.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Resting
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
+	for i, r in pairs(Headings:GetChildren()) do
+		if r.Name ~= Resting.Name then
+			r.Visible = false
+			Headings.Resting.Visible = true
+		end
+	end
+end)
 
 Underline_4.Name = "Underline"
 Underline_4.Parent = Resting
@@ -385,9 +479,11 @@ UIGradient_4.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 
 UIGradient_4.Parent = Underline_4
 
 task.wait(2.5)
-Desc.Text = "Fully Loaded!"
+typeText("Fully Loaded!", 0.02)
+--Desc.Text = "Fully Loaded!"
 task.wait(0.6)
-Desc.Text = 'Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab. This GUI is a WIP so there "may" be a lot more added.'
+typeText('Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab.', 0.02)
+--Desc.Text = 'Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab. This GUI is a WIP so there "may" be a lot more added.'
 Index.Visible = true -- Opens all the options after loaded
 
 Headings.Name = "Headings"
@@ -524,6 +620,18 @@ Return.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Return.TextTransparency = 0.100
 Return.TextWrapped = true
 Return.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Return
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
 	for i, r in pairs(Headings:GetChildren()) do
 		r.Visible = false
 	end
@@ -650,6 +758,18 @@ Return_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Return_2.TextTransparency = 0.100
 Return_2.TextWrapped = true
 Return_2.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Return_2
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
 	for i, r in pairs(Headings:GetChildren()) do
 		r.Visible = false
 	end
@@ -776,6 +896,18 @@ Return_3.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Return_3.TextTransparency = 0.100
 Return_3.TextWrapped = true
 Return_3.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Return_3
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
 	for i, r in pairs(Headings:GetChildren()) do
 		r.Visible = false
 	end
@@ -871,17 +1003,17 @@ Desc_4.BackgroundTransparency = 1.000
 Desc_4.Position = UDim2.new(0.5, 0, 0, 47)
 Desc_4.Size = UDim2.new(0.899999976, 0, 1, -60)
 Desc_4.Font = Enum.Font.SourceSans
-Desc_4.Text = "To get a boat, head to the dock and find a <b>Shipwright</b>. Dinghies can be crafted for free, but you can only have one Dinghy in your Shipyard.\\n\\nWhen sailing, use <b>Z</b> and <b>C</b> to angle your Sails. Ships move faster when their sails are facing in the same direction as the wind. You can look at your ship's flag to tell the direction of the wind. Your flag should be perpendicular to your sails to give you the greatest speed boost.\\n\\n<b>Sea Highways</b> are marked as large gates with rushing rapids at their mouths. Entering a Highway through its gate will give you a considerable speed boost until you leave its borders.\\n\\nTo stick yourself to a boat and prevent sliding around, you can hold <b>X</b> and use a Gesture that loops, such as Lean Back. "
+Desc_4.Text = "[Creator - Pot] -- This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts. Sincerely, Pot"
 Desc_4.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc_4.TextScaled = true
-Desc_4.TextSize = 14.000
+Desc_4.TextSize = 18.000
 Desc_4.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Desc_4.TextTransparency = 0.100
 Desc_4.TextWrapped = true
 Desc_4.TextYAlignment = Enum.TextYAlignment.Top
 
 UITextSizeConstraint_6.Parent = Desc_4
-UITextSizeConstraint_6.MaxTextSize = 14
+UITextSizeConstraint_6.MaxTextSize = 18
 UITextSizeConstraint_6.MinTextSize = 12
 
 Return_4.Name = "Return"
@@ -902,6 +1034,18 @@ Return_4.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 Return_4.TextTransparency = 0.100
 Return_4.TextWrapped = true
 Return_4.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = "Click"
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = "Inverse"
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = Return_4
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
 	for i, r in pairs(Headings:GetChildren()) do
 		r.Visible = false
 	end
@@ -929,7 +1073,7 @@ UserInputService.InputBegan:connect(function(player, p9)
 	end
 end)
 
-coroutine.wrap(function()
+spawn(function()
 	task.wait(1)
 	while true do
 		task.wait(1.75)
