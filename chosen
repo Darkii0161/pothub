@@ -21,6 +21,9 @@ if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId ==
 elseif game.PlaceId == 12404070010 then
 	gameName = "Shinobi Storm Online Remastered -- Kuro Game"
 	print("Found Semi-Supported Game: "..gameName)
+elseif game.PlaceId == 4111023553 then
+	gameName = "Deepwoken"
+	print("Found Supported Game: "..gameName)
 else
 	print("This game isn't supported by the Pot Script!.")
 	return
@@ -54,6 +57,9 @@ local UIGradient_3 = Instance.new("UIGradient")
 local Resting = Instance.new("TextButton")
 local Underline_4 = Instance.new("Frame")
 local UIGradient_4 = Instance.new("UIGradient")
+--local GameShow = Instance.new("TextButton")--Special
+--local Underline_5 = Instance.new("Frame")--Special
+--local UIGradient_5 = Instance.new("UIGradient")--Special
 local Desc = Instance.new("TextLabel")
 local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 local Headings = Instance.new("Folder")
@@ -570,6 +576,7 @@ LeftControlDesc.BackgroundTransparency = 1.000
 LeftControlDesc.Position = UDim2.new(0.25, 0, 0, 47)
 LeftControlDesc.Size = UDim2.new(0.449999988, 0, 1, -60)
 LeftControlDesc.Font = Enum.Font.SourceSans
+LeftControlDesc.RichText = true
 LeftControlDesc.Text = "<b>M1</b> - Light Attack\\n<b>M2</b> - Feint/Cancel\\n<b>M3 / R</b> - Critical Attack\\n<b>E</b> - Interact\\n<b>F</b> - Parry\\n<b>F</b> (Hold) - Block\\n\\n<b>Y</b> - Switch Stance\\n<b>T</b> - Taunt\\n\\n<b>V</b> - Carry KO'd Enemy\\n<b>B</b> - Execute KO'd Enemy"
 LeftControlDesc.TextColor3 = Color3.fromRGB(28, 36, 35)
 LeftControlDesc.TextScaled = true
