@@ -73,6 +73,8 @@ local UIGradient_4 = Instance.new("UIGradient")
 --local UIGradient_5 = Instance.new("UIGradient")--Special
 local Desc = Instance.new("TextLabel")
 local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local DescHide = Instance.new("TextLabel")
+local UITextSizeConstraintHide = Instance.new("UITextSizeConstraint")
 local Headings = Instance.new("Folder")
 local Main_2 = Instance.new("Frame")
 local Overlay_2 = Instance.new("ImageLabel")
@@ -468,20 +470,21 @@ GameShow.Position = UDim2.new(0.5, 0, 0, 50)
 GameShow.Selectable = false
 GameShow.Size = UDim2.new(0.899999976, 0, 0, 20)
 GameShow.Font = Enum.Font.SourceSansSemibold
+GameShow.RichText = true
 GameShow.Text = ""
 local gameShort = ""
 task.spawn(function()
 	repeat task.wait(0.1) until Index.Visible == true
-	wait(0.2)
+	wait(0.15)
 	if gameName == "Rogue Lineage Copy" then
 		gameShort = "RL Copy"
 	elseif gameName == "Shinobi Storm Online Remastered -- Kuro Game" then
 		gameShort = "Storm Online"
 	end
 	if fullSupp == true then
-		typeText(GameShow,'Game: <font color="rgb(0, 200, 0)">'..gameShort..'</font>', 0.015)
+		typeText(GameShow,'Game: <font color="rgb(0, 200, 0)">'..gameShort..'</font>', 0.025)
 	elseif fullSupp == false then
-		typeText(GameShow,'Game: <font color="rgb(253, 117, 39)">'..gameShort..'</font>', 0.015)
+		typeText(GameShow,'Game: <font color="rgb(253, 117, 39)">'..gameShort..'</font>', 0.025)
 	end
 end)
 GameShow.TextColor3 = Color3.fromRGB(28, 36, 35)
@@ -528,6 +531,50 @@ task.wait(0.6)
 typeText(Title,'Pot Hub', 0.03)
 typeText(Desc,'Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab.', 0.02)
 Index.Visible = true -- Opens all the options after loaded
+
+DescHide.Name = "DescHide"
+DescHide.Parent = HubFrame
+DescHide.AnchorPoint = Vector2.new(0.5, 0)
+DescHide.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+DescHide.BackgroundTransparency = 1.000
+DescHide.Position = UDim2.new(0.5, 0, 0, 67)
+DescHide.Size = UDim2.new(0.899999976, 0, 0, 28)
+DescHide.Font = Enum.Font.SourceSans
+DescHide.Text = "RightAlt To Hide"
+DescHide.TextColor3 = Color3.fromRGB(28, 36, 35)
+DescHide.TextScaled = true
+DescHide.TextSize = 12.000
+DescHide.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+DescHide.TextTransparency = 1--0.100
+DescHide.TextWrapped = true
+local hashiden = false
+spawn(function()
+	local HideGUITextTween1 = TweenService:Create(DescHide, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+		TextTransparency = 0.100
+	})
+	local HideGUITextTween2 = TweenService:Create(DescHide, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+		TextTransparency = 0.850
+	})
+	local HideGUITextTween3 = TweenService:Create(DescHide, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+		TextTransparency = 1
+	})
+	task.wait(0.15)
+	while true do
+		wait()
+		if hashiden == true then
+			HideGUITextTween3:Play()
+			break
+		end
+		HideGUITextTween1:Play()
+		HideGUITextTween1.Completed:Wait()
+		HideGUITextTween2:Play()
+		HideGUITextTween2.Completed:Wait()
+	end
+end)
+
+UITextSizeConstraintHide.Parent = DescHide
+UITextSizeConstraintHide.MaxTextSize = 12
+UITextSizeConstraintHide.MinTextSize = 8
 
 Headings.Name = "Headings"
 Headings.Parent = HubGui
@@ -774,7 +821,7 @@ Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
 Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
 Desc_2.Font = Enum.Font.SourceSans
 Desc_2.RichText = true
-Desc_2.Text = "In order to increase your attributes, you need to use the relevant <b>Training Gear</b>.\\n\\nUsing <b>Training Gear</b> will enable you to <i>Invest</i> your attributes once you meet Training Requirements. Training is increased passively by doing things related to that attribute.\\n\\nFor example, eating poisonous foods will train your <b>Fortitude</b>, which you can <i>Invest</i> using a <b>Boulder</b> or a <b>Training Vest</b>. <b>Weapons</b> can be trained by engaging in combat and using a <b>Weapon Manual</b>.\\n\\nYou can use Training Gear before or after passive training to invest the attribute.\\n\\nSome Training Gear will let you train your attribute by using the gear repeatedly. This is slow, however, and recommended during down-time such as when sailing or resting.\\n\\nYou get <b>15 Investment Points</b> per <b>Power</b>, and using them all up and meeting Experience Requirements will give you a Power Up."
+Desc_2.Text = "<u>WIP</u>"
 Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc_2.TextScaled = true
 Desc_2.TextSize = 14.000
@@ -1120,6 +1167,9 @@ UserInputService.InputBegan:connect(function(player, p9)
 		return
 	end
 	if player.KeyCode == Enum.KeyCode.RightAlt then
+		if hashiden == false then
+			hashiden = true
+		end
 		HubGui.Enabled = not HubGui.Enabled
 		on = HubGui.Enabled
 	end
