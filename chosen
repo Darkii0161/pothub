@@ -1161,6 +1161,16 @@ Underline_8.Size = UDim2.new(1, 0, 0, 1)
 UIGradient_8.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 UIGradient_8.Parent = Underline_8
 
+if gameName == "Deepwoken" then
+	game.Workspace.Live.ChildAdded:Connect(function(player)
+		if player == player.Name then
+			pcall(function()
+				loadstring(game:HttpGet(scr1))()
+			end)
+		end
+	end)
+end
+
 local on = false
 UserInputService.InputBegan:connect(function(player, p9)
 	if p9 then
