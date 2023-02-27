@@ -26,7 +26,7 @@ elseif game.PlaceId == 12404070010 then
 	gameName = "Shinobi Storm Online Remastered -- Kuro Game"
 	fullSupp = false
 	print("Found Semi-Supported Game: "..gameName)
-elseif game.PlaceId == 4111023553 or game.PlaceId == 6032399813 then
+elseif game.PlaceId == 4111023553 then
 	gameName = "Deepwoken"
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/deepdrip/main/customvisuals'
 	fullSupp = true
@@ -480,6 +480,8 @@ task.spawn(function()
 		gameShort = "RL Copy"
 	elseif gameName == "Shinobi Storm Online Remastered -- Kuro Game" then
 		gameShort = "Storm Online"
+	else
+		gameShort = gameName
 	end
 	if fullSupp == true then
 		typeText(GameShow,'Game: <font color="rgb(0, 200, 0)">'..gameShort..'</font>', 0.025)
