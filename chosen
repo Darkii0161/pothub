@@ -26,7 +26,7 @@ elseif game.PlaceId == 12404070010 then
 	gameName = "Shinobi Storm Online Remastered -- Kuro Game"
 	fullSupp = false
 	print("Found Semi-Supported Game: "..gameName)
-elseif game.PlaceId == 4111023553 or game.PlaceId == 6032399813 then
+elseif game.PlaceId == 4111023553 or game.PlaceId == 6032399813 or game.PlaceId == 8668476218 then
 	gameName = "Deepwoken"
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/deepdrip/main/customvisuals'
 	fullSupp = true
