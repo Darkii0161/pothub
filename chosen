@@ -17,7 +17,7 @@ local gameName = ""
 local scr1 = ''
 local fullSupp = false
 
-if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 then
+if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 or game.GameId == 3400722193 then
 	gameName = "Rogue Lineage Copy"
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/rcopy/main/unidrip'
 	fullSupp = true
