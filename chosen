@@ -22,7 +22,7 @@ if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId ==
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/rcopy/main/unidrip'
 	fullSupp = true
 	print("Found Supported Game: "..gameName)
-elseif game.PlaceId == 12404070010 then
+elseif game.PlaceId == 12404070010 or game.PlaceId == 12767171440 then
 	gameName = "Shinobi Storm Online Remastered -- Kuro Game"
 	fullSupp = false
 	print("Found Semi-Supported Game: "..gameName)
