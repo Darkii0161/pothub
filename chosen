@@ -190,15 +190,6 @@ HubFrame.BorderSizePixel = 0
 HubFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 HubFrame.Size = UDim2.new(0, 280, 0, 200)
 
-MainDragFrame.Name = "Hold"
-MainDragFrame.Parent = HubFrame
-MainDragFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-MainDragFrame.BackgroundTransparency = 1.000
-MainDragFrame.BorderSizePixel = 0
-MainDragFrame.Position = UDim2.new(0, 0, 0, 0)
-MainDragFrame.Size = UDim2.new(0, 280, 0, 26)
-
-
 Overlay.Name = "Overlay"
 Overlay.Parent = HubFrame
 Overlay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
