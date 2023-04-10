@@ -119,8 +119,15 @@ local UITextSizeConstraint_6 = Instance.new("UITextSizeConstraint")
 local Return_4 = Instance.new("TextButton")
 local Underline_8 = Instance.new("Frame")
 local UIGradient_8 = Instance.new("UIGradient")
+--//For CartRide Captures
+local Captures = Instance.new("Folder")
+local CaptureTitle = Instance.new("TextLabel")
+local ForestCapture = Instance.new("TextLabel")
+local SkycastleCapture = Instance.new("TextLabel")
+local ShoreCapture = Instance.new("TextLabel")
+local BurialCapture = Instance.new("TextLabel")
 
---SOme Functions:
+--Some Functions:
 
 local function randomString(length)
 	local chars = {}
@@ -182,6 +189,15 @@ HubFrame.BackgroundTransparency = 0.100
 HubFrame.BorderSizePixel = 0
 HubFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 HubFrame.Size = UDim2.new(0, 280, 0, 200)
+
+MainDragFrame.Name = "Hold"
+MainDragFrame.Parent = HubFrame
+MainDragFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainDragFrame.BackgroundTransparency = 1.000
+MainDragFrame.BorderSizePixel = 0
+MainDragFrame.Position = UDim2.new(0, 0, 0, 0)
+MainDragFrame.Size = UDim2.new(0, 280, 0, 26)
+
 
 Overlay.Name = "Overlay"
 Overlay.Parent = HubFrame
@@ -826,28 +842,171 @@ DescSheet_3.TopImage = "http://www.roblox.com/asset/?id=4292727598"
 DescSheet_3.VerticalScrollBarInset = Enum.ScrollBarInset.None
 DescSheet_3.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
 
-Desc_2.Name = "Desc"
-Desc_2.Visible = false
-Desc_2.Parent = Extras_2
-Desc_2.AnchorPoint = Vector2.new(0.5, 0)
-Desc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Desc_2.BackgroundTransparency = 1.000
-Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
-Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
-Desc_2.Font = Enum.Font.SourceSans
-Desc_2.RichText = true
-Desc_2.Text = ""
-Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
-Desc_2.TextScaled = true
-Desc_2.TextSize = 14.000
-Desc_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-Desc_2.TextTransparency = 0.100
-Desc_2.TextWrapped = true
-Desc_2.TextYAlignment = Enum.TextYAlignment.Top
+--// This is for Extra Features
+if gameName == "Rogue Lineage Copy" then
+	Desc_2.Name = "Desc"
+	Desc_2.Visible = false
+	Desc_2.Parent = Extras_2
+	Desc_2.AnchorPoint = Vector2.new(0.5, 0)
+	Desc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Desc_2.BackgroundTransparency = 1.000
+	Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
+	Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
+	Desc_2.Font = Enum.Font.SourceSans
+	Desc_2.RichText = true
+	Desc_2.Text = ""
+	Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
+	Desc_2.TextScaled = true
+	Desc_2.TextSize = 14.000
+	Desc_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	Desc_2.TextTransparency = 0.100
+	Desc_2.TextWrapped = true
+	Desc_2.TextYAlignment = Enum.TextYAlignment.Top
+else
+	Desc_2.Name = "Desc"
+	Desc_2.Visible = true
+	Desc_2.Parent = Extras_2
+	Desc_2.AnchorPoint = Vector2.new(0.5, 0)
+	Desc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Desc_2.BackgroundTransparency = 1.000
+	Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
+	Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
+	Desc_2.Font = Enum.Font.SourceSans
+	Desc_2.RichText = true
+	Desc_2.Text = "<u>WIP</u>"
+	Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
+	Desc_2.TextScaled = true
+	Desc_2.TextSize = 14.000
+	Desc_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	Desc_2.TextTransparency = 0.100
+	Desc_2.TextWrapped = true
+	Desc_2.TextYAlignment = Enum.TextYAlignment.Top
+end
 
 UITextSizeConstraint_4.Parent = Desc_2
 UITextSizeConstraint_4.MaxTextSize = 14
 UITextSizeConstraint_4.MinTextSize = 12
+
+if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") then
+	Captures.Name = "Captures"
+	Captures.Parent = DescSheet_3
+	
+	--// CaptureTitle
+	CaptureTitle.Name = "CaptureTitle"
+	CaptureTitle.Parent = Captures
+	CaptureTitle.Active = false
+	CaptureTitle.AnchorPoint = Vector2.new(0.5, 1)
+	CaptureTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	CaptureTitle.BackgroundTransparency = 1.000
+	CaptureTitle.LayoutOrder = 1
+	CaptureTitle.Position = UDim2.new(0.5, -80, 1, -715)
+	CaptureTitle.Selectable = false
+	CaptureTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	CaptureTitle.Font = Enum.Font.SourceSansSemibold
+	CaptureTitle.RichText = true
+	CaptureTitle.Text = "<u>Capture Points</u>"
+	CaptureTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	CaptureTitle.TextSize = 18.000
+	CaptureTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	CaptureTitle.TextTransparency = 0.100
+	CaptureTitle.TextWrapped = true
+	
+	--// ForestPoint
+	ForestCapture.Name = "ForestPoint"
+	ForestCapture.Parent = Captures
+	ForestCapture.Active = false
+	ForestCapture.AnchorPoint = Vector2.new(0.5, 1)
+	ForestCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ForestCapture.BackgroundTransparency = 1.000
+	ForestCapture.LayoutOrder = 1
+	ForestCapture.Position = UDim2.new(0.5, -80, 1, -695)
+	ForestCapture.Selectable = false
+	ForestCapture.Size = UDim2.new(0.5, 0, 0, 20)
+	ForestCapture.Font = Enum.Font.SourceSansSemibold
+	ForestCapture.RichText = true
+	if game.Workspace.CapturePoints.Oresfall.CapturedBy.Value ~= "" then
+		ForestCapture.Text = "Forest: <u>"..game.Workspace.CapturePoints.Oresfall.CapturedBy.Value.."</u>"
+	else
+		ForestCapture.Text = "Forest: <u>No one</u>"
+	end
+	ForestCapture.TextColor3 = Color3.fromRGB(0, 200, 0)
+	ForestCapture.TextSize = 18.000
+	ForestCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	ForestCapture.TextTransparency = 0.100
+	ForestCapture.TextWrapped = true
+	
+	--// SkycastlePoint
+	SkycastleCapture.Name = "SkycastlePoint"
+	SkycastleCapture.Parent = Captures
+	SkycastleCapture.Active = false
+	SkycastleCapture.AnchorPoint = Vector2.new(0.5, 1)
+	SkycastleCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	SkycastleCapture.BackgroundTransparency = 1.000
+	SkycastleCapture.LayoutOrder = 1
+	SkycastleCapture.Position = UDim2.new(0.5, -80, 1, -675)
+	SkycastleCapture.Selectable = false
+	SkycastleCapture.Size = UDim2.new(0.5, 0, 0, 20)
+	SkycastleCapture.Font = Enum.Font.SourceSansSemibold
+	SkycastleCapture.RichText = true
+	if game.Workspace.CapturePoints.Skycastle.CapturedBy.Value ~= "" then
+		SkycastleCapture.Text = "Skycastle: <u>"..game.Workspace.CapturePoints.Skycastle.CapturedBy.Value.."</u>"
+	else
+		SkycastleCapture.Text = "Skycastle: <u>No one</u>"
+	end
+	SkycastleCapture.TextColor3 = Color3.fromRGB(109, 109, 109)
+	SkycastleCapture.TextSize = 18.000
+	SkycastleCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	SkycastleCapture.TextTransparency = 0.100
+	SkycastleCapture.TextWrapped = true
+	
+	--// BurialPoint
+	BurialCapture.Name = "BurialPoint"
+	BurialCapture.Parent = Captures
+	BurialCapture.Active = false
+	BurialCapture.AnchorPoint = Vector2.new(0.5, 1)
+	BurialCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	BurialCapture.BackgroundTransparency = 1.000
+	BurialCapture.LayoutOrder = 1
+	BurialCapture.Position = UDim2.new(0.5, -80, 1, -655)
+	BurialCapture.Selectable = false
+	BurialCapture.Size = UDim2.new(0.5, 0, 0, 20)
+	BurialCapture.Font = Enum.Font.SourceSansSemibold
+	BurialCapture.RichText = true
+	if game.Workspace.CapturePoints.Burial.CapturedBy.Value ~= "" then
+		BurialCapture.Text = "Burial: <u>"..game.Workspace.CapturePoints.Burial.CapturedBy.Value.."</u>"
+	else
+		BurialCapture.Text = "Burial: <u>No one</u>"
+	end
+	BurialCapture.TextColor3 = Color3.fromRGB(177, 170, 68)
+	BurialCapture.TextSize = 18.000
+	BurialCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	BurialCapture.TextTransparency = 0.100
+	BurialCapture.TextWrapped = true
+	
+	--// ShorePoint
+	ShoreCapture.Name = "ShorePoint"
+	ShoreCapture.Parent = Captures
+	ShoreCapture.Active = false
+	ShoreCapture.AnchorPoint = Vector2.new(0.5, 1)
+	ShoreCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ShoreCapture.BackgroundTransparency = 1.000
+	ShoreCapture.LayoutOrder = 1
+	ShoreCapture.Position = UDim2.new(0.5, -80, 1, -635)
+	ShoreCapture.Selectable = false
+	ShoreCapture.Size = UDim2.new(0.5, 0, 0, 20)
+	ShoreCapture.Font = Enum.Font.SourceSansSemibold
+	ShoreCapture.RichText = true
+	if game.Workspace.CapturePoints.Shore.CapturedBy.Value ~= "" then
+		ShoreCapture.Text = "Shore: <u>"..game.Workspace.CapturePoints.Shore.CapturedBy.Value.."</u>"
+	else
+		ShoreCapture.Text = "Shore: <u>No one</u>"
+	end
+	ShoreCapture.TextColor3 = Color3.fromRGB(101, 190, 180)
+	ShoreCapture.TextSize = 18.000
+	ShoreCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	ShoreCapture.TextTransparency = 0.100
+	ShoreCapture.TextWrapped = true
+end
 
 Return_2.Name = "Return"
 Return_2.Parent = DescSheet_3
@@ -1207,13 +1366,38 @@ spawn(function()
 		if not game.Players.LocalPlayer.PlayerGui:FindFirstChild(HubGui.Name) then
 			game.Players.LocalPlayer:Kick("gui was deleted??")
 		end
+		if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") then
+			--//Forest
+			if game.Workspace.CapturePoints.Oresfall.CapturedBy.Value ~= "" then
+				ForestCapture.Text = "Forest: <u>"..game.Workspace.CapturePoints.Oresfall.CapturedBy.Value.."</u>"
+			else
+				ForestCapture.Text = "Forest: <u>No one</u>"
+			end
+			--//Skycastle
+			if game.Workspace.CapturePoints.Skycastle.CapturedBy.Value ~= "" then
+				SkycastleCapture.Text = "Skycastle: <u>"..game.Workspace.CapturePoints.Skycastle.CapturedBy.Value.."</u>"
+			else
+				SkycastleCapture.Text = "Skycastle: <u>No one</u>"
+			end
+			--//Burial
+			if game.Workspace.CapturePoints.Burial.CapturedBy.Value ~= "" then
+				BurialCapture.Text = "Burial: <u>"..game.Workspace.CapturePoints.Burial.CapturedBy.Value.."</u>"
+			else
+				BurialCapture.Text = "Burial: <u>No one</u>"
+			end
+			--//Shore
+			if game.Workspace.CapturePoints.Shore.CapturedBy.Value ~= "" then
+				ShoreCapture.Text = "Shore: <u>"..game.Workspace.CapturePoints.Shore.CapturedBy.Value.."</u>"
+			else
+				ShoreCapture.Text = "Shore: <u>No one</u>"
+			end
+		end
 	end
 end)
 -- Scripts:
 
---[[local function YPLIDNV_fake_script() -- HubGui.TutorialClient 
-	local script = Instance.new('LocalScript', HubGui)
+--[[local function Draggable1() -- Hold.Drag 
+	local script = Instance.new('LocalScript', MainDragFrame)
 
-	
 end
-coroutine.wrap(YPLIDNV_fake_script)()]]
+coroutine.wrap(Draggable1)()]]
