@@ -126,6 +126,10 @@ local ForestCapture = Instance.new("TextLabel")
 local SkycastleCapture = Instance.new("TextLabel")
 local ShoreCapture = Instance.new("TextLabel")
 local BurialCapture = Instance.new("TextLabel")
+--//For JobId
+local JobIdHolder = Instance.new("Folder")
+local JobIdTitle = Instance.new("TextLabel")
+local JobIdBox = Instance.new("TextBox")
 
 --Some Functions:
 
@@ -834,45 +838,24 @@ DescSheet_3.VerticalScrollBarInset = Enum.ScrollBarInset.None
 DescSheet_3.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
 
 --// This is for Extra Features
-if gameName == "Rogue Lineage Copy" then
-	Desc_2.Name = "Desc"
-	Desc_2.Visible = false
-	Desc_2.Parent = Extras_2
-	Desc_2.AnchorPoint = Vector2.new(0.5, 0)
-	Desc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Desc_2.BackgroundTransparency = 1.000
-	Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
-	Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
-	Desc_2.Font = Enum.Font.SourceSans
-	Desc_2.RichText = true
-	Desc_2.Text = ""
-	Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
-	Desc_2.TextScaled = true
-	Desc_2.TextSize = 14.000
-	Desc_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-	Desc_2.TextTransparency = 0.100
-	Desc_2.TextWrapped = true
-	Desc_2.TextYAlignment = Enum.TextYAlignment.Top
-else
-	Desc_2.Name = "Desc"
-	Desc_2.Visible = true
-	Desc_2.Parent = Extras_2
-	Desc_2.AnchorPoint = Vector2.new(0.5, 0)
-	Desc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Desc_2.BackgroundTransparency = 1.000
-	Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
-	Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
-	Desc_2.Font = Enum.Font.SourceSans
-	Desc_2.RichText = true
-	Desc_2.Text = "<u>WIP</u>"
-	Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
-	Desc_2.TextScaled = true
-	Desc_2.TextSize = 14.000
-	Desc_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-	Desc_2.TextTransparency = 0.100
-	Desc_2.TextWrapped = true
-	Desc_2.TextYAlignment = Enum.TextYAlignment.Top
-end
+Desc_2.Name = "Desc"
+Desc_2.Visible = false
+Desc_2.Parent = Extras_2
+Desc_2.AnchorPoint = Vector2.new(0.5, 0)
+Desc_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Desc_2.BackgroundTransparency = 1.000
+Desc_2.Position = UDim2.new(0.5, 0, 0, 47)
+Desc_2.Size = UDim2.new(0.899999976, 0, 1, -60)
+Desc_2.Font = Enum.Font.SourceSans
+Desc_2.RichText = true
+Desc_2.Text = ""
+Desc_2.TextColor3 = Color3.fromRGB(28, 36, 35)
+Desc_2.TextScaled = true
+Desc_2.TextSize = 14.000
+Desc_2.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+Desc_2.TextTransparency = 0.100
+Desc_2.TextWrapped = true
+Desc_2.TextYAlignment = Enum.TextYAlignment.Top
 
 UITextSizeConstraint_4.Parent = Desc_2
 UITextSizeConstraint_4.MaxTextSize = 14
@@ -890,7 +873,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	CaptureTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	CaptureTitle.BackgroundTransparency = 1.000
 	CaptureTitle.LayoutOrder = 1
-	CaptureTitle.Position = UDim2.new(0.5, -80, 1, -715)
+	CaptureTitle.Position = UDim2.new(0.5, -85, 1, -715)
 	CaptureTitle.Selectable = false
 	CaptureTitle.Size = UDim2.new(0.5, 0, 0, 20)
 	CaptureTitle.Font = Enum.Font.SourceSansSemibold
@@ -901,6 +884,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	CaptureTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 	CaptureTitle.TextTransparency = 0.100
 	CaptureTitle.TextWrapped = true
+	CaptureTitle.TextXAlignment = Enum.TextXAlignment.Left
 	
 	--// ForestPoint
 	ForestCapture.Name = "ForestPoint"
@@ -910,7 +894,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	ForestCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	ForestCapture.BackgroundTransparency = 1.000
 	ForestCapture.LayoutOrder = 1
-	ForestCapture.Position = UDim2.new(0.5, -80, 1, -695)
+	ForestCapture.Position = UDim2.new(0.5, -85, 1, -695)
 	ForestCapture.Selectable = false
 	ForestCapture.Size = UDim2.new(0.5, 0, 0, 20)
 	ForestCapture.Font = Enum.Font.SourceSansSemibold
@@ -925,6 +909,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	ForestCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 	ForestCapture.TextTransparency = 0.100
 	ForestCapture.TextWrapped = true
+	ForestCapture.TextXAlignment = Enum.TextXAlignment.Left
 	
 	--// SkycastlePoint
 	SkycastleCapture.Name = "SkycastlePoint"
@@ -934,7 +919,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	SkycastleCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	SkycastleCapture.BackgroundTransparency = 1.000
 	SkycastleCapture.LayoutOrder = 1
-	SkycastleCapture.Position = UDim2.new(0.5, -80, 1, -675)
+	SkycastleCapture.Position = UDim2.new(0.5, -85, 1, -675)
 	SkycastleCapture.Selectable = false
 	SkycastleCapture.Size = UDim2.new(0.5, 0, 0, 20)
 	SkycastleCapture.Font = Enum.Font.SourceSansSemibold
@@ -949,6 +934,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	SkycastleCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 	SkycastleCapture.TextTransparency = 0.100
 	SkycastleCapture.TextWrapped = true
+	SkycastleCapture.TextXAlignment = Enum.TextXAlignment.Left
 	
 	--// BurialPoint
 	BurialCapture.Name = "BurialPoint"
@@ -958,7 +944,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	BurialCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	BurialCapture.BackgroundTransparency = 1.000
 	BurialCapture.LayoutOrder = 1
-	BurialCapture.Position = UDim2.new(0.5, -80, 1, -655)
+	BurialCapture.Position = UDim2.new(0.5, -85, 1, -655)
 	BurialCapture.Selectable = false
 	BurialCapture.Size = UDim2.new(0.5, 0, 0, 20)
 	BurialCapture.Font = Enum.Font.SourceSansSemibold
@@ -973,6 +959,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	BurialCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 	BurialCapture.TextTransparency = 0.100
 	BurialCapture.TextWrapped = true
+	BurialCapture.TextXAlignment = Enum.TextXAlignment.Left
 	
 	--// ShorePoint
 	ShoreCapture.Name = "ShorePoint"
@@ -982,7 +969,7 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	ShoreCapture.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	ShoreCapture.BackgroundTransparency = 1.000
 	ShoreCapture.LayoutOrder = 1
-	ShoreCapture.Position = UDim2.new(0.5, -80, 1, -635)
+	ShoreCapture.Position = UDim2.new(0.5, -85, 1, -635)
 	ShoreCapture.Selectable = false
 	ShoreCapture.Size = UDim2.new(0.5, 0, 0, 20)
 	ShoreCapture.Font = Enum.Font.SourceSansSemibold
@@ -997,7 +984,58 @@ if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") 
 	ShoreCapture.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 	ShoreCapture.TextTransparency = 0.100
 	ShoreCapture.TextWrapped = true
+	ShoreCapture.TextXAlignment = Enum.TextXAlignment.Left
 end
+
+JobIdHolder.Name = "JobId"
+JobIdHolder.Parent = DescSheet_3
+
+JobIdTitle.Name = "JobIdTitle"
+JobIdTitle.Parent = JobIdHolder
+JobIdTitle.Active = false
+JobIdTitle.AnchorPoint = Vector2.new(0.5, 1)
+JobIdTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+JobIdTitle.BackgroundTransparency = 1.000
+JobIdTitle.LayoutOrder = 1
+JobIdTitle.Position = UDim2.new(0.5, 85, 1, -715)
+JobIdTitle.Selectable = false
+JobIdTitle.Size = UDim2.new(0.5, 0, 0, 20)
+JobIdTitle.Font = Enum.Font.SourceSansSemibold
+JobIdTitle.RichText = true
+JobIdTitle.Text = "<u>JobId</u>"
+JobIdTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+JobIdTitle.TextSize = 18.000
+JobIdTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+JobIdTitle.TextTransparency = 0.100
+JobIdTitle.TextWrapped = true
+JobIdTitle.TextXAlignment = Enum.TextXAlignment.Center
+
+JobIdBox.Name = "JobIdBox"
+JobIdBox.Parent = JobIdHolder
+JobIdBox.Active = false
+JobIdBox.AnchorPoint = Vector2.new(0.5, 1)
+JobIdBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+JobIdBox.BackgroundTransparency = 1.000
+JobIdBox.ClearTextOnFocus = false
+JobIdBox.CursorPosition = -1.000
+JobIdBox.LayoutOrder = 1
+JobIdBox.MultiLine = false
+JobIdBox.Position = UDim2.new(0.5, 85, 1, -695)
+JobIdBox.SelectionStart = -1
+JobIdBox.ShowNativeInput = true
+JobIdBox.TextEditable = false
+JobIdBox.Selectable = false
+JobIdBox.Size = UDim2.new(0.5, 0, 0, 20)
+JobIdBox.Font = Enum.Font.SourceSansSemibold
+JobIdBox.RichText = true
+JobIdBox.Text = game.JobId
+JobIdBox.TextColor3 = Color3.fromRGB(28, 36, 35)
+JobIdBox.TextScaled = false
+JobIdBox.TextSize = 14.000
+JobIdBox.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+JobIdBox.TextTransparency = 0.100
+JobIdBox.TextWrapped = false
+JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
 
 Return_2.Name = "Return"
 Return_2.Parent = DescSheet_3
