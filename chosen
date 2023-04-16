@@ -34,6 +34,10 @@ elseif game.PlaceId == 185655149 then
 	gameName = "BloxBurg"
 	fullSupp = false
 	print("Found Semi-Supported Game: "..gameName)
+elseif game.GameId == 3291589472 then
+	gameName = "VoxlBlade"
+	fullSupp = true
+	print("Found Supported Game: "..gameName)
 else
 	print("This game isn't supported by the Pot Script!.")
 	return
@@ -132,10 +136,14 @@ local BurialCapture = Instance.new("TextLabel")
 local JobIdHolder = Instance.new("Folder")
 local JobIdTitle = Instance.new("TextLabel")
 local JobIdBox = Instance.new("TextBox")
---//For Auto Functions
+--//For AutoBard Functions
 local AutoHolder = Instance.new("Folder")
 local AutoTitle = Instance.new("TextLabel")
-local AutoBardText = Instance.new("TextButton")
+local AutoBardButton = Instance.new("TextButton")
+--//For VoxlBlade Esp
+local VoxlEspHolder = Instance.new("Folder")
+local VoxlEspTitle = Instance.new("TextLabel")
+local VoxlEspButton = Instance.new("TextButton")
 
 --Some Functions:
 
@@ -1043,6 +1051,7 @@ JobIdBox.TextTransparency = 0.100
 JobIdBox.TextWrapped = false
 JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
 
+local voxlenemyEsp = false
 if gameName == "Rogue Lineage Copy" then
 	AutoHolder.Name = "Auto"
 	AutoHolder.Parent = DescSheet_3
@@ -1067,27 +1076,27 @@ if gameName == "Rogue Lineage Copy" then
 	AutoTitle.TextWrapped = true
 	AutoTitle.TextXAlignment = Enum.TextXAlignment.Right
 
-	AutoBardText.Name = "AutoBard"
-	AutoBardText.Parent = AutoHolder
-	AutoBardText.Active = false
-	AutoBardText.AnchorPoint = Vector2.new(0.5, 1)
-	AutoBardText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	AutoBardText.BackgroundTransparency = 1.000
-	AutoBardText.LayoutOrder = 1
-	AutoBardText.Position = UDim2.new(0.5, 85, 1, -635)
-	AutoBardText.Selectable = false
-	AutoBardText.Size = UDim2.new(0.5, 0, 0, 20)
-	AutoBardText.Font = Enum.Font.SourceSansSemibold
-	AutoBardText.RichText = true
-	AutoBardText.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
-	AutoBardText.TextColor3 = Color3.fromRGB(28, 36, 35)
-	AutoBardText.TextSize = 16.000
-	AutoBardText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-	AutoBardText.TextTransparency = 0.100
-	AutoBardText.TextWrapped = true
-	AutoBardText.TextXAlignment = Enum.TextXAlignment.Right
-	AutoBardText.MouseButton1Down:connect(function()
-		if not AutoBardText:FindFirstChild("Wait") then
+	AutoBardButton.Name = "AutoBard"
+	AutoBardButton.Parent = AutoHolder
+	AutoBardButton.Active = false
+	AutoBardButton.AnchorPoint = Vector2.new(0.5, 1)
+	AutoBardButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	AutoBardButton.BackgroundTransparency = 1.000
+	AutoBardButton.LayoutOrder = 1
+	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -635)
+	AutoBardButton.Selectable = false
+	AutoBardButton.Size = UDim2.new(0.5, 0, 0, 20)
+	AutoBardButton.Font = Enum.Font.SourceSansSemibold
+	AutoBardButton.RichText = true
+	AutoBardButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
+	AutoBardButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	AutoBardButton.TextSize = 16.000
+	AutoBardButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	AutoBardButton.TextTransparency = 0.100
+	AutoBardButton.TextWrapped = true
+	AutoBardButton.TextXAlignment = Enum.TextXAlignment.Right
+	AutoBardButton.MouseButton1Down:connect(function()
+		if not AutoBardButton:FindFirstChild("Wait") then
 			local ClickSound = Instance.new("Sound")
 			ClickSound.Name = "Click"
 			ClickSound.SoundId = "rbxassetid://4729721770"
@@ -1097,16 +1106,16 @@ if gameName == "Rogue Lineage Copy" then
 			ClickSound.PlayOnRemove = false
 			ClickSound.Looped = false
 			ClickSound.Volume = 0.095
-			ClickSound.Parent = AutoBardText
+			ClickSound.Parent = AutoBardButton
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			local deb = Instance.new("Folder")
 			deb.Name = "Wait"
-			deb.Parent = AutoBardText
-			AutoBardText.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Bard Player</stroke>'
+			deb.Parent = AutoBardButton
+			AutoBardButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Bard Player</stroke>'
 			task.spawn(function()
 				task.wait(4)
-				AutoBardText.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
+				AutoBardButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
 				deb:Destroy()
 			end)
 			if scr2 ~= "" then
@@ -1169,6 +1178,249 @@ if gameName == "Rogue Lineage Copy" then
 					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
 					task.spawn(function()
 						task.wait(2)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+elseif gameName == "VoxlBlade" then
+	VoxlEspHolder.Name = "VoxlEsp"
+	VoxlEspHolder.Parent = DescSheet_3
+
+	VoxlEspTitle.Name = "EspTitle"
+	VoxlEspTitle.Parent = VoxlEspHolder
+	VoxlEspTitle.Active = false
+	VoxlEspTitle.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlEspTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlEspTitle.BackgroundTransparency = 1.000
+	VoxlEspTitle.LayoutOrder = 1
+	VoxlEspTitle.Position = UDim2.new(0.5, 85, 1, -655)
+	VoxlEspTitle.Selectable = false
+	VoxlEspTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlEspTitle.Font = Enum.Font.SourceSansSemibold
+	VoxlEspTitle.RichText = true
+	VoxlEspTitle.Text = "<u>Enemy Esp</u>"
+	VoxlEspTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlEspTitle.TextSize = 18.000
+	VoxlEspTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlEspTitle.TextTransparency = 0.100
+	VoxlEspTitle.TextWrapped = true
+	VoxlEspTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	VoxlEspButton.Name = "Activator"
+	VoxlEspButton.Parent = VoxlEspHolder
+	VoxlEspButton.Active = false
+	VoxlEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlEspButton.BackgroundTransparency = 1.000
+	VoxlEspButton.LayoutOrder = 1
+	VoxlEspButton.Position = UDim2.new(0.5, 85, 1, -635)
+	VoxlEspButton.Selectable = false
+	VoxlEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlEspButton.RichText = true
+	VoxlEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Turned Off</stroke>'
+	VoxlEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlEspButton.TextSize = 16.000
+	VoxlEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlEspButton.TextTransparency = 0.100
+	VoxlEspButton.TextWrapped = true
+	VoxlEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlEspButton.MouseButton1Down:connect(function()
+		if not VoxlEspHolder:FindFirstChild("ActivateCD") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = VoxlEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if voxlenemyEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlenemyEsp = true
+						for i, v in pairs(game.Workspace.NPCS:GetChildren()) do
+							if v:FindFirstChild("EnemyviewHolder") then
+								v.EnemyviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("EnemyviewHolder") then
+								local enemyEspHolder = Instance.new("BillboardGui")
+								enemyEspHolder.Name = "EnemyviewHolder"
+								enemyEspHolder.Parent = v
+								enemyEspHolder.Active = false
+								enemyEspHolder.Adornee = v
+								enemyEspHolder.AlwaysOnTop = true
+								enemyEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								enemyEspHolder.ResetOnSpawn = false
+								enemyEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								enemyEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+								enemyEspHolder.ClipsDescendants = true
+
+								local enemyEspLabel = Instance.new("TextLabel")
+								enemyEspLabel.Name = "EnemyView"
+								enemyEspLabel.Parent = enemyEspHolder
+								enemyEspLabel.Active = false
+								enemyEspLabel.BackgroundTransparency = 1.000
+								enemyEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								enemyEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								enemyEspLabel.ZIndex = 5
+								enemyEspLabel.Font = Enum.Font.SourceSansBold
+								enemyEspLabel.RichText = true
+								if v.Corrupt.Enabled == true or v.Magical.Enabled == true or v.Bloody.Enabled == true or v.Legendary.Enabled == true then
+									if v.Corrupt.Enabled == true then
+										enemyEspLabel.Text = "Corrupt "..v.Name
+										enemyEspLabel.TextColor3 = Color3.fromRGB(140, 0, 255)
+										enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+										enemyEspLabel.TextStrokeTransparency = 0.650
+										enemyEspLabel.TextTransparency = 0.250
+									elseif v.Magical.Enabled == true then
+										enemyEspLabel.Text = "Magical "..v.Name
+										enemyEspLabel.TextColor3 = Color3.fromRGB(105, 228, 255)
+										enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+										enemyEspLabel.TextStrokeTransparency = 0.650
+										enemyEspLabel.TextTransparency = 0.250
+									elseif v.Bloody.Enabled == true then
+										enemyEspLabel.Text = "Bloody "..v.Name
+										enemyEspLabel.TextColor3 = Color3.fromRGB(255, 29, 29)
+										enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+										enemyEspLabel.TextStrokeTransparency = 0.650
+										enemyEspLabel.TextTransparency = 0.250
+									elseif v.Legendary.Enabled == true then
+										enemyEspLabel.Text = "Legendary "..v.Name
+										enemyEspLabel.TextColor3 = Color3.fromRGB(237, 255, 70)
+										enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+										enemyEspLabel.TextStrokeTransparency = 0.650
+										enemyEspLabel.TextTransparency = 0.250
+									end
+								else
+									enemyEspLabel.Text = v.Name
+									enemyEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+									enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+									enemyEspLabel.TextStrokeTransparency = 0.900
+									enemyEspLabel.TextTransparency = 0.100
+								end
+								enemyEspLabel.TextSize = 15.000
+								enemyEspLabel.TextWrapped = true
+							end
+						end
+					end)
+					VoxlEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Turned On</stroke>'
+					
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, 0, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif voxlenemyEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlenemyEsp = false
+						for i, v in pairs(game.Workspace.NPCS:GetChildren()) do
+							if v:FindFirstChild("EnemyviewHolder") then
+								v.EnemyviewHolder.Enabled = false
+							end
+						end
+					end)
+					VoxlEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Turned Off</stroke>'
+					
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, 0, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
 						notfoundcharText:Destroy()
 					end)
 				end
@@ -1446,7 +1698,7 @@ Desc_4.Position = UDim2.new(0.5, 0, 0, 47)
 Desc_4.Size = UDim2.new(0.899999976, 0, 1, -60)
 Desc_4.Font = Enum.Font.SourceSans
 Desc_4.RichText = true
-Desc_4.Text = '<b><font color="rgb(239, 184, 56)">[Creator - Pot]</font></b><br /><font color="rgb(0, 200, 0)">[Fully Supported Games - Newer Rogue Lineage Copys, Deepwoken]</font><br /><font color="rgb(253, 117, 39)">[Semi Supported Games - Shinobi Storm Online Remastered]</font><br />This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts.<br /><i>Sincerely, Pot</i>'
+Desc_4.Text = '<b><font color="rgb(239, 184, 56)">[Creator - Pot]</font></b><br /><font color="rgb(0, 200, 0)">[Fully Supported Games - Newer Rogue Lineage Copys, Deepwoken, VoxlBlade]</font><br /><font color="rgb(253, 117, 39)">[Semi Supported Games - Shinobi Storm Online Remastered]</font><br />This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts.<br /><i>Sincerely, Pot</i>'
 Desc_4.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc_4.TextScaled = true
 Desc_4.TextSize = 18.000
@@ -1516,6 +1768,76 @@ if gameName == "Deepwoken" then
 	end)
 end
 
+if gameName == "VoxlBlade" then
+	game.Workspace.NPCS.ChildAdded:Connect(function(enemy)
+		if not enemy:FindFirstChild("EnemyviewHolder") then
+			task.wait(0.35)
+			local enemyEspHolder = Instance.new("BillboardGui")
+			enemyEspHolder.Name = "EnemyviewHolder"
+			enemyEspHolder.Parent = enemy
+			enemyEspHolder.Active = false
+			enemyEspHolder.Adornee = enemy
+			enemyEspHolder.AlwaysOnTop = true
+			if voxlenemyEsp == true then
+				enemyEspHolder.Enabled = true
+			elseif voxlenemyEsp == false then
+				enemyEspHolder.Enabled = false
+			end
+			enemyEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+			enemyEspHolder.ResetOnSpawn = false
+			enemyEspHolder.Size = UDim2.new(0, 200, 0, 50)
+			enemyEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+			enemyEspHolder.ClipsDescendants = true
+			
+			local enemyEspLabel = Instance.new("TextLabel")
+			enemyEspLabel.Name = "EnemyView"
+			enemyEspLabel.Parent = enemyEspHolder
+			enemyEspLabel.Active = false
+			enemyEspLabel.BackgroundTransparency = 1.000
+			enemyEspLabel.Position = UDim2.new(0, 0, 0, 0)
+			enemyEspLabel.Size = UDim2.new(0, 200, 0, 50)
+			enemyEspLabel.ZIndex = 5
+			enemyEspLabel.Font = Enum.Font.SourceSansBold
+			enemyEspLabel.RichText = true
+			if enemy.Corrupt.Enabled == true or enemy.Magical.Enabled == true or enemy.Bloody.Enabled == true or enemy.Legendary.Enabled == true then
+				if enemy.Corrupt.Enabled == true then
+					enemyEspLabel.Text = "Corrupt "..enemy.Name
+					enemyEspLabel.TextColor3 = Color3.fromRGB(140, 0, 255)
+					enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+					enemyEspLabel.TextStrokeTransparency = 0.650
+					enemyEspLabel.TextTransparency = 0.250
+				elseif enemy.Magical.Enabled == true then
+					enemyEspLabel.Text = "Magical "..enemy.Name
+					enemyEspLabel.TextColor3 = Color3.fromRGB(105, 228, 255)
+					enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+					enemyEspLabel.TextStrokeTransparency = 0.650
+					enemyEspLabel.TextTransparency = 0.250
+				elseif enemy.Bloody.Enabled == true then
+					enemyEspLabel.Text = "Bloody "..enemy.Name
+					enemyEspLabel.TextColor3 = Color3.fromRGB(255, 29, 29)
+					enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+					enemyEspLabel.TextStrokeTransparency = 0.650
+					enemyEspLabel.TextTransparency = 0.250
+				elseif enemy.Legendary.Enabled == true then
+					enemyEspLabel.Text = "Legendary "..enemy.Name
+					enemyEspLabel.TextColor3 = Color3.fromRGB(237, 255, 70)
+					enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+					enemyEspLabel.TextStrokeTransparency = 0.650
+					enemyEspLabel.TextTransparency = 0.250
+				end
+			else
+				enemyEspLabel.Text = enemy.Name
+				enemyEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+				enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+				enemyEspLabel.TextStrokeTransparency = 0.900
+				enemyEspLabel.TextTransparency = 0.100
+			end
+			enemyEspLabel.TextSize = 15.000
+			enemyEspLabel.TextWrapped = true
+		end
+	end)
+end
+
 local on = false
 UserInputService.InputBegan:connect(function(player, p9)
 	if p9 then
@@ -1561,6 +1883,47 @@ spawn(function()
 				ShoreCapture.Text = "Shore: <u>"..game.Workspace.CapturePoints.Shore.CapturedBy.Value.."</u>"
 			else
 				ShoreCapture.Text = "Shore: <u>No one</u>"
+			end
+		end
+		if gameName == "VoxlBlade" then
+			for i, v in pairs(game.Workspace.NPCS:GetChildren()) do
+				if v:FindFirstChild("EnemyviewHolder") then
+					if v.Corrupt.Enabled == true or v.Magical.Enabled == true or v.Bloody.Enabled == true or v.Legendary.Enabled == true then
+						if v.Corrupt.Enabled == true then
+							v.EnemyviewHolder.EnemyView.Text = "Corrupt "..v.Name
+							v.EnemyviewHolder.EnemyView.TextColor3 = Color3.fromRGB(140, 0, 255)
+							v.EnemyviewHolder.EnemyView.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							v.EnemyviewHolder.EnemyView.TextStrokeTransparency = 0.650
+							v.EnemyviewHolder.EnemyView.TextTransparency = 0.250
+						elseif v.Magical.Enabled == true then
+							v.EnemyviewHolder.EnemyView.Text = "Magical "..v.Name
+							v.EnemyviewHolder.EnemyView.TextColor3 = Color3.fromRGB(105, 228, 255)
+							v.EnemyviewHolder.EnemyView.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							v.EnemyviewHolder.EnemyView.TextStrokeTransparency = 0.650
+							v.EnemyviewHolder.EnemyView.TextTransparency = 0.250
+						elseif v.Bloody.Enabled == true then
+							v.EnemyviewHolder.EnemyView.Text = "Bloody "..v.Name
+							v.EnemyviewHolder.EnemyView.TextColor3 = Color3.fromRGB(255, 29, 29)
+							v.EnemyviewHolder.EnemyView.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							v.EnemyviewHolder.EnemyView.TextStrokeTransparency = 0.650
+							v.EnemyviewHolder.EnemyView.TextTransparency = 0.250
+						elseif v.Legendary.Enabled == true then
+							v.EnemyviewHolder.EnemyView.Text = "Legendary "..v.Name
+							v.EnemyviewHolder.EnemyView.TextColor3 = Color3.fromRGB(237, 255, 70)
+							v.EnemyviewHolder.EnemyView.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							v.EnemyviewHolder.EnemyView.TextStrokeTransparency = 0.650
+							v.EnemyviewHolder.EnemyView.TextTransparency = 0.250
+						end
+					else
+						v.EnemyviewHolder.EnemyView.Text = v.Name
+						v.EnemyviewHolder.EnemyView.TextColor3 = Color3.fromRGB(255, 255, 255)
+						v.EnemyviewHolder.EnemyView.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+						v.EnemyviewHolder.EnemyView.TextStrokeTransparency = 0.900
+						v.EnemyviewHolder.EnemyView.TextTransparency = 0.100
+					end
+					v.EnemyviewHolder.EnemyView.TextSize = 15.000
+					v.EnemyviewHolder.EnemyView.TextWrapped = true
+				end
 			end
 		end
 	end
