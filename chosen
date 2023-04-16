@@ -12,11 +12,13 @@ print("Game is loaded!".." Running Pot Script.")
 
 local gameName = ""
 local scr1 = ''
+local scr2 = ''
 local fullSupp = false
 
-if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 or game.GameId == 3400722193 or game.GameId == 4505104344 then
+if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 or game.GameId == 3400722193 or game.GameId == 4505104344 or game.GameId == 4582120535 then
 	gameName = "Rogue Lineage Copy"
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/rcopy/main/unidrip'
+	scr2 = "https://raw.githubusercontent.com/Darkii0161/autobard/main/auto"
 	fullSupp = true
 	print("Found Supported Game: "..gameName)
 elseif game.PlaceId == 12404070010 or game.PlaceId == 12767171440 then
@@ -130,6 +132,10 @@ local BurialCapture = Instance.new("TextLabel")
 local JobIdHolder = Instance.new("Folder")
 local JobIdTitle = Instance.new("TextLabel")
 local JobIdBox = Instance.new("TextBox")
+--//For Auto Functions
+local AutoHolder = Instance.new("Folder")
+local AutoTitle = Instance.new("TextLabel")
+local AutoBardText = Instance.new("TextButton")
 
 --Some Functions:
 
@@ -861,7 +867,7 @@ UITextSizeConstraint_4.Parent = Desc_2
 UITextSizeConstraint_4.MaxTextSize = 14
 UITextSizeConstraint_4.MinTextSize = 12
 
-if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") then
+if (game.GameId == 4505104344 or game.GameId == 4582120535) and game.Workspace:FindFirstChild("CapturePoints") then
 	Captures.Name = "Captures"
 	Captures.Parent = DescSheet_3
 	
@@ -1008,7 +1014,7 @@ JobIdTitle.TextSize = 18.000
 JobIdTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 JobIdTitle.TextTransparency = 0.100
 JobIdTitle.TextWrapped = true
-JobIdTitle.TextXAlignment = Enum.TextXAlignment.Center
+JobIdTitle.TextXAlignment = Enum.TextXAlignment.Right
 
 JobIdBox.Name = "JobIdBox"
 JobIdBox.Parent = JobIdHolder
@@ -1036,6 +1042,142 @@ JobIdBox.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 JobIdBox.TextTransparency = 0.100
 JobIdBox.TextWrapped = false
 JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
+
+if gameName == "Rogue Lineage Copy" then
+	AutoHolder.Name = "Auto"
+	AutoHolder.Parent = DescSheet_3
+
+	AutoTitle.Name = "AutoTitle"
+	AutoTitle.Parent = AutoHolder
+	AutoTitle.Active = false
+	AutoTitle.AnchorPoint = Vector2.new(0.5, 1)
+	AutoTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	AutoTitle.BackgroundTransparency = 1.000
+	AutoTitle.LayoutOrder = 1
+	AutoTitle.Position = UDim2.new(0.5, 85, 1, -655)
+	AutoTitle.Selectable = false
+	AutoTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	AutoTitle.Font = Enum.Font.SourceSansSemibold
+	AutoTitle.RichText = true
+	AutoTitle.Text = "<u>Auto</u>"
+	AutoTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	AutoTitle.TextSize = 18.000
+	AutoTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	AutoTitle.TextTransparency = 0.100
+	AutoTitle.TextWrapped = true
+	AutoTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	AutoBardText.Name = "AutoBard"
+	AutoBardText.Parent = AutoHolder
+	AutoBardText.Active = false
+	AutoBardText.AnchorPoint = Vector2.new(0.5, 1)
+	AutoBardText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	AutoBardText.BackgroundTransparency = 1.000
+	AutoBardText.LayoutOrder = 1
+	AutoBardText.Position = UDim2.new(0.5, 85, 1, -635)
+	AutoBardText.Selectable = false
+	AutoBardText.Size = UDim2.new(0.5, 0, 0, 20)
+	AutoBardText.Font = Enum.Font.SourceSansSemibold
+	AutoBardText.RichText = true
+	AutoBardText.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
+	AutoBardText.TextColor3 = Color3.fromRGB(28, 36, 35)
+	AutoBardText.TextSize = 16.000
+	AutoBardText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	AutoBardText.TextTransparency = 0.100
+	AutoBardText.TextWrapped = true
+	AutoBardText.TextXAlignment = Enum.TextXAlignment.Right
+	AutoBardText.MouseButton1Down:connect(function()
+		if not AutoBardText:FindFirstChild("Wait") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = AutoBardText
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			local deb = Instance.new("Folder")
+			deb.Name = "Wait"
+			deb.Parent = AutoBardText
+			AutoBardText.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Bard Player</stroke>'
+			task.spawn(function()
+				task.wait(4)
+				AutoBardText.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
+				deb:Destroy()
+			end)
+			if scr2 ~= "" then
+				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
+					if game.Workspace.Live[game.Players.LocalPlayer.Name]:FindFirstChild("HumanoidRootPart") then
+						if not game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart:FindFirstChild("ZOobjc4ccPtui9fcbmp34YW28VkB") then
+							pcall(function()
+								loadstring(game:HttpGet(scr2))()
+								local usedautoBard = Instance.new("Folder")
+								usedautoBard.Name = "ZOobjc4ccPtui9fcbmp34YW28VkB"
+								usedautoBard.Parent = game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart
+							end)
+						else
+							local alreadyusedbardText = Instance.new("TextLabel")
+							alreadyusedbardText.Name = "AutoBardUsed"
+							alreadyusedbardText.Parent = AutoHolder
+							alreadyusedbardText.Active = false
+							alreadyusedbardText.AnchorPoint = Vector2.new(0.5, 1)
+							alreadyusedbardText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							alreadyusedbardText.BackgroundTransparency = 1.000
+							alreadyusedbardText.LayoutOrder = 1
+							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -635)
+							alreadyusedbardText.Selectable = false
+							alreadyusedbardText.Size = UDim2.new(0.5, 0, 0, 20)
+							alreadyusedbardText.Font = Enum.Font.SourceSansSemibold
+							alreadyusedbardText.RichText = true
+							alreadyusedbardText.Text = "Already used"
+							alreadyusedbardText.TextColor3 = Color3.fromRGB(28, 36, 35)
+							alreadyusedbardText.TextSize = 16.000
+							alreadyusedbardText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+							alreadyusedbardText.TextTransparency = 0.600
+							alreadyusedbardText.TextWrapped = true
+							alreadyusedbardText.TextXAlignment = Enum.TextXAlignment.Right
+							task.spawn(function()
+								task.wait(2)
+								alreadyusedbardText:Destroy()
+							end)
+						end
+					end
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = AutoHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(2)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+end
+
+print("Made past Check:E")
 
 Return_2.Name = "Return"
 Return_2.Parent = DescSheet_3
@@ -1395,7 +1537,7 @@ spawn(function()
 		if not game.Players.LocalPlayer.PlayerGui:FindFirstChild(HubGui.Name) then
 			game.Players.LocalPlayer:Kick("gui was deleted??")
 		end
-		if game.GameId == 4505104344 and game.Workspace:FindFirstChild("CapturePoints") then
+		if (game.GameId == 4505104344 or game.GameId == 4582120535) and game.Workspace:FindFirstChild("CapturePoints") then
 			--//Forest
 			if game.Workspace.CapturePoints.Oresfall.CapturedBy.Value ~= "" then
 				ForestCapture.Text = "Forest: <u>"..game.Workspace.CapturePoints.Oresfall.CapturedBy.Value.."</u>"
