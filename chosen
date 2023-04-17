@@ -1298,6 +1298,12 @@ elseif gameName == "VoxlBlade" then
 										enemyEspLabel.TextStrokeTransparency = 0.650
 										enemyEspLabel.TextTransparency = 0.250
 									end
+								elseif string.find(v.Name,"Easter") then
+									enemyEspLabel.Text = v.Name
+									enemyEspLabel.TextColor3 = Color3.fromRGB(212, 144, 189)
+									enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+									enemyEspLabel.TextStrokeTransparency = 0.650
+									enemyEspLabel.TextTransparency = 0.250
 								else
 									enemyEspLabel.Text = v.Name
 									enemyEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1825,6 +1831,12 @@ if gameName == "VoxlBlade" then
 					enemyEspLabel.TextStrokeTransparency = 0.650
 					enemyEspLabel.TextTransparency = 0.250
 				end
+			elseif string.find(enemy.Name,"Easter") then
+				enemyEspLabel.Text = enemy.Name
+				enemyEspLabel.TextColor3 = Color3.fromRGB(212, 144, 189)
+				enemyEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+				enemyEspLabel.TextStrokeTransparency = 0.650
+				enemyEspLabel.TextTransparency = 0.250
 			else
 				enemyEspLabel.Text = enemy.Name
 				enemyEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1914,6 +1926,12 @@ spawn(function()
 							v.EnemyviewHolder.EnemyView.TextStrokeTransparency = 0.650
 							v.EnemyviewHolder.EnemyView.TextTransparency = 0.250
 						end
+					elseif string.find(v.Name,"Easter") then
+						v.EnemyviewHolder.EnemyView.Text = v.Name
+						v.EnemyviewHolder.EnemyView.TextColor3 = Color3.fromRGB(212, 144, 189)
+						v.EnemyviewHolder.EnemyView.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+						v.EnemyviewHolder.EnemyView.TextStrokeTransparency = 0.650
+						v.EnemyviewHolder.EnemyView.TextTransparency = 0.250
 					else
 						v.EnemyviewHolder.EnemyView.Text = v.Name
 						v.EnemyviewHolder.EnemyView.TextColor3 = Color3.fromRGB(255, 255, 255)
