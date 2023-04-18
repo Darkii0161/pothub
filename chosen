@@ -143,7 +143,13 @@ local AutoBardButton = Instance.new("TextButton")
 --//For VoxlBlade Esp
 local VoxlEspHolder = Instance.new("Folder")
 local VoxlEspTitle = Instance.new("TextLabel")
-local VoxlEspButton = Instance.new("TextButton")
+local VoxlEnemyEspButton = Instance.new("TextButton")
+local VoxlNpcEspButton = Instance.new("TextButton")
+local VoxlCraftingEspButton = Instance.new("TextButton")
+local VoxlShopEspButton = Instance.new("TextButton")
+local VoxlShrineEspButton = Instance.new("TextButton")
+local VoxlInfuserEspButton = Instance.new("TextButton")
+local VoxlSnailsmanEspButton = Instance.new("TextButton")
 
 --Some Functions:
 
@@ -1052,6 +1058,12 @@ JobIdBox.TextWrapped = false
 JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
 
 local voxlenemyEsp = false
+local voxlnpcEsp = false
+local voxlcraftingEsp = false
+local voxlshopEsp = false
+local voxlshrineEsp = false
+local voxlinfuserEsp = false
+local voxlsnailsmanEsp = false
 if gameName == "Rogue Lineage Copy" then
 	AutoHolder.Name = "Auto"
 	AutoHolder.Parent = DescSheet_3
@@ -1200,7 +1212,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlEspTitle.Size = UDim2.new(0.5, 0, 0, 20)
 	VoxlEspTitle.Font = Enum.Font.SourceSansSemibold
 	VoxlEspTitle.RichText = true
-	VoxlEspTitle.Text = "<u>Enemy Esp</u>"
+	VoxlEspTitle.Text = "<u>General Esp</u>"
 	VoxlEspTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
 	VoxlEspTitle.TextSize = 18.000
 	VoxlEspTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
@@ -1208,26 +1220,26 @@ elseif gameName == "VoxlBlade" then
 	VoxlEspTitle.TextWrapped = true
 	VoxlEspTitle.TextXAlignment = Enum.TextXAlignment.Right
 
-	VoxlEspButton.Name = "Activator"
-	VoxlEspButton.Parent = VoxlEspHolder
-	VoxlEspButton.Active = false
-	VoxlEspButton.AnchorPoint = Vector2.new(0.5, 1)
-	VoxlEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	VoxlEspButton.BackgroundTransparency = 1.000
-	VoxlEspButton.LayoutOrder = 1
-	VoxlEspButton.Position = UDim2.new(0.5, 85, 1, -635)
-	VoxlEspButton.Selectable = false
-	VoxlEspButton.Size = UDim2.new(0.5, 0, 0, 20)
-	VoxlEspButton.Font = Enum.Font.SourceSansSemibold
-	VoxlEspButton.RichText = true
-	VoxlEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Turned Off</stroke>'
-	VoxlEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
-	VoxlEspButton.TextSize = 16.000
-	VoxlEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-	VoxlEspButton.TextTransparency = 0.100
-	VoxlEspButton.TextWrapped = true
-	VoxlEspButton.TextXAlignment = Enum.TextXAlignment.Right
-	VoxlEspButton.MouseButton1Down:connect(function()
+	VoxlEnemyEspButton.Name = "Activator"
+	VoxlEnemyEspButton.Parent = VoxlEspHolder
+	VoxlEnemyEspButton.Active = false
+	VoxlEnemyEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlEnemyEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlEnemyEspButton.BackgroundTransparency = 1.000
+	VoxlEnemyEspButton.LayoutOrder = 1
+	VoxlEnemyEspButton.Position = UDim2.new(0.5, 85, 1, -635)
+	VoxlEnemyEspButton.Selectable = false
+	VoxlEnemyEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlEnemyEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlEnemyEspButton.RichText = true
+	VoxlEnemyEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Enemy Turned Off</stroke>'
+	VoxlEnemyEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlEnemyEspButton.TextSize = 16.000
+	VoxlEnemyEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlEnemyEspButton.TextTransparency = 0.100
+	VoxlEnemyEspButton.TextWrapped = true
+	VoxlEnemyEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlEnemyEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
 			ClickSound.Name = "Click"
@@ -1238,7 +1250,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound.PlayOnRemove = false
 			ClickSound.Looped = false
 			ClickSound.Volume = 0.095
-			ClickSound.Parent = VoxlEspButton
+			ClickSound.Parent = VoxlEnemyEspButton
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlenemyEsp == false then
@@ -1316,7 +1328,7 @@ elseif gameName == "VoxlBlade" then
 							end
 						end
 					end)
-					VoxlEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Turned On</stroke>'
+					VoxlEnemyEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Enemy Turned On</stroke>'
 					
 					local deb = Instance.new("TextLabel")
 					deb.Name = "ActivateCD"
@@ -1326,7 +1338,7 @@ elseif gameName == "VoxlBlade" then
 					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					deb.BackgroundTransparency = 1.000
 					deb.LayoutOrder = 1
-					deb.Position = UDim2.new(0.5, 0, 1, -635)
+					deb.Position = UDim2.new(0.5, -40, 1, -635)
 					deb.Selectable = false
 					deb.Size = UDim2.new(0.5, 0, 0, 20)
 					deb.Font = Enum.Font.SourceSansSemibold
@@ -1351,7 +1363,7 @@ elseif gameName == "VoxlBlade" then
 					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					notfoundcharText.BackgroundTransparency = 1.000
 					notfoundcharText.LayoutOrder = 1
-					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -635)
+					notfoundcharText.Position = UDim2.new(0.5, -40, 1, -635)
 					notfoundcharText.Selectable = false
 					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
 					notfoundcharText.Font = Enum.Font.SourceSansSemibold
@@ -1378,7 +1390,7 @@ elseif gameName == "VoxlBlade" then
 							end
 						end
 					end)
-					VoxlEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Turned Off</stroke>'
+					VoxlEnemyEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Enemy Turned Off</stroke>'
 					
 					local deb = Instance.new("TextLabel")
 					deb.Name = "ActivateCD"
@@ -1388,7 +1400,7 @@ elseif gameName == "VoxlBlade" then
 					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					deb.BackgroundTransparency = 1.000
 					deb.LayoutOrder = 1
-					deb.Position = UDim2.new(0.5, 0, 1, -635)
+					deb.Position = UDim2.new(0.5, -40, 1, -635)
 					deb.Selectable = false
 					deb.Size = UDim2.new(0.5, 0, 0, 20)
 					deb.Font = Enum.Font.SourceSansSemibold
@@ -1413,7 +1425,1162 @@ elseif gameName == "VoxlBlade" then
 					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					notfoundcharText.BackgroundTransparency = 1.000
 					notfoundcharText.LayoutOrder = 1
-					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -635)
+					notfoundcharText.Position = UDim2.new(0.5, -40, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	VoxlNpcEspButton.Name = "Activator2"
+	VoxlNpcEspButton.Parent = VoxlEspHolder
+	VoxlNpcEspButton.Active = false
+	VoxlNpcEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlNpcEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlNpcEspButton.BackgroundTransparency = 1.000
+	VoxlNpcEspButton.LayoutOrder = 1
+	VoxlNpcEspButton.Position = UDim2.new(0.5, 85, 1, -615)
+	VoxlNpcEspButton.Selectable = false
+	VoxlNpcEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlNpcEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlNpcEspButton.RichText = true
+	VoxlNpcEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Npc Turned Off</stroke>'
+	VoxlNpcEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlNpcEspButton.TextSize = 16.000
+	VoxlNpcEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlNpcEspButton.TextTransparency = 0.100
+	VoxlNpcEspButton.TextWrapped = true
+	VoxlNpcEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlNpcEspButton.MouseButton1Down:connect(function()
+		if not VoxlEspHolder:FindFirstChild("ActivateCD2") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = VoxlNpcEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if voxlnpcEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlnpcEsp = true
+						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
+							if v:FindFirstChild("NpcviewHolder") then
+								v.NpcviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("NpcviewHolder") then
+								if string.find(v.Name,"Shop") or v.Name == "Crafting" or v.ClassName == "Model" then
+								else
+									local npcEspHolder = Instance.new("BillboardGui")
+									npcEspHolder.Name = "NpcviewHolder"
+									npcEspHolder.Parent = v
+									npcEspHolder.Active = false
+									npcEspHolder.Adornee = v
+									npcEspHolder.AlwaysOnTop = true
+									npcEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+									npcEspHolder.ResetOnSpawn = false
+									npcEspHolder.Size = UDim2.new(0, 200, 0, 50)
+									npcEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									npcEspHolder.ClipsDescendants = true
+
+									local npcEspLabel = Instance.new("TextLabel")
+									npcEspLabel.Name = "NpcView"
+									npcEspLabel.Parent = npcEspHolder
+									npcEspLabel.Active = false
+									npcEspLabel.BackgroundTransparency = 1.000
+									npcEspLabel.Position = UDim2.new(0, 0, 0, 0)
+									npcEspLabel.Size = UDim2.new(0, 200, 0, 50)
+									npcEspLabel.ZIndex = 5
+									npcEspLabel.Font = Enum.Font.SourceSansBold
+									npcEspLabel.RichText = true
+									npcEspLabel.Text = v.Name
+									npcEspLabel.TextColor3 = Color3.fromRGB(0, 255, 127)
+									npcEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+									npcEspLabel.TextStrokeTransparency = 0.550
+									npcEspLabel.TextTransparency = 0.200
+									npcEspLabel.TextSize = 15.000
+									npcEspLabel.TextWrapped = true
+								end
+							end
+						end
+					end)
+					VoxlNpcEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Npc Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -25, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound2"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -25, 1, -615)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif voxlnpcEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlnpcEsp = false
+						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
+							if v:FindFirstChild("NpcviewHolder") then
+								v.NpcviewHolder.Enabled = false
+							end
+						end
+					end)
+					VoxlNpcEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Npc Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -25, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound2"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -25, 1, -615)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	VoxlCraftingEspButton.Name = "Activator3"
+	VoxlCraftingEspButton.Parent = VoxlEspHolder
+	VoxlCraftingEspButton.Active = false
+	VoxlCraftingEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlCraftingEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlCraftingEspButton.BackgroundTransparency = 1.000
+	VoxlCraftingEspButton.LayoutOrder = 1
+	VoxlCraftingEspButton.Position = UDim2.new(0.5, 85, 1, -595)
+	VoxlCraftingEspButton.Selectable = false
+	VoxlCraftingEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlCraftingEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlCraftingEspButton.RichText = true
+	VoxlCraftingEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Crafting Turned Off</stroke>'
+	VoxlCraftingEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlCraftingEspButton.TextSize = 16.000
+	VoxlCraftingEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlCraftingEspButton.TextTransparency = 0.100
+	VoxlCraftingEspButton.TextWrapped = true
+	VoxlCraftingEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlCraftingEspButton.MouseButton1Down:connect(function()
+		if not VoxlEspHolder:FindFirstChild("ActivateCD3") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = VoxlCraftingEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if voxlcraftingEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlcraftingEsp = true
+						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
+							if v:FindFirstChild("CraftingviewHolder") then
+								v.CraftingviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("CraftingviewHolder") then
+								if v.Name == "Crafting" then
+									local craftingEspHolder = Instance.new("BillboardGui")
+									craftingEspHolder.Name = "CraftingviewHolder"
+									craftingEspHolder.Parent = v
+									craftingEspHolder.Active = false
+									craftingEspHolder.Adornee = v
+									craftingEspHolder.AlwaysOnTop = true
+									craftingEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+									craftingEspHolder.ResetOnSpawn = false
+									craftingEspHolder.Size = UDim2.new(0, 200, 0, 50)
+									craftingEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									craftingEspHolder.ClipsDescendants = true
+
+									local craftingEspLabel = Instance.new("TextLabel")
+									craftingEspLabel.Name = "CraftingView"
+									craftingEspLabel.Parent = craftingEspHolder
+									craftingEspLabel.Active = false
+									craftingEspLabel.BackgroundTransparency = 1.000
+									craftingEspLabel.Position = UDim2.new(0, 0, 0, 0)
+									craftingEspLabel.Size = UDim2.new(0, 200, 0, 50)
+									craftingEspLabel.ZIndex = 5
+									craftingEspLabel.Font = Enum.Font.SourceSansBold
+									craftingEspLabel.RichText = true
+									craftingEspLabel.Text = v.Name
+									craftingEspLabel.TextColor3 = Color3.fromRGB(255, 170, 0)
+									craftingEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+									craftingEspLabel.TextStrokeTransparency = 0.550
+									craftingEspLabel.TextTransparency = 0.200
+									craftingEspLabel.TextSize = 15.000
+									craftingEspLabel.TextWrapped = true
+								end
+							end
+						end
+					end)
+					VoxlCraftingEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Crafting Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -45, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound3"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -45, 1, -595)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif voxlcraftingEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlcraftingEsp = false
+						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
+							if v:FindFirstChild("CraftingviewHolder") then
+								v.CraftingviewHolder.Enabled = false
+							end
+						end
+					end)
+					VoxlCraftingEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Crafting Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -45, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound3"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -45, 1, -595)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	VoxlShopEspButton.Name = "Activator4"
+	VoxlShopEspButton.Parent = VoxlEspHolder
+	VoxlShopEspButton.Active = false
+	VoxlShopEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlShopEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlShopEspButton.BackgroundTransparency = 1.000
+	VoxlShopEspButton.LayoutOrder = 1
+	VoxlShopEspButton.Position = UDim2.new(0.5, 85, 1, -575)
+	VoxlShopEspButton.Selectable = false
+	VoxlShopEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlShopEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlShopEspButton.RichText = true
+	VoxlShopEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Shop Turned Off</stroke>'
+	VoxlShopEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlShopEspButton.TextSize = 16.000
+	VoxlShopEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlShopEspButton.TextTransparency = 0.100
+	VoxlShopEspButton.TextWrapped = true
+	VoxlShopEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlShopEspButton.MouseButton1Down:connect(function()
+		if not VoxlEspHolder:FindFirstChild("ActivateCD4") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = VoxlShopEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if voxlshopEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlshopEsp = true
+						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
+							if v:FindFirstChild("ShopviewHolder") then
+								v.ShopviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("ShopviewHolder") then
+								if string.find(v.Name,"Shop") then
+									local shopEspHolder = Instance.new("BillboardGui")
+									shopEspHolder.Name = "ShopviewHolder"
+									shopEspHolder.Parent = v
+									shopEspHolder.Active = false
+									shopEspHolder.Adornee = v
+									shopEspHolder.AlwaysOnTop = true
+									shopEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+									shopEspHolder.ResetOnSpawn = false
+									shopEspHolder.Size = UDim2.new(0, 200, 0, 50)
+									shopEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									shopEspHolder.ClipsDescendants = true
+
+									local shopEspLabel = Instance.new("TextLabel")
+									shopEspLabel.Name = "ShopView"
+									shopEspLabel.Parent = shopEspHolder
+									shopEspLabel.Active = false
+									shopEspLabel.BackgroundTransparency = 1.000
+									shopEspLabel.Position = UDim2.new(0, 0, 0, 0)
+									shopEspLabel.Size = UDim2.new(0, 200, 0, 50)
+									shopEspLabel.ZIndex = 5
+									shopEspLabel.Font = Enum.Font.SourceSansBold
+									shopEspLabel.RichText = true
+									shopEspLabel.Text = v.Name
+									shopEspLabel.TextColor3 = Color3.fromRGB(255, 170, 0)
+									shopEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+									shopEspLabel.TextStrokeTransparency = 0.550
+									shopEspLabel.TextTransparency = 0.200
+									shopEspLabel.TextSize = 15.000
+									shopEspLabel.TextWrapped = true
+								end
+							end
+						end
+					end)
+					VoxlShopEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Shop Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD4"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -30, 1, -575)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound4"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -30, 1, -575)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif voxlshopEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlshopEsp = false
+						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
+							if v:FindFirstChild("ShopviewHolder") then
+								v.ShopviewHolder.Enabled = false
+							end
+						end
+					end)
+					VoxlShopEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Shop Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD4"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -30, 1, -575)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound4"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -30, 1, -575)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	VoxlShrineEspButton.Name = "Activator5"
+	VoxlShrineEspButton.Parent = VoxlEspHolder
+	VoxlShrineEspButton.Active = false
+	VoxlShrineEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlShrineEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlShrineEspButton.BackgroundTransparency = 1.000
+	VoxlShrineEspButton.LayoutOrder = 1
+	VoxlShrineEspButton.Position = UDim2.new(0.5, 85, 1, -555)
+	VoxlShrineEspButton.Selectable = false
+	VoxlShrineEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlShrineEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlShrineEspButton.RichText = true
+	VoxlShrineEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Shrine Turned Off</stroke>'
+	VoxlShrineEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlShrineEspButton.TextSize = 16.000
+	VoxlShrineEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlShrineEspButton.TextTransparency = 0.100
+	VoxlShrineEspButton.TextWrapped = true
+	VoxlShrineEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlShrineEspButton.MouseButton1Down:connect(function()
+		if not VoxlEspHolder:FindFirstChild("ActivateCD5") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = VoxlShrineEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if voxlshrineEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlshrineEsp = true
+						for i, v in pairs(game.Workspace.Shrines:GetChildren()) do
+							if v:FindFirstChild("ShrineviewHolder") then
+								v.ShrineviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("ShrineviewHolder") then
+								local shrineEspHolder = Instance.new("BillboardGui")
+								shrineEspHolder.Name = "ShrineviewHolder"
+								shrineEspHolder.Parent = v
+								shrineEspHolder.Active = false
+								shrineEspHolder.Adornee = v
+								shrineEspHolder.AlwaysOnTop = true
+								shrineEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								shrineEspHolder.ResetOnSpawn = false
+								shrineEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								shrineEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+								shrineEspHolder.ClipsDescendants = true
+
+								local shrineEspLabel = Instance.new("TextLabel")
+								shrineEspLabel.Name = "ShrineView"
+								shrineEspLabel.Parent = shrineEspHolder
+								shrineEspLabel.Active = false
+								shrineEspLabel.BackgroundTransparency = 1.000
+								shrineEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								shrineEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								shrineEspLabel.ZIndex = 5
+								shrineEspLabel.Font = Enum.Font.SourceSansBold
+								shrineEspLabel.RichText = true
+								shrineEspLabel.Text = v.Name
+								shrineEspLabel.TextColor3 = v.Enabled.Color
+								shrineEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								shrineEspLabel.TextStrokeTransparency = 0.550
+								shrineEspLabel.TextTransparency = 0.200
+								shrineEspLabel.TextSize = 15.000
+								shrineEspLabel.TextWrapped = true
+							end
+						end
+					end)
+					VoxlShrineEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Shrine Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD5"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -35, 1, -555)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound5"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -35, 1, -555)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif voxlshrineEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlshrineEsp = false
+						for i, v in pairs(game.Workspace.Shrines:GetChildren()) do
+							if v:FindFirstChild("ShrineviewHolder") then
+								v.ShrineviewHolder.Enabled = false
+							end
+						end
+					end)
+					VoxlShrineEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Shrine Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD5"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -35, 1, -555)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound5"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -35, 1, -555)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	VoxlInfuserEspButton.Name = "Activator6"
+	VoxlInfuserEspButton.Parent = VoxlEspHolder
+	VoxlInfuserEspButton.Active = false
+	VoxlInfuserEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlInfuserEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlInfuserEspButton.BackgroundTransparency = 1.000
+	VoxlInfuserEspButton.LayoutOrder = 1
+	VoxlInfuserEspButton.Position = UDim2.new(0.5, 85, 1, -535)
+	VoxlInfuserEspButton.Selectable = false
+	VoxlInfuserEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlInfuserEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlInfuserEspButton.RichText = true
+	VoxlInfuserEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Infuser Turned Off</stroke>'
+	VoxlInfuserEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlInfuserEspButton.TextSize = 16.000
+	VoxlInfuserEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlInfuserEspButton.TextTransparency = 0.100
+	VoxlInfuserEspButton.TextWrapped = true
+	VoxlInfuserEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlInfuserEspButton.MouseButton1Down:connect(function()
+		if not VoxlEspHolder:FindFirstChild("ActivateCD6") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = VoxlInfuserEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if voxlinfuserEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlinfuserEsp = true
+						for i, v in pairs(game.Workspace.Infusers:GetChildren()) do
+							if v:FindFirstChild("InfuserviewHolder") then
+								v.InfuserviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("InfuserviewHolder") then
+								local infuserEspHolder = Instance.new("BillboardGui")
+								infuserEspHolder.Name = "InfuserviewHolder"
+								infuserEspHolder.Parent = v
+								infuserEspHolder.Active = false
+								infuserEspHolder.Adornee = v
+								infuserEspHolder.AlwaysOnTop = true
+								infuserEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								infuserEspHolder.ResetOnSpawn = false
+								infuserEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								infuserEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+								infuserEspHolder.ClipsDescendants = true
+
+								local infuserEspLabel = Instance.new("TextLabel")
+								infuserEspLabel.Name = "InfuserView"
+								infuserEspLabel.Parent = infuserEspHolder
+								infuserEspLabel.Active = false
+								infuserEspLabel.BackgroundTransparency = 1.000
+								infuserEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								infuserEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								infuserEspLabel.ZIndex = 5
+								infuserEspLabel.Font = Enum.Font.SourceSansBold
+								infuserEspLabel.RichText = true
+								infuserEspLabel.Text = v.Name.." Infuser"
+								infuserEspLabel.TextColor3 = v.Enabled.Color
+								infuserEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								infuserEspLabel.TextStrokeTransparency = 0.550
+								infuserEspLabel.TextTransparency = 0.200
+								infuserEspLabel.TextSize = 15.000
+								infuserEspLabel.TextWrapped = true
+							end
+						end
+					end)
+					VoxlInfuserEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Infuser Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD6"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -37, 1, -535)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound6"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -37, 1, -535)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif voxlinfuserEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlinfuserEsp = false
+						for i, v in pairs(game.Workspace.Infusers:GetChildren()) do
+							if v:FindFirstChild("InfuserviewHolder") then
+								v.InfuserviewHolder.Enabled = false
+							end
+						end
+					end)
+					VoxlInfuserEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Infuser Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD6"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -37, 1, -535)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound6"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -37, 1, -535)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	VoxlSnailsmanEspButton.Name = "Activator7"
+	VoxlSnailsmanEspButton.Parent = VoxlEspHolder
+	VoxlSnailsmanEspButton.Active = false
+	VoxlSnailsmanEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	VoxlSnailsmanEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	VoxlSnailsmanEspButton.BackgroundTransparency = 1.000
+	VoxlSnailsmanEspButton.LayoutOrder = 1
+	VoxlSnailsmanEspButton.Position = UDim2.new(0.5, 85, 1, -515)
+	VoxlSnailsmanEspButton.Selectable = false
+	VoxlSnailsmanEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	VoxlSnailsmanEspButton.Font = Enum.Font.SourceSansSemibold
+	VoxlSnailsmanEspButton.RichText = true
+	VoxlSnailsmanEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Snailsman Turned Off</stroke>'
+	VoxlSnailsmanEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	VoxlSnailsmanEspButton.TextSize = 16.000
+	VoxlSnailsmanEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	VoxlSnailsmanEspButton.TextTransparency = 0.100
+	VoxlSnailsmanEspButton.TextWrapped = true
+	VoxlSnailsmanEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	VoxlSnailsmanEspButton.MouseButton1Down:connect(function()
+		if not VoxlEspHolder:FindFirstChild("ActivateCD7") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = VoxlSnailsmanEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if voxlsnailsmanEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlsnailsmanEsp = true
+						for i, v in pairs(game.Workspace.Map:GetDescendants()) do
+							if v:FindFirstChild("SnailsmanviewHolder") then
+								v.SnailsmanviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("SnailsmanviewHolder") then
+								if v.Name == "Snailsman" then
+									local snailsmanEspHolder = Instance.new("BillboardGui")
+									snailsmanEspHolder.Name = "SnailsmanviewHolder"
+									snailsmanEspHolder.Parent = v
+									snailsmanEspHolder.Active = false
+									snailsmanEspHolder.Adornee = v
+									snailsmanEspHolder.AlwaysOnTop = true
+									snailsmanEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+									snailsmanEspHolder.ResetOnSpawn = false
+									snailsmanEspHolder.Size = UDim2.new(0, 200, 0, 50)
+									snailsmanEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									snailsmanEspHolder.ClipsDescendants = true
+
+									local snailsmanEspLabel = Instance.new("TextLabel")
+									snailsmanEspLabel.Name = "SnailsmanView"
+									snailsmanEspLabel.Parent = snailsmanEspHolder
+									snailsmanEspLabel.Active = false
+									snailsmanEspLabel.BackgroundTransparency = 1.000
+									snailsmanEspLabel.Position = UDim2.new(0, 0, 0, 0)
+									snailsmanEspLabel.Size = UDim2.new(0, 200, 0, 50)
+									snailsmanEspLabel.ZIndex = 5
+									snailsmanEspLabel.Font = Enum.Font.SourceSansBold
+									snailsmanEspLabel.RichText = true
+									snailsmanEspLabel.Text = v.Name
+									snailsmanEspLabel.TextColor3 = Color3.fromRGB(86, 66, 54)
+									snailsmanEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+									snailsmanEspLabel.TextStrokeTransparency = 0.550
+									snailsmanEspLabel.TextTransparency = 0.200
+									snailsmanEspLabel.TextSize = 15.000
+									snailsmanEspLabel.TextWrapped = true
+								end
+							end
+						end
+					end)
+					VoxlSnailsmanEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Snailsman Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD7"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -60, 1, -515)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound7"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -60, 1, -515)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif voxlsnailsmanEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						voxlsnailsmanEsp = false
+						for i, v in pairs(game.Workspace.Map:GetDescendants()) do
+							if v:FindFirstChild("SnailsmanviewHolder") then
+								v.SnailsmanviewHolder.Enabled = false
+							end
+						end
+					end)
+					VoxlSnailsmanEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Snailsman Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD7"
+					deb.Parent = VoxlEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -60, 1, -515)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound7"
+					notfoundcharText.Parent = VoxlEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -60, 1, -515)
 					notfoundcharText.Selectable = false
 					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
 					notfoundcharText.Font = Enum.Font.SourceSansSemibold
@@ -1766,7 +2933,8 @@ UIGradient_8.Parent = Underline_8
 
 if gameName == "Deepwoken" then
 	game.Workspace.Live.ChildAdded:Connect(function(player)
-		if player == player.Name then
+		if player.Name == game.Players.LocalPlayer.Name then
+			task.wait(1)
 			pcall(function()
 				loadstring(game:HttpGet(scr1))()
 			end)
