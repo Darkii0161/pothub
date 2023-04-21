@@ -15,7 +15,7 @@ local scr1 = ''
 local scr2 = ''
 local fullSupp = false
 
-if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 or game.GameId == 3400722193 or game.GameId == 4505104344 or game.GameId == 4582120535 then
+if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 or game.GameId == 3400722193 or game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680 then
 	gameName = "Rogue Lineage Copy"
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/rcopy/main/unidrip'
 	scr2 = "https://raw.githubusercontent.com/Darkii0161/autobard/main/auto"
@@ -881,7 +881,7 @@ UITextSizeConstraint_4.Parent = Desc_2
 UITextSizeConstraint_4.MaxTextSize = 14
 UITextSizeConstraint_4.MinTextSize = 12
 
-if (game.GameId == 4505104344 or game.GameId == 4582120535) and game.Workspace:FindFirstChild("CapturePoints") then
+if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680) and game.Workspace:FindFirstChild("CapturePoints") then
 	Captures.Name = "Captures"
 	Captures.Parent = DescSheet_3
 	
@@ -3039,7 +3039,7 @@ spawn(function()
 		if not game.Players.LocalPlayer.PlayerGui:FindFirstChild(HubGui.Name) then
 			game.Players.LocalPlayer:Kick("gui was deleted??")
 		end
-		if (game.GameId == 4505104344 or game.GameId == 4582120535) and game.Workspace:FindFirstChild("CapturePoints") then
+		if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680) and game.Workspace:FindFirstChild("CapturePoints") then
 			--//Forest
 			if game.Workspace.CapturePoints.Oresfall.CapturedBy.Value ~= "" then
 				ForestCapture.Text = "Forest: <u>"..game.Workspace.CapturePoints.Oresfall.CapturedBy.Value.."</u>"
