@@ -140,6 +140,10 @@ local JobIdBox = Instance.new("TextBox")
 local AutoHolder = Instance.new("Folder")
 local AutoTitle = Instance.new("TextLabel")
 local AutoBardButton = Instance.new("TextButton")
+--//For Rogue Esp
+local RogueEspHolder = Instance.new("Folder")
+local RogueEspTitle = Instance.new("TextLabel")
+local RogueTrinketEspButton = Instance.new("TextButton")
 --//For VoxlBlade Esp
 local VoxlEspHolder = Instance.new("Folder")
 local VoxlEspTitle = Instance.new("TextLabel")
@@ -884,7 +888,7 @@ UITextSizeConstraint_4.MinTextSize = 12
 if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680) and game.Workspace:FindFirstChild("CapturePoints") then
 	Captures.Name = "Captures"
 	Captures.Parent = DescSheet_3
-	
+
 	--// CaptureTitle
 	CaptureTitle.Name = "CaptureTitle"
 	CaptureTitle.Parent = Captures
@@ -905,7 +909,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	CaptureTitle.TextTransparency = 0.100
 	CaptureTitle.TextWrapped = true
 	CaptureTitle.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	--// ForestPoint
 	ForestCapture.Name = "ForestPoint"
 	ForestCapture.Parent = Captures
@@ -930,7 +934,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	ForestCapture.TextTransparency = 0.100
 	ForestCapture.TextWrapped = true
 	ForestCapture.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	--// SkycastlePoint
 	SkycastleCapture.Name = "SkycastlePoint"
 	SkycastleCapture.Parent = Captures
@@ -955,7 +959,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	SkycastleCapture.TextTransparency = 0.100
 	SkycastleCapture.TextWrapped = true
 	SkycastleCapture.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	--// BurialPoint
 	BurialCapture.Name = "BurialPoint"
 	BurialCapture.Parent = Captures
@@ -980,7 +984,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	BurialCapture.TextTransparency = 0.100
 	BurialCapture.TextWrapped = true
 	BurialCapture.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	--// ShorePoint
 	ShoreCapture.Name = "ShorePoint"
 	ShoreCapture.Parent = Captures
@@ -1057,6 +1061,10 @@ JobIdBox.TextTransparency = 0.100
 JobIdBox.TextWrapped = false
 JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
 
+--//Rogue Vars
+local roguetrinketEsp = false
+
+--//Voxl Vars
 local voxlenemyEsp = false
 local voxlnpcEsp = false
 local voxlcraftingEsp = false
@@ -1065,6 +1073,413 @@ local voxlshrineEsp = false
 local voxlinfuserEsp = false
 local voxlsnailsmanEsp = false
 if gameName == "Rogue Lineage Copy" then
+	RogueEspHolder.Name = "RogueEsp"
+	RogueEspHolder.Parent = DescSheet_3
+
+	RogueEspTitle.Name = "EspTitle"
+	RogueEspTitle.Parent = RogueEspHolder
+	RogueEspTitle.Active = false
+	RogueEspTitle.AnchorPoint = Vector2.new(0.5, 1)
+	RogueEspTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueEspTitle.BackgroundTransparency = 1.000
+	RogueEspTitle.LayoutOrder = 1
+	RogueEspTitle.Position = UDim2.new(0.5, 85, 1, -655)
+	RogueEspTitle.Selectable = false
+	RogueEspTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueEspTitle.Font = Enum.Font.SourceSansSemibold
+	RogueEspTitle.RichText = true
+	RogueEspTitle.Text = "<u>General Esp (Unfin)</u>"
+	RogueEspTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueEspTitle.TextSize = 18.000
+	RogueEspTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueEspTitle.TextTransparency = 0.100
+	RogueEspTitle.TextWrapped = true
+	RogueEspTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	RogueTrinketEspButton.Name = "Activator"
+	RogueTrinketEspButton.Parent = RogueEspHolder
+	RogueTrinketEspButton.Active = false
+	RogueTrinketEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueTrinketEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueTrinketEspButton.BackgroundTransparency = 1.000
+	RogueTrinketEspButton.LayoutOrder = 1
+	RogueTrinketEspButton.Position = UDim2.new(0.5, 85, 1, -635)
+	RogueTrinketEspButton.Selectable = false
+	RogueTrinketEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueTrinketEspButton.Font = Enum.Font.SourceSansSemibold
+	RogueTrinketEspButton.RichText = true
+	RogueTrinketEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Trinket Turned Off</stroke>'
+	RogueTrinketEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueTrinketEspButton.TextSize = 16.000
+	RogueTrinketEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueTrinketEspButton.TextTransparency = 0.100
+	RogueTrinketEspButton.TextWrapped = true
+	RogueTrinketEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueTrinketEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueTrinketEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguetrinketEsp == false then
+				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						roguetrinketEsp = true
+						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
+							if v:FindFirstChild("TrinketviewHolder") then
+								v.TrinketviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("TrinketviewHolder") then
+								local trinketEspHolder = Instance.new("BillboardGui")
+								trinketEspHolder.Name = "TrinketviewHolder"
+								trinketEspHolder.Parent = v
+								trinketEspHolder.Active = false
+								trinketEspHolder.Adornee = v
+								trinketEspHolder.AlwaysOnTop = true
+								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								trinketEspHolder.ResetOnSpawn = false
+								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								trinketEspHolder.ClipsDescendants = true
+
+								local trinketEspLabel = Instance.new("TextLabel")
+								trinketEspLabel.Name = "TrinketView"
+								trinketEspLabel.Parent = trinketEspHolder
+								trinketEspLabel.Active = false
+								trinketEspLabel.BackgroundTransparency = 1.000
+								trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspLabel.ZIndex = 5
+								trinketEspLabel.Font = Enum.Font.SourceSansBold
+								trinketEspLabel.RichText = true
+								if v.Parent == game.Workspace.Trinkets then
+									if v.ClassName == "MeshPart" then
+										if v.MeshId == "rbxassetid://5196551436" then
+											trinketEspLabel.Text = "Amulet"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.MeshId == "rbxassetid://923469333" then
+											if v.Color == Color3.fromRGB(33, 84, 185) then
+												trinketEspLabel.Text = "Blue Candy"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(33, 84, 185)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											elseif v.Color == Color3.fromRGB(30, 185, 30) then
+												trinketEspLabel.Text = "Green Candy"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(30, 185, 30)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											elseif v.Color == Color3.fromRGB(255, 137, 1) then
+												trinketEspLabel.Text = "Orange Candy"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(255, 137, 1)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											else
+												trinketEspLabel.Text = "Unknown Candy"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											end
+										elseif v.MeshId == "rbxassetid://5204003946" then
+											trinketEspLabel.Text = "Goblet"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(150, 86, 9)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.MeshId == "rbxassetid://2520762076" then
+											trinketEspLabel.Text = "Howler Friend"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.MeshId == "rbxassetid://5196577540" then
+											trinketEspLabel.Text = "Old Amulet"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.MeshId == "rbxassetid://5196782997" then
+											trinketEspLabel.Text = "Old Ring"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.MeshId == "rbxassetid://5196776695" then
+											trinketEspLabel.Text = "Ring"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.MeshId == "rbxassetid://5204453430" then
+											trinketEspLabel.Text = "Scroll"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(255, 202, 42)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(255, 0, 0) and v.Material == Enum.Material.Glass then
+											trinketEspLabel.Text = "Ruby"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										end
+									elseif v.ClassName == "UnionOperation" then
+										if v.Color == Color3.fromRGB(111, 113, 125) then
+											trinketEspLabel.Text = "Forgotten Idle"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(111, 113, 125)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(248, 217, 109) then
+											trinketEspLabel.Text = "Scroom Key"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(255, 89, 89) then
+											trinketEspLabel.Text = "Philosopher's Stone"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(29, 46, 58) then
+											trinketEspLabel.Text = "Nightstone"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(248, 248, 248) and v.Material == Enum.Material.Neon then
+											if v:FindFirstChild("PointLight") then
+												trinketEspLabel.Text = "Amulet of the White King"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											else
+												trinketEspLabel.Text = "Lannis Amulet"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											end
+										end
+									elseif v.ClassName == "Part" then
+										if v.Color == Color3.fromRGB(89, 34, 89) then
+											trinketEspLabel.Text = "???"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(89, 34, 89)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(164, 187, 190) and v.Material == Enum.Material.Glass then
+											trinketEspLabel.Text = "Diamond"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(164, 187, 190)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(0, 184, 49) and v.Material == Enum.Material.Glass then
+											trinketEspLabel.Text = "Emerald"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(0, 184, 49)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(16, 42, 220) and v.Material == Enum.Material.Glass then
+											trinketEspLabel.Text = "Sapphire"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(16, 42, 220)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(248, 248, 248) and v.Material == Enum.Material.Glass then
+											trinketEspLabel.Text = "Opal"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(248, 248, 248)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(255, 0, 191) and v.Material == Enum.Material.Glass then
+											if not v:FindFirstChildOfClass("Script") then
+												trinketEspLabel.Text = "Rift Gem"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 191)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											end
+										elseif v.Color == Color3.fromRGB(254, 85, 100) then
+											if v:FindFirstChild("OrbParticle") then
+												trinketEspLabel.Text = "Ice Essence"
+												trinketEspLabel.TextColor3 = Color3.fromRGB(25, 185, 155)
+												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												trinketEspLabel.TextStrokeTransparency = 0.650
+												trinketEspLabel.TextTransparency = 0.250
+											end
+										elseif v.Color == Color3.fromRGB(255, 255, 0) then
+											trinketEspLabel.Text = "Spider Cloak"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(128, 187, 219) then
+											trinketEspLabel.Text = "Fairfrozen"
+											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											trinketEspLabel.TextStrokeTransparency = 0.650
+											trinketEspLabel.TextTransparency = 0.250
+										elseif v.Color == Color3.fromRGB(163, 162, 165) then
+											if v:FindFirstChildOfClass("Attachment") then
+												if v.Attachment:FindFirstChildOfClass("ParticleEmitter") then
+													if v.Attachment.ParticleEmitter.Texture == "rbxassetid://1536547385" then
+														trinketEspLabel.Text = "P.M.A"
+														trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+														trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+														trinketEspLabel.TextStrokeTransparency = 0.650
+														trinketEspLabel.TextTransparency = 0.250
+													end
+												end
+											end
+										end
+									else
+										trinketEspLabel.Text = "Unknown"
+										trinketEspLabel.TextColor3 = Color3.fromRGB(26, 26, 26)
+										trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+										trinketEspLabel.TextStrokeTransparency = 0.900
+										trinketEspLabel.TextTransparency = 0.100
+									end
+									trinketEspLabel.TextSize = 15.000
+									trinketEspLabel.TextWrapped = true
+								end
+							end
+						end
+					end)
+					RogueTrinketEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Trinket Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -40, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = RogueEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -40, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif roguetrinketEsp == true then
+				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						roguetrinketEsp = false
+						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
+							if v:FindFirstChild("TrinketviewHolder") then
+								v.TrinketviewHolder.Enabled = false
+							end
+						end
+					end)
+					RogueTrinketEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Trinket Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -40, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = RogueEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -40, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	
 	AutoHolder.Name = "Auto"
 	AutoHolder.Parent = DescSheet_3
 
@@ -1075,7 +1490,7 @@ if gameName == "Rogue Lineage Copy" then
 	AutoTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	AutoTitle.BackgroundTransparency = 1.000
 	AutoTitle.LayoutOrder = 1
-	AutoTitle.Position = UDim2.new(0.5, 85, 1, -655)
+	AutoTitle.Position = UDim2.new(0.5, 85, 1, -595)
 	AutoTitle.Selectable = false
 	AutoTitle.Size = UDim2.new(0.5, 0, 0, 20)
 	AutoTitle.Font = Enum.Font.SourceSansSemibold
@@ -1095,7 +1510,7 @@ if gameName == "Rogue Lineage Copy" then
 	AutoBardButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	AutoBardButton.BackgroundTransparency = 1.000
 	AutoBardButton.LayoutOrder = 1
-	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -635)
+	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -575)
 	AutoBardButton.Selectable = false
 	AutoBardButton.Size = UDim2.new(0.5, 0, 0, 20)
 	AutoBardButton.Font = Enum.Font.SourceSansSemibold
@@ -1149,7 +1564,7 @@ if gameName == "Rogue Lineage Copy" then
 							alreadyusedbardText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 							alreadyusedbardText.BackgroundTransparency = 1.000
 							alreadyusedbardText.LayoutOrder = 1
-							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -635)
+							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -575)
 							alreadyusedbardText.Selectable = false
 							alreadyusedbardText.Size = UDim2.new(0.5, 0, 0, 20)
 							alreadyusedbardText.Font = Enum.Font.SourceSansSemibold
@@ -1176,7 +1591,7 @@ if gameName == "Rogue Lineage Copy" then
 					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					notfoundcharText.BackgroundTransparency = 1.000
 					notfoundcharText.LayoutOrder = 1
-					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -635)
+					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -575)
 					notfoundcharText.Selectable = false
 					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
 					notfoundcharText.Font = Enum.Font.SourceSansSemibold
@@ -1329,7 +1744,7 @@ elseif gameName == "VoxlBlade" then
 						end
 					end)
 					VoxlEnemyEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Enemy Turned On</stroke>'
-					
+
 					local deb = Instance.new("TextLabel")
 					deb.Name = "ActivateCD"
 					deb.Parent = VoxlEspHolder
@@ -1391,7 +1806,7 @@ elseif gameName == "VoxlBlade" then
 						end
 					end)
 					VoxlEnemyEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Enemy Turned Off</stroke>'
-					
+
 					local deb = Instance.new("TextLabel")
 					deb.Name = "ActivateCD"
 					deb.Parent = VoxlEspHolder
@@ -2638,6 +3053,7 @@ Return_2.MouseButton1Down:connect(function()
 		HubFrame.Visible = true
 		r.Visible = false
 	end
+	DescSheet_3.CanvasPosition = Vector2.new(0, 0)
 end)
 
 Underline_6.Name = "Underline"
@@ -2942,6 +3358,242 @@ if gameName == "Deepwoken" then
 	end)
 end
 
+if gameName == "Rogue Lineage Copy" then
+	if game.Workspace:FindFirstChild("Trinkets") then
+		game.Workspace.Trinkets.ChildAdded:Connect(function(trinket)
+			if not trinket:FindFirstChild("TrinketviewHolder") then
+				task.wait(0.35)
+				local trinketEspHolder = Instance.new("BillboardGui")
+				trinketEspHolder.Name = "TrinketviewHolder"
+				trinketEspHolder.Parent = trinket
+				trinketEspHolder.Active = false
+				trinketEspHolder.Adornee = trinket
+				trinketEspHolder.AlwaysOnTop = true
+				if roguetrinketEsp == true then
+					trinketEspHolder.Enabled = true
+				elseif roguetrinketEsp == false then
+					trinketEspHolder.Enabled = false
+				end
+				trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+				trinketEspHolder.ResetOnSpawn = false
+				trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+				trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+				trinketEspHolder.ClipsDescendants = true
+
+				local trinketEspLabel = Instance.new("TextLabel")
+				trinketEspLabel.Name = "TrinketView"
+				trinketEspLabel.Parent = trinketEspHolder
+				trinketEspLabel.Active = false
+				trinketEspLabel.BackgroundTransparency = 1.000
+				trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+				trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+				trinketEspLabel.ZIndex = 5
+				trinketEspLabel.Font = Enum.Font.SourceSansBold
+				trinketEspLabel.RichText = true
+				if trinket.Parent == game.Workspace.Trinkets then
+					if trinket.ClassName == "MeshPart" then
+						if trinket.MeshId == "rbxassetid://5196551436" then
+							trinketEspLabel.Text = "Amulet"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.MeshId == "rbxassetid://923469333" then
+							if trinket.Color == Color3.fromRGB(33, 84, 185) then
+								trinketEspLabel.Text = "Blue Candy"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(33, 84, 185)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							elseif trinket.Color == Color3.fromRGB(30, 185, 30) then
+								trinketEspLabel.Text = "Green Candy"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(30, 185, 30)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							elseif trinket.Color == Color3.fromRGB(255, 137, 1) then
+								trinketEspLabel.Text = "Orange Candy"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(255, 137, 1)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							else
+								trinketEspLabel.Text = "Unknown Candy"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							end
+						elseif trinket.MeshId == "rbxassetid://5204003946" then
+							trinketEspLabel.Text = "Goblet"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(150, 86, 9)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.MeshId == "rbxassetid://2520762076" then
+							trinketEspLabel.Text = "Howler Friend"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.MeshId == "rbxassetid://5196577540" then
+							trinketEspLabel.Text = "Old Amulet"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.MeshId == "rbxassetid://5196782997" then
+							trinketEspLabel.Text = "Old Ring"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.MeshId == "rbxassetid://5196776695" then
+							trinketEspLabel.Text = "Ring"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.MeshId == "rbxassetid://5204453430" then
+							trinketEspLabel.Text = "Scroll"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(255, 202, 42)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(255, 0, 0) and trinket.Material == Enum.Material.Glass then
+							trinketEspLabel.Text = "Ruby"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						end
+					elseif trinket.ClassName == "UnionOperation" then
+						if trinket.Color == Color3.fromRGB(111, 113, 125) then
+							trinketEspLabel.Text = "Forgotten Idle"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(111, 113, 125)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(248, 217, 109) then
+							trinketEspLabel.Text = "Scroom Key"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(255, 89, 89) then
+							trinketEspLabel.Text = "Philosopher's Stone"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(29, 46, 58) then
+							trinketEspLabel.Text = "Nightstone"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(248, 248, 248) and trinket.Material == Enum.Material.Neon then
+							if trinket:FindFirstChild("PointLight") then
+								trinketEspLabel.Text = "Amulet of the White King"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							else
+								trinketEspLabel.Text = "Lannis Amulet"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							end
+						end
+					elseif trinket.ClassName == "Part" then
+						if trinket.Color == Color3.fromRGB(89, 34, 89) then
+							trinketEspLabel.Text = "???"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(89, 34, 89)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(164, 187, 190) and trinket.Material == Enum.Material.Glass then
+							trinketEspLabel.Text = "Diamond"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(164, 187, 190)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(0, 184, 49) and trinket.Material == Enum.Material.Glass then
+							trinketEspLabel.Text = "Emerald"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(0, 184, 49)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(16, 42, 220) and trinket.Material == Enum.Material.Glass then
+							trinketEspLabel.Text = "Sapphire"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(16, 42, 220)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(248, 248, 248) and trinket.Material == Enum.Material.Glass then
+							trinketEspLabel.Text = "Opal"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(248, 248, 248)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(255, 0, 191) and trinket.Material == Enum.Material.Glass then
+							if not trinket:FindFirstChildOfClass("Script") then
+								trinketEspLabel.Text = "Rift Gem"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 191)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							end
+						elseif trinket.Color == Color3.fromRGB(254, 85, 100) then
+							if trinket:FindFirstChild("OrbParticle") then
+								trinketEspLabel.Text = "Ice Essence"
+								trinketEspLabel.TextColor3 = Color3.fromRGB(25, 185, 155)
+								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								trinketEspLabel.TextStrokeTransparency = 0.650
+								trinketEspLabel.TextTransparency = 0.250
+							end
+						elseif trinket.Color == Color3.fromRGB(255, 255, 0) then
+							trinketEspLabel.Text = "Spider Cloak"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(128, 187, 219) then
+							trinketEspLabel.Text = "Fairfrozen"
+							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							trinketEspLabel.TextStrokeTransparency = 0.650
+							trinketEspLabel.TextTransparency = 0.250
+						elseif trinket.Color == Color3.fromRGB(163, 162, 165) then
+							if trinket:FindFirstChildOfClass("Attachment") then
+								if trinket.Attachment:FindFirstChildOfClass("ParticleEmitter") then
+									if trinket.Attachment.ParticleEmitter.Texture == "rbxassetid://1536547385" then
+										trinketEspLabel.Text = "P.M.A"
+										trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+										trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+										trinketEspLabel.TextStrokeTransparency = 0.650
+										trinketEspLabel.TextTransparency = 0.250
+									end
+								end
+							end
+						end
+					else
+						trinketEspLabel.Text = "Unknown"
+						trinketEspLabel.TextColor3 = Color3.fromRGB(26, 26, 26)
+						trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+						trinketEspLabel.TextStrokeTransparency = 0.900
+						trinketEspLabel.TextTransparency = 0.100
+					end
+					trinketEspLabel.TextSize = 15.000
+					trinketEspLabel.TextWrapped = true
+				end
+			end
+		end)
+	end
+end
+
 if gameName == "VoxlBlade" then
 	game.Workspace.NPCS.ChildAdded:Connect(function(enemy)
 		if not enemy:FindFirstChild("EnemyviewHolder") then
@@ -2962,7 +3614,7 @@ if gameName == "VoxlBlade" then
 			enemyEspHolder.Size = UDim2.new(0, 200, 0, 50)
 			enemyEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
 			enemyEspHolder.ClipsDescendants = true
-			
+
 			local enemyEspLabel = Instance.new("TextLabel")
 			enemyEspLabel.Name = "EnemyView"
 			enemyEspLabel.Parent = enemyEspHolder
@@ -3038,6 +3690,9 @@ spawn(function()
 		task.wait(1.75)
 		if not game.Players.LocalPlayer.PlayerGui:FindFirstChild(HubGui.Name) then
 			game.Players.LocalPlayer:Kick("gui was deleted??")
+		end
+		if gameName == "Rogue Lineage Copy" then
+			
 		end
 		if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680) and game.Workspace:FindFirstChild("CapturePoints") then
 			--//Forest
