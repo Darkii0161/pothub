@@ -144,6 +144,11 @@ local AutoBardButton = Instance.new("TextButton")
 local RogueEspHolder = Instance.new("Folder")
 local RogueEspTitle = Instance.new("TextLabel")
 local RogueTrinketEspButton = Instance.new("TextButton")
+local RogueGemScrollEspButton = Instance.new("TextButton")
+local RogueArtifactEspButton = Instance.new("TextButton")
+local RogueNotifierHolder = Instance.new("Folder")
+local RogueNotifierTitle = Instance.new("TextLabel")
+local RogueNotifierButton = Instance.new("TextButton")
 --//For VoxlBlade Esp
 local VoxlEspHolder = Instance.new("Folder")
 local VoxlEspTitle = Instance.new("TextLabel")
@@ -1063,6 +1068,9 @@ JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
 
 --//Rogue Vars
 local roguetrinketEsp = false
+local roguegemscrollEsp = false
+local rogueartifactEsp = false
+local roguenotifierOn = false
 
 --//Voxl Vars
 local voxlenemyEsp = false
@@ -1073,6 +1081,7 @@ local voxlshrineEsp = false
 local voxlinfuserEsp = false
 local voxlsnailsmanEsp = false
 if gameName == "Rogue Lineage Copy" then
+	--// Rogue Esp
 	RogueEspHolder.Name = "RogueEsp"
 	RogueEspHolder.Parent = DescSheet_3
 
@@ -1088,7 +1097,7 @@ if gameName == "Rogue Lineage Copy" then
 	RogueEspTitle.Size = UDim2.new(0.5, 0, 0, 20)
 	RogueEspTitle.Font = Enum.Font.SourceSansSemibold
 	RogueEspTitle.RichText = true
-	RogueEspTitle.Text = "<u>General Esp (Unfin)</u>"
+	RogueEspTitle.Text = "<u>General Esp</u>"
 	RogueEspTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
 	RogueEspTitle.TextSize = 18.000
 	RogueEspTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
@@ -1130,7 +1139,7 @@ if gameName == "Rogue Lineage Copy" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if roguetrinketEsp == false then
-				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Players.LocalPlayer then
 					task.spawn(function()
 						roguetrinketEsp = true
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -1138,226 +1147,316 @@ if gameName == "Rogue Lineage Copy" then
 								v.TrinketviewHolder.Enabled = true
 							end
 							if not v:FindFirstChild("TrinketviewHolder") then
-								local trinketEspHolder = Instance.new("BillboardGui")
-								trinketEspHolder.Name = "TrinketviewHolder"
-								trinketEspHolder.Parent = v
-								trinketEspHolder.Active = false
-								trinketEspHolder.Adornee = v
-								trinketEspHolder.AlwaysOnTop = true
-								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
-								trinketEspHolder.ResetOnSpawn = false
-								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
-								trinketEspHolder.ClipsDescendants = true
-
-								local trinketEspLabel = Instance.new("TextLabel")
-								trinketEspLabel.Name = "TrinketView"
-								trinketEspLabel.Parent = trinketEspHolder
-								trinketEspLabel.Active = false
-								trinketEspLabel.BackgroundTransparency = 1.000
-								trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
-								trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
-								trinketEspLabel.ZIndex = 5
-								trinketEspLabel.Font = Enum.Font.SourceSansBold
-								trinketEspLabel.RichText = true
 								if v.Parent == game.Workspace.Trinkets then
 									if v.ClassName == "MeshPart" then
 										if v.MeshId == "rbxassetid://5196551436" then
+											local trinketEspHolder = Instance.new("BillboardGui")
+											trinketEspHolder.Name = "TrinketviewHolder"
+											trinketEspHolder.Parent = v
+											trinketEspHolder.Active = false
+											trinketEspHolder.Adornee = v
+											trinketEspHolder.AlwaysOnTop = true
+											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											trinketEspHolder.ResetOnSpawn = false
+											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.ClipsDescendants = true
+
+											local trinketEspLabel = Instance.new("TextLabel")
+											trinketEspLabel.Name = "TrinketView"
+											trinketEspLabel.Parent = trinketEspHolder
+											trinketEspLabel.Active = false
+											trinketEspLabel.BackgroundTransparency = 1.000
+											trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspLabel.ZIndex = 5
+											trinketEspLabel.Font = Enum.Font.SourceSansBold
+											trinketEspLabel.RichText = true
 											trinketEspLabel.Text = "Amulet"
 											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 											trinketEspLabel.TextStrokeTransparency = 0.650
 											trinketEspLabel.TextTransparency = 0.250
+											trinketEspLabel.TextSize = 15.000
+											trinketEspLabel.TextWrapped = true
 										elseif v.MeshId == "rbxassetid://923469333" then
 											if v.Color == Color3.fromRGB(33, 84, 185) then
+												local trinketEspHolder = Instance.new("BillboardGui")
+												trinketEspHolder.Name = "TrinketviewHolder"
+												trinketEspHolder.Parent = v
+												trinketEspHolder.Active = false
+												trinketEspHolder.Adornee = v
+												trinketEspHolder.AlwaysOnTop = true
+												trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+												trinketEspHolder.ResetOnSpawn = false
+												trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+												trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												trinketEspHolder.ClipsDescendants = true
+
+												local trinketEspLabel = Instance.new("TextLabel")
+												trinketEspLabel.Name = "TrinketView"
+												trinketEspLabel.Parent = trinketEspHolder
+												trinketEspLabel.Active = false
+												trinketEspLabel.BackgroundTransparency = 1.000
+												trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+												trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+												trinketEspLabel.ZIndex = 5
+												trinketEspLabel.Font = Enum.Font.SourceSansBold
+												trinketEspLabel.RichText = true
 												trinketEspLabel.Text = "Blue Candy"
 												trinketEspLabel.TextColor3 = Color3.fromRGB(33, 84, 185)
 												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 												trinketEspLabel.TextStrokeTransparency = 0.650
 												trinketEspLabel.TextTransparency = 0.250
+												trinketEspLabel.TextSize = 15.000
+												trinketEspLabel.TextWrapped = true
 											elseif v.Color == Color3.fromRGB(30, 185, 30) then
+												local trinketEspHolder = Instance.new("BillboardGui")
+												trinketEspHolder.Name = "TrinketviewHolder"
+												trinketEspHolder.Parent = v
+												trinketEspHolder.Active = false
+												trinketEspHolder.Adornee = v
+												trinketEspHolder.AlwaysOnTop = true
+												trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+												trinketEspHolder.ResetOnSpawn = false
+												trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+												trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												trinketEspHolder.ClipsDescendants = true
+
+												local trinketEspLabel = Instance.new("TextLabel")
+												trinketEspLabel.Name = "TrinketView"
+												trinketEspLabel.Parent = trinketEspHolder
+												trinketEspLabel.Active = false
+												trinketEspLabel.BackgroundTransparency = 1.000
+												trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+												trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+												trinketEspLabel.ZIndex = 5
+												trinketEspLabel.Font = Enum.Font.SourceSansBold
+												trinketEspLabel.RichText = true
 												trinketEspLabel.Text = "Green Candy"
 												trinketEspLabel.TextColor3 = Color3.fromRGB(30, 185, 30)
 												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 												trinketEspLabel.TextStrokeTransparency = 0.650
 												trinketEspLabel.TextTransparency = 0.250
+												trinketEspLabel.TextSize = 15.000
+												trinketEspLabel.TextWrapped = true
 											elseif v.Color == Color3.fromRGB(255, 137, 1) then
+												local trinketEspHolder = Instance.new("BillboardGui")
+												trinketEspHolder.Name = "TrinketviewHolder"
+												trinketEspHolder.Parent = v
+												trinketEspHolder.Active = false
+												trinketEspHolder.Adornee = v
+												trinketEspHolder.AlwaysOnTop = true
+												trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+												trinketEspHolder.ResetOnSpawn = false
+												trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+												trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												trinketEspHolder.ClipsDescendants = true
+
+												local trinketEspLabel = Instance.new("TextLabel")
+												trinketEspLabel.Name = "TrinketView"
+												trinketEspLabel.Parent = trinketEspHolder
+												trinketEspLabel.Active = false
+												trinketEspLabel.BackgroundTransparency = 1.000
+												trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+												trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+												trinketEspLabel.ZIndex = 5
+												trinketEspLabel.Font = Enum.Font.SourceSansBold
+												trinketEspLabel.RichText = true
 												trinketEspLabel.Text = "Orange Candy"
 												trinketEspLabel.TextColor3 = Color3.fromRGB(255, 137, 1)
 												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 												trinketEspLabel.TextStrokeTransparency = 0.650
 												trinketEspLabel.TextTransparency = 0.250
-											else
-												trinketEspLabel.Text = "Unknown Candy"
-												trinketEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-												trinketEspLabel.TextStrokeTransparency = 0.650
-												trinketEspLabel.TextTransparency = 0.250
+												trinketEspLabel.TextSize = 15.000
+												trinketEspLabel.TextWrapped = true
 											end
 										elseif v.MeshId == "rbxassetid://5204003946" then
+											local trinketEspHolder = Instance.new("BillboardGui")
+											trinketEspHolder.Name = "TrinketviewHolder"
+											trinketEspHolder.Parent = v
+											trinketEspHolder.Active = false
+											trinketEspHolder.Adornee = v
+											trinketEspHolder.AlwaysOnTop = true
+											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											trinketEspHolder.ResetOnSpawn = false
+											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.ClipsDescendants = true
+
+											local trinketEspLabel = Instance.new("TextLabel")
+											trinketEspLabel.Name = "TrinketView"
+											trinketEspLabel.Parent = trinketEspHolder
+											trinketEspLabel.Active = false
+											trinketEspLabel.BackgroundTransparency = 1.000
+											trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspLabel.ZIndex = 5
+											trinketEspLabel.Font = Enum.Font.SourceSansBold
+											trinketEspLabel.RichText = true
 											trinketEspLabel.Text = "Goblet"
 											trinketEspLabel.TextColor3 = Color3.fromRGB(150, 86, 9)
 											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 											trinketEspLabel.TextStrokeTransparency = 0.650
 											trinketEspLabel.TextTransparency = 0.250
-										elseif v.MeshId == "rbxassetid://2520762076" then
-											trinketEspLabel.Text = "Howler Friend"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
+											trinketEspLabel.TextSize = 15.000
+											trinketEspLabel.TextWrapped = true
 										elseif v.MeshId == "rbxassetid://5196577540" then
+											local trinketEspHolder = Instance.new("BillboardGui")
+											trinketEspHolder.Name = "TrinketviewHolder"
+											trinketEspHolder.Parent = v
+											trinketEspHolder.Active = false
+											trinketEspHolder.Adornee = v
+											trinketEspHolder.AlwaysOnTop = true
+											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											trinketEspHolder.ResetOnSpawn = false
+											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.ClipsDescendants = true
+
+											local trinketEspLabel = Instance.new("TextLabel")
+											trinketEspLabel.Name = "TrinketView"
+											trinketEspLabel.Parent = trinketEspHolder
+											trinketEspLabel.Active = false
+											trinketEspLabel.BackgroundTransparency = 1.000
+											trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspLabel.ZIndex = 5
+											trinketEspLabel.Font = Enum.Font.SourceSansBold
+											trinketEspLabel.RichText = true
 											trinketEspLabel.Text = "Old Amulet"
 											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 											trinketEspLabel.TextStrokeTransparency = 0.650
 											trinketEspLabel.TextTransparency = 0.250
+											trinketEspLabel.TextSize = 15.000
+											trinketEspLabel.TextWrapped = true
 										elseif v.MeshId == "rbxassetid://5196782997" then
+											local trinketEspHolder = Instance.new("BillboardGui")
+											trinketEspHolder.Name = "TrinketviewHolder"
+											trinketEspHolder.Parent = v
+											trinketEspHolder.Active = false
+											trinketEspHolder.Adornee = v
+											trinketEspHolder.AlwaysOnTop = true
+											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											trinketEspHolder.ResetOnSpawn = false
+											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.ClipsDescendants = true
+
+											local trinketEspLabel = Instance.new("TextLabel")
+											trinketEspLabel.Name = "TrinketView"
+											trinketEspLabel.Parent = trinketEspHolder
+											trinketEspLabel.Active = false
+											trinketEspLabel.BackgroundTransparency = 1.000
+											trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspLabel.ZIndex = 5
+											trinketEspLabel.Font = Enum.Font.SourceSansBold
+											trinketEspLabel.RichText = true
 											trinketEspLabel.Text = "Old Ring"
 											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 											trinketEspLabel.TextStrokeTransparency = 0.650
 											trinketEspLabel.TextTransparency = 0.250
+											trinketEspLabel.TextSize = 15.000
+											trinketEspLabel.TextWrapped = true
 										elseif v.MeshId == "rbxassetid://5196776695" then
+											local trinketEspHolder = Instance.new("BillboardGui")
+											trinketEspHolder.Name = "TrinketviewHolder"
+											trinketEspHolder.Parent = v
+											trinketEspHolder.Active = false
+											trinketEspHolder.Adornee = v
+											trinketEspHolder.AlwaysOnTop = true
+											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											trinketEspHolder.ResetOnSpawn = false
+											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.ClipsDescendants = true
+
+											local trinketEspLabel = Instance.new("TextLabel")
+											trinketEspLabel.Name = "TrinketView"
+											trinketEspLabel.Parent = trinketEspHolder
+											trinketEspLabel.Active = false
+											trinketEspLabel.BackgroundTransparency = 1.000
+											trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspLabel.ZIndex = 5
+											trinketEspLabel.Font = Enum.Font.SourceSansBold
+											trinketEspLabel.RichText = true
 											trinketEspLabel.Text = "Ring"
 											trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 											trinketEspLabel.TextStrokeTransparency = 0.650
 											trinketEspLabel.TextTransparency = 0.250
-										elseif v.MeshId == "rbxassetid://5204453430" then
-											trinketEspLabel.Text = "Scroll"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(255, 202, 42)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(255, 0, 0) and v.Material == Enum.Material.Glass then
-											trinketEspLabel.Text = "Ruby"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
+											trinketEspLabel.TextSize = 15.000
+											trinketEspLabel.TextWrapped = true
 										end
 									elseif v.ClassName == "UnionOperation" then
 										if v.Color == Color3.fromRGB(111, 113, 125) then
+											local trinketEspHolder = Instance.new("BillboardGui")
+											trinketEspHolder.Name = "TrinketviewHolder"
+											trinketEspHolder.Parent = v
+											trinketEspHolder.Active = false
+											trinketEspHolder.Adornee = v
+											trinketEspHolder.AlwaysOnTop = true
+											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											trinketEspHolder.ResetOnSpawn = false
+											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.ClipsDescendants = true
+
+											local trinketEspLabel = Instance.new("TextLabel")
+											trinketEspLabel.Name = "TrinketView"
+											trinketEspLabel.Parent = trinketEspHolder
+											trinketEspLabel.Active = false
+											trinketEspLabel.BackgroundTransparency = 1.000
+											trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspLabel.ZIndex = 5
+											trinketEspLabel.Font = Enum.Font.SourceSansBold
+											trinketEspLabel.RichText = true
 											trinketEspLabel.Text = "Forgotten Idle"
 											trinketEspLabel.TextColor3 = Color3.fromRGB(111, 113, 125)
 											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 											trinketEspLabel.TextStrokeTransparency = 0.650
 											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(248, 217, 109) then
-											trinketEspLabel.Text = "Scroom Key"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(255, 89, 89) then
-											trinketEspLabel.Text = "Philosopher's Stone"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(29, 46, 58) then
-											trinketEspLabel.Text = "Nightstone"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(248, 248, 248) and v.Material == Enum.Material.Neon then
-											if v:FindFirstChild("PointLight") then
-												trinketEspLabel.Text = "Amulet of the White King"
-												trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-												trinketEspLabel.TextStrokeTransparency = 0.650
-												trinketEspLabel.TextTransparency = 0.250
-											else
-												trinketEspLabel.Text = "Lannis Amulet"
-												trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-												trinketEspLabel.TextStrokeTransparency = 0.650
-												trinketEspLabel.TextTransparency = 0.250
-											end
+											trinketEspLabel.TextSize = 15.000
+											trinketEspLabel.TextWrapped = true
 										end
 									elseif v.ClassName == "Part" then
 										if v.Color == Color3.fromRGB(89, 34, 89) then
+											local trinketEspHolder = Instance.new("BillboardGui")
+											trinketEspHolder.Name = "TrinketviewHolder"
+											trinketEspHolder.Parent = v
+											trinketEspHolder.Active = false
+											trinketEspHolder.Adornee = v
+											trinketEspHolder.AlwaysOnTop = true
+											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											trinketEspHolder.ResetOnSpawn = false
+											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.ClipsDescendants = true
+
+											local trinketEspLabel = Instance.new("TextLabel")
+											trinketEspLabel.Name = "TrinketView"
+											trinketEspLabel.Parent = trinketEspHolder
+											trinketEspLabel.Active = false
+											trinketEspLabel.BackgroundTransparency = 1.000
+											trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											trinketEspLabel.ZIndex = 5
+											trinketEspLabel.Font = Enum.Font.SourceSansBold
+											trinketEspLabel.RichText = true
 											trinketEspLabel.Text = "???"
 											trinketEspLabel.TextColor3 = Color3.fromRGB(89, 34, 89)
 											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 											trinketEspLabel.TextStrokeTransparency = 0.650
 											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(164, 187, 190) and v.Material == Enum.Material.Glass then
-											trinketEspLabel.Text = "Diamond"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(164, 187, 190)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(0, 184, 49) and v.Material == Enum.Material.Glass then
-											trinketEspLabel.Text = "Emerald"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(0, 184, 49)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(16, 42, 220) and v.Material == Enum.Material.Glass then
-											trinketEspLabel.Text = "Sapphire"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(16, 42, 220)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(248, 248, 248) and v.Material == Enum.Material.Glass then
-											trinketEspLabel.Text = "Opal"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(248, 248, 248)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(255, 0, 191) and v.Material == Enum.Material.Glass then
-											if not v:FindFirstChildOfClass("Script") then
-												trinketEspLabel.Text = "Rift Gem"
-												trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 191)
-												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-												trinketEspLabel.TextStrokeTransparency = 0.650
-												trinketEspLabel.TextTransparency = 0.250
-											end
-										elseif v.Color == Color3.fromRGB(254, 85, 100) then
-											if v:FindFirstChild("OrbParticle") then
-												trinketEspLabel.Text = "Ice Essence"
-												trinketEspLabel.TextColor3 = Color3.fromRGB(25, 185, 155)
-												trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-												trinketEspLabel.TextStrokeTransparency = 0.650
-												trinketEspLabel.TextTransparency = 0.250
-											end
-										elseif v.Color == Color3.fromRGB(255, 255, 0) then
-											trinketEspLabel.Text = "Spider Cloak"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(128, 187, 219) then
-											trinketEspLabel.Text = "Fairfrozen"
-											trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-											trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-											trinketEspLabel.TextStrokeTransparency = 0.650
-											trinketEspLabel.TextTransparency = 0.250
-										elseif v.Color == Color3.fromRGB(163, 162, 165) then
-											if v:FindFirstChildOfClass("Attachment") then
-												if v.Attachment:FindFirstChildOfClass("ParticleEmitter") then
-													if v.Attachment.ParticleEmitter.Texture == "rbxassetid://1536547385" then
-														trinketEspLabel.Text = "P.M.A"
-														trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-														trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-														trinketEspLabel.TextStrokeTransparency = 0.650
-														trinketEspLabel.TextTransparency = 0.250
-													end
-												end
-											end
+											trinketEspLabel.TextSize = 15.000
+											trinketEspLabel.TextWrapped = true
 										end
-									else
-										trinketEspLabel.Text = "Unknown"
-										trinketEspLabel.TextColor3 = Color3.fromRGB(26, 26, 26)
-										trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-										trinketEspLabel.TextStrokeTransparency = 0.900
-										trinketEspLabel.TextTransparency = 0.100
 									end
-									trinketEspLabel.TextSize = 15.000
-									trinketEspLabel.TextWrapped = true
 								end
 							end
 						end
@@ -1388,34 +1487,9 @@ if gameName == "Rogue Lineage Copy" then
 						task.wait(0.5)
 						deb:Destroy()
 					end)
-				else
-					local notfoundcharText = Instance.new("TextLabel")
-					notfoundcharText.Name = "CharNotFound"
-					notfoundcharText.Parent = RogueEspHolder
-					notfoundcharText.Active = false
-					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
-					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					notfoundcharText.BackgroundTransparency = 1.000
-					notfoundcharText.LayoutOrder = 1
-					notfoundcharText.Position = UDim2.new(0.5, -40, 1, -635)
-					notfoundcharText.Selectable = false
-					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
-					notfoundcharText.Font = Enum.Font.SourceSansSemibold
-					notfoundcharText.RichText = true
-					notfoundcharText.Text = "Character not found"
-					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
-					notfoundcharText.TextSize = 16.000
-					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-					notfoundcharText.TextTransparency = 0.600
-					notfoundcharText.TextWrapped = true
-					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
-					task.spawn(function()
-						task.wait(1)
-						notfoundcharText:Destroy()
-					end)
 				end
 			elseif roguetrinketEsp == true then
-				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Players.LocalPlayer then
 					task.spawn(function()
 						roguetrinketEsp = false
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -1450,36 +1524,888 @@ if gameName == "Rogue Lineage Copy" then
 						task.wait(0.5)
 						deb:Destroy()
 					end)
-				else
-					local notfoundcharText = Instance.new("TextLabel")
-					notfoundcharText.Name = "CharNotFound"
-					notfoundcharText.Parent = RogueEspHolder
-					notfoundcharText.Active = false
-					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
-					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-					notfoundcharText.BackgroundTransparency = 1.000
-					notfoundcharText.LayoutOrder = 1
-					notfoundcharText.Position = UDim2.new(0.5, -40, 1, -635)
-					notfoundcharText.Selectable = false
-					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
-					notfoundcharText.Font = Enum.Font.SourceSansSemibold
-					notfoundcharText.RichText = true
-					notfoundcharText.Text = "Character not found"
-					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
-					notfoundcharText.TextSize = 16.000
-					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
-					notfoundcharText.TextTransparency = 0.600
-					notfoundcharText.TextWrapped = true
-					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+				end
+			end
+		end
+	end)
+	RogueGemScrollEspButton.Name = "Activator2"
+	RogueGemScrollEspButton.Parent = RogueEspHolder
+	RogueGemScrollEspButton.Active = false
+	RogueGemScrollEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueGemScrollEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueGemScrollEspButton.BackgroundTransparency = 1.000
+	RogueGemScrollEspButton.LayoutOrder = 1
+	RogueGemScrollEspButton.Position = UDim2.new(0.5, 85, 1, -615)
+	RogueGemScrollEspButton.Selectable = false
+	RogueGemScrollEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueGemScrollEspButton.Font = Enum.Font.SourceSansSemibold
+	RogueGemScrollEspButton.RichText = true
+	RogueGemScrollEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Gem/Scroll Turned Off</stroke>'
+	RogueGemScrollEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueGemScrollEspButton.TextSize = 16.000
+	RogueGemScrollEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueGemScrollEspButton.TextTransparency = 0.100
+	RogueGemScrollEspButton.TextWrapped = true
+	RogueGemScrollEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueGemScrollEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD2") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueGemScrollEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguegemscrollEsp == false then
+				if game.Players.LocalPlayer then
 					task.spawn(function()
-						task.wait(1)
-						notfoundcharText:Destroy()
+						roguegemscrollEsp = true
+						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
+							if v:FindFirstChild("GemScrollviewHolder") then
+								v.GemScrollviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("GemScrollviewHolder") then
+								if v.Parent == game.Workspace.Trinkets then
+									if v.ClassName == "MeshPart" then
+										if v.MeshId == "rbxassetid://5204453430" then
+											local gemscrollEspHolder = Instance.new("BillboardGui")
+											gemscrollEspHolder.Name = "GemScrollviewHolder"
+											gemscrollEspHolder.Parent = v
+											gemscrollEspHolder.Active = false
+											gemscrollEspHolder.Adornee = v
+											gemscrollEspHolder.AlwaysOnTop = true
+											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											gemscrollEspHolder.ResetOnSpawn = false
+											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.ClipsDescendants = true
+
+											local gemscrollEspLabel = Instance.new("TextLabel")
+											gemscrollEspLabel.Name = "GemScrollView"
+											gemscrollEspLabel.Parent = gemscrollEspHolder
+											gemscrollEspLabel.Active = false
+											gemscrollEspLabel.BackgroundTransparency = 1.000
+											gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspLabel.ZIndex = 5
+											gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+											gemscrollEspLabel.RichText = true
+											gemscrollEspLabel.Text = "Scroll"
+											gemscrollEspLabel.TextColor3 = Color3.fromRGB(255, 202, 42)
+											gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											gemscrollEspLabel.TextStrokeTransparency = 0.650
+											gemscrollEspLabel.TextTransparency = 0.250
+											gemscrollEspLabel.TextSize = 15.000
+											gemscrollEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(255, 0, 0) and v.Material == Enum.Material.Glass then
+											local gemscrollEspHolder = Instance.new("BillboardGui")
+											gemscrollEspHolder.Name = "GemScrollviewHolder"
+											gemscrollEspHolder.Parent = v
+											gemscrollEspHolder.Active = false
+											gemscrollEspHolder.Adornee = v
+											gemscrollEspHolder.AlwaysOnTop = true
+											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											gemscrollEspHolder.ResetOnSpawn = false
+											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.ClipsDescendants = true
+
+											local gemscrollEspLabel = Instance.new("TextLabel")
+											gemscrollEspLabel.Name = "GemScrollView"
+											gemscrollEspLabel.Parent = gemscrollEspHolder
+											gemscrollEspLabel.Active = false
+											gemscrollEspLabel.BackgroundTransparency = 1.000
+											gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspLabel.ZIndex = 5
+											gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+											gemscrollEspLabel.RichText = true
+											gemscrollEspLabel.Text = "Ruby"
+											gemscrollEspLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+											gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											gemscrollEspLabel.TextStrokeTransparency = 0.650
+											gemscrollEspLabel.TextTransparency = 0.250
+											gemscrollEspLabel.TextSize = 15.000
+											gemscrollEspLabel.TextWrapped = true
+										end
+									elseif v.ClassName == "Part" then
+										if v.Color == Color3.fromRGB(164, 187, 190) and v.Material == Enum.Material.Glass then
+											local gemscrollEspHolder = Instance.new("BillboardGui")
+											gemscrollEspHolder.Name = "GemScrollviewHolder"
+											gemscrollEspHolder.Parent = v
+											gemscrollEspHolder.Active = false
+											gemscrollEspHolder.Adornee = v
+											gemscrollEspHolder.AlwaysOnTop = true
+											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											gemscrollEspHolder.ResetOnSpawn = false
+											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.ClipsDescendants = true
+
+											local gemscrollEspLabel = Instance.new("TextLabel")
+											gemscrollEspLabel.Name = "GemScrollView"
+											gemscrollEspLabel.Parent = gemscrollEspHolder
+											gemscrollEspLabel.Active = false
+											gemscrollEspLabel.BackgroundTransparency = 1.000
+											gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspLabel.ZIndex = 5
+											gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+											gemscrollEspLabel.RichText = true
+											gemscrollEspLabel.Text = "Diamond"
+											gemscrollEspLabel.TextColor3 = Color3.fromRGB(164, 187, 190)
+											gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											gemscrollEspLabel.TextStrokeTransparency = 0.650
+											gemscrollEspLabel.TextTransparency = 0.250
+											gemscrollEspLabel.TextSize = 15.000
+											gemscrollEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(0, 184, 49) and v.Material == Enum.Material.Glass then
+											local gemscrollEspHolder = Instance.new("BillboardGui")
+											gemscrollEspHolder.Name = "GemScrollviewHolder"
+											gemscrollEspHolder.Parent = v
+											gemscrollEspHolder.Active = false
+											gemscrollEspHolder.Adornee = v
+											gemscrollEspHolder.AlwaysOnTop = true
+											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											gemscrollEspHolder.ResetOnSpawn = false
+											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.ClipsDescendants = true
+
+											local gemscrollEspLabel = Instance.new("TextLabel")
+											gemscrollEspLabel.Name = "GemScrollView"
+											gemscrollEspLabel.Parent = gemscrollEspHolder
+											gemscrollEspLabel.Active = false
+											gemscrollEspLabel.BackgroundTransparency = 1.000
+											gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspLabel.ZIndex = 5
+											gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+											gemscrollEspLabel.RichText = true
+											gemscrollEspLabel.Text = "Emerald"
+											gemscrollEspLabel.TextColor3 = Color3.fromRGB(0, 184, 49)
+											gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											gemscrollEspLabel.TextStrokeTransparency = 0.650
+											gemscrollEspLabel.TextTransparency = 0.250
+											gemscrollEspLabel.TextSize = 15.000
+											gemscrollEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(16, 42, 220) and v.Material == Enum.Material.Glass then
+											local gemscrollEspHolder = Instance.new("BillboardGui")
+											gemscrollEspHolder.Name = "GemScrollviewHolder"
+											gemscrollEspHolder.Parent = v
+											gemscrollEspHolder.Active = false
+											gemscrollEspHolder.Adornee = v
+											gemscrollEspHolder.AlwaysOnTop = true
+											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											gemscrollEspHolder.ResetOnSpawn = false
+											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.ClipsDescendants = true
+
+											local gemscrollEspLabel = Instance.new("TextLabel")
+											gemscrollEspLabel.Name = "GemScrollView"
+											gemscrollEspLabel.Parent = gemscrollEspHolder
+											gemscrollEspLabel.Active = false
+											gemscrollEspLabel.BackgroundTransparency = 1.000
+											gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspLabel.ZIndex = 5
+											gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+											gemscrollEspLabel.RichText = true
+											gemscrollEspLabel.Text = "Sapphire"
+											gemscrollEspLabel.TextColor3 = Color3.fromRGB(16, 42, 220)
+											gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											gemscrollEspLabel.TextStrokeTransparency = 0.650
+											gemscrollEspLabel.TextTransparency = 0.250
+											gemscrollEspLabel.TextSize = 15.000
+											gemscrollEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(248, 248, 248) and v.Material == Enum.Material.Glass then
+											local gemscrollEspHolder = Instance.new("BillboardGui")
+											gemscrollEspHolder.Name = "GemScrollviewHolder"
+											gemscrollEspHolder.Parent = v
+											gemscrollEspHolder.Active = false
+											gemscrollEspHolder.Adornee = v
+											gemscrollEspHolder.AlwaysOnTop = true
+											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											gemscrollEspHolder.ResetOnSpawn = false
+											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.ClipsDescendants = true
+
+											local gemscrollEspLabel = Instance.new("TextLabel")
+											gemscrollEspLabel.Name = "GemScrollView"
+											gemscrollEspLabel.Parent = gemscrollEspHolder
+											gemscrollEspLabel.Active = false
+											gemscrollEspLabel.BackgroundTransparency = 1.000
+											gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											gemscrollEspLabel.ZIndex = 5
+											gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+											gemscrollEspLabel.RichText = true
+											gemscrollEspLabel.Text = "Opal"
+											gemscrollEspLabel.TextColor3 = Color3.fromRGB(248, 248, 248)
+											gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											gemscrollEspLabel.TextStrokeTransparency = 0.650
+											gemscrollEspLabel.TextTransparency = 0.250
+											gemscrollEspLabel.TextSize = 15.000
+											gemscrollEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(254, 85, 100) then
+											if v:FindFirstChild("OrbParticle") then
+												local gemscrollEspHolder = Instance.new("BillboardGui")
+												gemscrollEspHolder.Name = "GemScrollviewHolder"
+												gemscrollEspHolder.Parent = v
+												gemscrollEspHolder.Active = false
+												gemscrollEspHolder.Adornee = v
+												gemscrollEspHolder.AlwaysOnTop = true
+												gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+												gemscrollEspHolder.ResetOnSpawn = false
+												gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+												gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												gemscrollEspHolder.ClipsDescendants = true
+
+												local gemscrollEspLabel = Instance.new("TextLabel")
+												gemscrollEspLabel.Name = "GemScrollView"
+												gemscrollEspLabel.Parent = gemscrollEspHolder
+												gemscrollEspLabel.Active = false
+												gemscrollEspLabel.BackgroundTransparency = 1.000
+												gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+												gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+												gemscrollEspLabel.ZIndex = 5
+												gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+												gemscrollEspLabel.RichText = true
+												gemscrollEspLabel.Text = "Ice Essence"
+												gemscrollEspLabel.TextColor3 = Color3.fromRGB(25, 185, 155)
+												gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												gemscrollEspLabel.TextStrokeTransparency = 0.650
+												gemscrollEspLabel.TextTransparency = 0.250
+												gemscrollEspLabel.TextSize = 15.000
+												gemscrollEspLabel.TextWrapped = true
+											end
+										end
+									end
+								end
+							end
+						end
+					end)
+					RogueGemScrollEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Gem/Scroll Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -65, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif roguegemscrollEsp == true then
+				if game.Players.LocalPlayer then
+					task.spawn(function()
+						roguegemscrollEsp = false
+						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
+							if v:FindFirstChild("GemScrollviewHolder") then
+								v.GemScrollviewHolder.Enabled = false
+							end
+						end
+					end)
+					RogueGemScrollEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Gem/Scroll Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -65, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	RogueArtifactEspButton.Name = "Activator3"
+	RogueArtifactEspButton.Parent = RogueEspHolder
+	RogueArtifactEspButton.Active = false
+	RogueArtifactEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueArtifactEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueArtifactEspButton.BackgroundTransparency = 1.000
+	RogueArtifactEspButton.LayoutOrder = 1
+	RogueArtifactEspButton.Position = UDim2.new(0.5, 85, 1, -595)
+	RogueArtifactEspButton.Selectable = false
+	RogueArtifactEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueArtifactEspButton.Font = Enum.Font.SourceSansSemibold
+	RogueArtifactEspButton.RichText = true
+	RogueArtifactEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Artifact Turned Off</stroke>'
+	RogueArtifactEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueArtifactEspButton.TextSize = 16.000
+	RogueArtifactEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueArtifactEspButton.TextTransparency = 0.100
+	RogueArtifactEspButton.TextWrapped = true
+	RogueArtifactEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueArtifactEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD3") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueArtifactEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if rogueartifactEsp == false then
+				if game.Players.LocalPlayer then
+					task.spawn(function()
+						rogueartifactEsp = true
+						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
+							if v:FindFirstChild("ArtifactviewHolder") then
+								v.ArtifactviewHolder.Enabled = true
+							end
+							if not v:FindFirstChild("ArtifactviewHolder") then
+								if v.Parent == game.Workspace.Trinkets then
+									if v.ClassName == "MeshPart" then
+										if v.MeshId == "rbxassetid://2520762076" then
+											local artifactEspHolder = Instance.new("BillboardGui")
+											artifactEspHolder.Name = "ArtifactviewHolder"
+											artifactEspHolder.Parent = v
+											artifactEspHolder.Active = false
+											artifactEspHolder.Adornee = v
+											artifactEspHolder.AlwaysOnTop = true
+											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											artifactEspHolder.ResetOnSpawn = false
+											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.ClipsDescendants = true
+
+											local artifactEspLabel = Instance.new("TextLabel")
+											artifactEspLabel.Name = "ArtifactView"
+											artifactEspLabel.Parent = artifactEspHolder
+											artifactEspLabel.Active = false
+											artifactEspLabel.BackgroundTransparency = 1.000
+											artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspLabel.ZIndex = 5
+											artifactEspLabel.Font = Enum.Font.SourceSansBold
+											artifactEspLabel.RichText = true
+											artifactEspLabel.Text = "Howler Friend"
+											artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											artifactEspLabel.TextStrokeTransparency = 0.650
+											artifactEspLabel.TextTransparency = 0.250
+											artifactEspLabel.TextSize = 15.000
+											artifactEspLabel.TextWrapped = true
+										end
+									elseif v.ClassName == "UnionOperation" then
+										if v.Color == Color3.fromRGB(248, 217, 109) then
+											local artifactEspHolder = Instance.new("BillboardGui")
+											artifactEspHolder.Name = "ArtifactviewHolder"
+											artifactEspHolder.Parent = v
+											artifactEspHolder.Active = false
+											artifactEspHolder.Adornee = v
+											artifactEspHolder.AlwaysOnTop = true
+											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											artifactEspHolder.ResetOnSpawn = false
+											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.ClipsDescendants = true
+
+											local artifactEspLabel = Instance.new("TextLabel")
+											artifactEspLabel.Name = "ArtifactView"
+											artifactEspLabel.Parent = artifactEspHolder
+											artifactEspLabel.Active = false
+											artifactEspLabel.BackgroundTransparency = 1.000
+											artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspLabel.ZIndex = 5
+											artifactEspLabel.Font = Enum.Font.SourceSansBold
+											artifactEspLabel.RichText = true
+											artifactEspLabel.Text = "Scroom Key"
+											artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											artifactEspLabel.TextStrokeTransparency = 0.650
+											artifactEspLabel.TextTransparency = 0.250
+											artifactEspLabel.TextSize = 15.000
+											artifactEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(255, 89, 89) then
+											local artifactEspHolder = Instance.new("BillboardGui")
+											artifactEspHolder.Name = "ArtifactviewHolder"
+											artifactEspHolder.Parent = v
+											artifactEspHolder.Active = false
+											artifactEspHolder.Adornee = v
+											artifactEspHolder.AlwaysOnTop = true
+											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											artifactEspHolder.ResetOnSpawn = false
+											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.ClipsDescendants = true
+
+											local artifactEspLabel = Instance.new("TextLabel")
+											artifactEspLabel.Name = "ArtifactView"
+											artifactEspLabel.Parent = artifactEspHolder
+											artifactEspLabel.Active = false
+											artifactEspLabel.BackgroundTransparency = 1.000
+											artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspLabel.ZIndex = 5
+											artifactEspLabel.Font = Enum.Font.SourceSansBold
+											artifactEspLabel.RichText = true
+											artifactEspLabel.Text = "Philosopher's Stone"
+											artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											artifactEspLabel.TextStrokeTransparency = 0.650
+											artifactEspLabel.TextTransparency = 0.250
+											artifactEspLabel.TextSize = 15.000
+											artifactEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(29, 46, 58) then
+											local artifactEspHolder = Instance.new("BillboardGui")
+											artifactEspHolder.Name = "ArtifactviewHolder"
+											artifactEspHolder.Parent = v
+											artifactEspHolder.Active = false
+											artifactEspHolder.Adornee = v
+											artifactEspHolder.AlwaysOnTop = true
+											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											artifactEspHolder.ResetOnSpawn = false
+											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.ClipsDescendants = true
+
+											local artifactEspLabel = Instance.new("TextLabel")
+											artifactEspLabel.Name = "ArtifactView"
+											artifactEspLabel.Parent = artifactEspHolder
+											artifactEspLabel.Active = false
+											artifactEspLabel.BackgroundTransparency = 1.000
+											artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspLabel.ZIndex = 5
+											artifactEspLabel.Font = Enum.Font.SourceSansBold
+											artifactEspLabel.RichText = true
+											artifactEspLabel.Text = "Nightstone"
+											artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											artifactEspLabel.TextStrokeTransparency = 0.650
+											artifactEspLabel.TextTransparency = 0.250
+											artifactEspLabel.TextSize = 15.000
+											artifactEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(248, 248, 248) and v.Material == Enum.Material.Neon then
+											if v:FindFirstChild("PointLight") then
+												local artifactEspHolder = Instance.new("BillboardGui")
+												artifactEspHolder.Name = "ArtifactviewHolder"
+												artifactEspHolder.Parent = v
+												artifactEspHolder.Active = false
+												artifactEspHolder.Adornee = v
+												artifactEspHolder.AlwaysOnTop = true
+												artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+												artifactEspHolder.ResetOnSpawn = false
+												artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+												artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												artifactEspHolder.ClipsDescendants = true
+
+												local artifactEspLabel = Instance.new("TextLabel")
+												artifactEspLabel.Name = "ArtifactView"
+												artifactEspLabel.Parent = artifactEspHolder
+												artifactEspLabel.Active = false
+												artifactEspLabel.BackgroundTransparency = 1.000
+												artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+												artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+												artifactEspLabel.ZIndex = 5
+												artifactEspLabel.Font = Enum.Font.SourceSansBold
+												artifactEspLabel.RichText = true
+												artifactEspLabel.Text = "Amulet of the White King"
+												artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+												artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												artifactEspLabel.TextStrokeTransparency = 0.650
+												artifactEspLabel.TextTransparency = 0.250
+												artifactEspLabel.TextSize = 15.000
+												artifactEspLabel.TextWrapped = true
+											else
+												local artifactEspHolder = Instance.new("BillboardGui")
+												artifactEspHolder.Name = "ArtifactviewHolder"
+												artifactEspHolder.Parent = v
+												artifactEspHolder.Active = false
+												artifactEspHolder.Adornee = v
+												artifactEspHolder.AlwaysOnTop = true
+												artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+												artifactEspHolder.ResetOnSpawn = false
+												artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+												artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												artifactEspHolder.ClipsDescendants = true
+
+												local artifactEspLabel = Instance.new("TextLabel")
+												artifactEspLabel.Name = "ArtifactView"
+												artifactEspLabel.Parent = artifactEspHolder
+												artifactEspLabel.Active = false
+												artifactEspLabel.BackgroundTransparency = 1.000
+												artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+												artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+												artifactEspLabel.ZIndex = 5
+												artifactEspLabel.Font = Enum.Font.SourceSansBold
+												artifactEspLabel.RichText = true
+												artifactEspLabel.Text = "Lannis Amulet"
+												artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+												artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												artifactEspLabel.TextStrokeTransparency = 0.650
+												artifactEspLabel.TextTransparency = 0.250
+												artifactEspLabel.TextSize = 15.000
+												artifactEspLabel.TextWrapped = true
+											end
+										end
+									elseif v.ClassName == "Part" then
+										if v.Color == Color3.fromRGB(255, 0, 191) and v.Material == Enum.Material.Glass then
+											if not v:FindFirstChildOfClass("Script") then
+												local artifactEspHolder = Instance.new("BillboardGui")
+												artifactEspHolder.Name = "ArtifactviewHolder"
+												artifactEspHolder.Parent = v
+												artifactEspHolder.Active = false
+												artifactEspHolder.Adornee = v
+												artifactEspHolder.AlwaysOnTop = true
+												artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+												artifactEspHolder.ResetOnSpawn = false
+												artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+												artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												artifactEspHolder.ClipsDescendants = true
+
+												local artifactEspLabel = Instance.new("TextLabel")
+												artifactEspLabel.Name = "ArtifactView"
+												artifactEspLabel.Parent = artifactEspHolder
+												artifactEspLabel.Active = false
+												artifactEspLabel.BackgroundTransparency = 1.000
+												artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+												artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+												artifactEspLabel.ZIndex = 5
+												artifactEspLabel.Font = Enum.Font.SourceSansBold
+												artifactEspLabel.RichText = true
+												artifactEspLabel.Text = "Rift Gem"
+												artifactEspLabel.TextColor3 = Color3.fromRGB(255, 0, 191)
+												artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+												artifactEspLabel.TextStrokeTransparency = 0.650
+												artifactEspLabel.TextTransparency = 0.250
+												artifactEspLabel.TextSize = 15.000
+												artifactEspLabel.TextWrapped = true
+											end
+										elseif v.Color == Color3.fromRGB(255, 255, 0) then
+											local artifactEspHolder = Instance.new("BillboardGui")
+											artifactEspHolder.Name = "ArtifactviewHolder"
+											artifactEspHolder.Parent = v
+											artifactEspHolder.Active = false
+											artifactEspHolder.Adornee = v
+											artifactEspHolder.AlwaysOnTop = true
+											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											artifactEspHolder.ResetOnSpawn = false
+											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.ClipsDescendants = true
+
+											local artifactEspLabel = Instance.new("TextLabel")
+											artifactEspLabel.Name = "ArtifactView"
+											artifactEspLabel.Parent = artifactEspHolder
+											artifactEspLabel.Active = false
+											artifactEspLabel.BackgroundTransparency = 1.000
+											artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspLabel.ZIndex = 5
+											artifactEspLabel.Font = Enum.Font.SourceSansBold
+											artifactEspLabel.RichText = true
+											artifactEspLabel.Text = "Spider Cloak"
+											artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											artifactEspLabel.TextStrokeTransparency = 0.650
+											artifactEspLabel.TextTransparency = 0.250
+											artifactEspLabel.TextSize = 15.000
+											artifactEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(128, 187, 219) then
+											local artifactEspHolder = Instance.new("BillboardGui")
+											artifactEspHolder.Name = "ArtifactviewHolder"
+											artifactEspHolder.Parent = v
+											artifactEspHolder.Active = false
+											artifactEspHolder.Adornee = v
+											artifactEspHolder.AlwaysOnTop = true
+											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+											artifactEspHolder.ResetOnSpawn = false
+											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.ClipsDescendants = true
+
+											local artifactEspLabel = Instance.new("TextLabel")
+											artifactEspLabel.Name = "ArtifactView"
+											artifactEspLabel.Parent = artifactEspHolder
+											artifactEspLabel.Active = false
+											artifactEspLabel.BackgroundTransparency = 1.000
+											artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											artifactEspLabel.ZIndex = 5
+											artifactEspLabel.Font = Enum.Font.SourceSansBold
+											artifactEspLabel.RichText = true
+											artifactEspLabel.Text = "Fairfrozen"
+											artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+											artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+											artifactEspLabel.TextStrokeTransparency = 0.650
+											artifactEspLabel.TextTransparency = 0.250
+											artifactEspLabel.TextSize = 15.000
+											artifactEspLabel.TextWrapped = true
+										elseif v.Color == Color3.fromRGB(163, 162, 165) then
+											if v:FindFirstChildOfClass("Attachment") then
+												if v.Attachment:FindFirstChildOfClass("ParticleEmitter") then
+													if v.Attachment.ParticleEmitter.Texture == "rbxassetid://1536547385" then
+														local artifactEspHolder = Instance.new("BillboardGui")
+														artifactEspHolder.Name = "ArtifactviewHolder"
+														artifactEspHolder.Parent = v
+														artifactEspHolder.Active = false
+														artifactEspHolder.Adornee = v
+														artifactEspHolder.AlwaysOnTop = true
+														artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+														artifactEspHolder.ResetOnSpawn = false
+														artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+														artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+														artifactEspHolder.ClipsDescendants = true
+
+														local artifactEspLabel = Instance.new("TextLabel")
+														artifactEspLabel.Name = "ArtifactView"
+														artifactEspLabel.Parent = artifactEspHolder
+														artifactEspLabel.Active = false
+														artifactEspLabel.BackgroundTransparency = 1.000
+														artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+														artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+														artifactEspLabel.ZIndex = 5
+														artifactEspLabel.Font = Enum.Font.SourceSansBold
+														artifactEspLabel.RichText = true
+														artifactEspLabel.Text = "P.M.A"
+														artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+														artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+														artifactEspLabel.TextStrokeTransparency = 0.650
+														artifactEspLabel.TextTransparency = 0.250
+														artifactEspLabel.TextSize = 15.000
+														artifactEspLabel.TextWrapped = true
+													end
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+					end)
+					RogueArtifactEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Artifact Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -43, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif rogueartifactEsp == true then
+				if game.Players.LocalPlayer then
+					task.spawn(function()
+						rogueartifactEsp = false
+						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
+							if v:FindFirstChild("ArtifactviewHolder") then
+								v.ArtifactviewHolder.Enabled = false
+							end
+						end
+					end)
+					RogueArtifactEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Artifact Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -43, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
 					end)
 				end
 			end
 		end
 	end)
 	
+	--// Notifier
+	RogueNotifierHolder.Name = "Notifier"
+	RogueNotifierHolder.Parent = DescSheet_3
+
+	RogueNotifierTitle.Name = "NotifierTitle"
+	RogueNotifierTitle.Parent = AutoHolder
+	RogueNotifierTitle.Active = false
+	RogueNotifierTitle.AnchorPoint = Vector2.new(0.5, 1)
+	RogueNotifierTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueNotifierTitle.BackgroundTransparency = 1.000
+	RogueNotifierTitle.LayoutOrder = 1
+	RogueNotifierTitle.Position = UDim2.new(0.5, 85, 1, -555)
+	RogueNotifierTitle.Selectable = false
+	RogueNotifierTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueNotifierTitle.Font = Enum.Font.SourceSansSemibold
+	RogueNotifierTitle.RichText = true
+	RogueNotifierTitle.Text = "<u>Artifact Notifier</u>"
+	RogueNotifierTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueNotifierTitle.TextSize = 18.000
+	RogueNotifierTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueNotifierTitle.TextTransparency = 0.100
+	RogueNotifierTitle.TextWrapped = true
+	RogueNotifierTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	RogueNotifierButton.Name = "Activator"
+	RogueNotifierButton.Parent = RogueNotifierHolder
+	RogueNotifierButton.Active = false
+	RogueNotifierButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueNotifierButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueNotifierButton.BackgroundTransparency = 1.000
+	RogueNotifierButton.LayoutOrder = 1
+	RogueNotifierButton.Position = UDim2.new(0.5, 85, 1, -535)
+	RogueNotifierButton.Selectable = false
+	RogueNotifierButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueNotifierButton.Font = Enum.Font.SourceSansSemibold
+	RogueNotifierButton.RichText = true
+	RogueNotifierButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Notifier Turned Off</stroke>'
+	RogueNotifierButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueNotifierButton.TextSize = 16.000
+	RogueNotifierButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueNotifierButton.TextTransparency = 0.100
+	RogueNotifierButton.TextWrapped = true
+	RogueNotifierButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueNotifierButton.MouseButton1Down:connect(function()
+		if not RogueNotifierHolder:FindFirstChild("ActivateCD") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueNotifierButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguenotifierOn == true then
+				roguenotifierOn = false
+				local deb = Instance.new("TextLabel")
+				deb.Name = "ActivateCD"
+				deb.Parent = RogueNotifierHolder
+				deb.Active = false
+				deb.AnchorPoint = Vector2.new(0.5, 1)
+				deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				deb.BackgroundTransparency = 1.000
+				deb.LayoutOrder = 1
+				deb.Position = UDim2.new(0.5, -43, 1, -535)
+				deb.Selectable = false
+				deb.Size = UDim2.new(0.5, 0, 0, 20)
+				deb.Font = Enum.Font.SourceSansSemibold
+				deb.RichText = true
+				deb.Text = "Wait"
+				deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+				deb.TextSize = 16.000
+				deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+				deb.TextTransparency = 0.600
+				deb.TextWrapped = true
+				deb.TextXAlignment = Enum.TextXAlignment.Right
+				task.spawn(function()
+					task.wait(0.5)
+					deb:Destroy()
+				end)
+				RogueNotifierButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Notifier Turned Off</stroke>'
+			elseif roguenotifierOn == false then
+				roguenotifierOn = true
+				local deb = Instance.new("TextLabel")
+				deb.Name = "ActivateCD"
+				deb.Parent = RogueNotifierHolder
+				deb.Active = false
+				deb.AnchorPoint = Vector2.new(0.5, 1)
+				deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				deb.BackgroundTransparency = 1.000
+				deb.LayoutOrder = 1
+				deb.Position = UDim2.new(0.5, -43, 1, -535)
+				deb.Selectable = false
+				deb.Size = UDim2.new(0.5, 0, 0, 20)
+				deb.Font = Enum.Font.SourceSansSemibold
+				deb.RichText = true
+				deb.Text = "Wait"
+				deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+				deb.TextSize = 16.000
+				deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+				deb.TextTransparency = 0.600
+				deb.TextWrapped = true
+				deb.TextXAlignment = Enum.TextXAlignment.Right
+				task.spawn(function()
+					task.wait(0.5)
+					deb:Destroy()
+				end)
+				RogueNotifierButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Notifier Turned On</stroke>'
+			end
+		end
+	end)
+	--// Auto
 	AutoHolder.Name = "Auto"
 	AutoHolder.Parent = DescSheet_3
 
@@ -1490,7 +2416,7 @@ if gameName == "Rogue Lineage Copy" then
 	AutoTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	AutoTitle.BackgroundTransparency = 1.000
 	AutoTitle.LayoutOrder = 1
-	AutoTitle.Position = UDim2.new(0.5, 85, 1, -595)
+	AutoTitle.Position = UDim2.new(0.5, 85, 1, -495)
 	AutoTitle.Selectable = false
 	AutoTitle.Size = UDim2.new(0.5, 0, 0, 20)
 	AutoTitle.Font = Enum.Font.SourceSansSemibold
@@ -1510,7 +2436,7 @@ if gameName == "Rogue Lineage Copy" then
 	AutoBardButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	AutoBardButton.BackgroundTransparency = 1.000
 	AutoBardButton.LayoutOrder = 1
-	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -575)
+	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -475)
 	AutoBardButton.Selectable = false
 	AutoBardButton.Size = UDim2.new(0.5, 0, 0, 20)
 	AutoBardButton.Font = Enum.Font.SourceSansSemibold
@@ -1564,7 +2490,7 @@ if gameName == "Rogue Lineage Copy" then
 							alreadyusedbardText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 							alreadyusedbardText.BackgroundTransparency = 1.000
 							alreadyusedbardText.LayoutOrder = 1
-							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -575)
+							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -475)
 							alreadyusedbardText.Selectable = false
 							alreadyusedbardText.Size = UDim2.new(0.5, 0, 0, 20)
 							alreadyusedbardText.Font = Enum.Font.SourceSansSemibold
@@ -1591,7 +2517,7 @@ if gameName == "Rogue Lineage Copy" then
 					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					notfoundcharText.BackgroundTransparency = 1.000
 					notfoundcharText.LayoutOrder = 1
-					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -575)
+					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -475)
 					notfoundcharText.Selectable = false
 					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
 					notfoundcharText.Font = Enum.Font.SourceSansSemibold
@@ -3363,231 +4289,1044 @@ if gameName == "Rogue Lineage Copy" then
 		game.Workspace.Trinkets.ChildAdded:Connect(function(trinket)
 			if not trinket:FindFirstChild("TrinketviewHolder") then
 				task.wait(0.35)
-				local trinketEspHolder = Instance.new("BillboardGui")
-				trinketEspHolder.Name = "TrinketviewHolder"
-				trinketEspHolder.Parent = trinket
-				trinketEspHolder.Active = false
-				trinketEspHolder.Adornee = trinket
-				trinketEspHolder.AlwaysOnTop = true
-				if roguetrinketEsp == true then
-					trinketEspHolder.Enabled = true
-				elseif roguetrinketEsp == false then
-					trinketEspHolder.Enabled = false
-				end
-				trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
-				trinketEspHolder.ResetOnSpawn = false
-				trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-				trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
-				trinketEspHolder.ClipsDescendants = true
-
-				local trinketEspLabel = Instance.new("TextLabel")
-				trinketEspLabel.Name = "TrinketView"
-				trinketEspLabel.Parent = trinketEspHolder
-				trinketEspLabel.Active = false
-				trinketEspLabel.BackgroundTransparency = 1.000
-				trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
-				trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
-				trinketEspLabel.ZIndex = 5
-				trinketEspLabel.Font = Enum.Font.SourceSansBold
-				trinketEspLabel.RichText = true
 				if trinket.Parent == game.Workspace.Trinkets then
 					if trinket.ClassName == "MeshPart" then
 						if trinket.MeshId == "rbxassetid://5196551436" then
+							local trinketEspHolder = Instance.new("BillboardGui")
+							trinketEspHolder.Name = "TrinketviewHolder"
+							trinketEspHolder.Parent = trinket
+							trinketEspHolder.Active = false
+							trinketEspHolder.Adornee = trinket
+							trinketEspHolder.AlwaysOnTop = true
+							if roguetrinketEsp == true then
+								trinketEspHolder.Enabled = true
+							elseif roguetrinketEsp == false then
+								trinketEspHolder.Enabled = false
+							end
+							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							trinketEspHolder.ResetOnSpawn = false
+							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.ClipsDescendants = true
+
+							local trinketEspLabel = Instance.new("TextLabel")
+							trinketEspLabel.Name = "TrinketView"
+							trinketEspLabel.Parent = trinketEspHolder
+							trinketEspLabel.Active = false
+							trinketEspLabel.BackgroundTransparency = 1.000
+							trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspLabel.ZIndex = 5
+							trinketEspLabel.Font = Enum.Font.SourceSansBold
+							trinketEspLabel.RichText = true
 							trinketEspLabel.Text = "Amulet"
 							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 							trinketEspLabel.TextStrokeTransparency = 0.650
 							trinketEspLabel.TextTransparency = 0.250
+							trinketEspLabel.TextSize = 15.000
+							trinketEspLabel.TextWrapped = true
 						elseif trinket.MeshId == "rbxassetid://923469333" then
 							if trinket.Color == Color3.fromRGB(33, 84, 185) then
+								local trinketEspHolder = Instance.new("BillboardGui")
+								trinketEspHolder.Name = "TrinketviewHolder"
+								trinketEspHolder.Parent = trinket
+								trinketEspHolder.Active = false
+								trinketEspHolder.Adornee = trinket
+								trinketEspHolder.AlwaysOnTop = true
+								if roguetrinketEsp == true then
+									trinketEspHolder.Enabled = true
+								elseif roguetrinketEsp == false then
+									trinketEspHolder.Enabled = false
+								end
+								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								trinketEspHolder.ResetOnSpawn = false
+								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								trinketEspHolder.ClipsDescendants = true
+
+								local trinketEspLabel = Instance.new("TextLabel")
+								trinketEspLabel.Name = "TrinketView"
+								trinketEspLabel.Parent = trinketEspHolder
+								trinketEspLabel.Active = false
+								trinketEspLabel.BackgroundTransparency = 1.000
+								trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspLabel.ZIndex = 5
+								trinketEspLabel.Font = Enum.Font.SourceSansBold
+								trinketEspLabel.RichText = true
 								trinketEspLabel.Text = "Blue Candy"
 								trinketEspLabel.TextColor3 = Color3.fromRGB(33, 84, 185)
 								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 								trinketEspLabel.TextStrokeTransparency = 0.650
 								trinketEspLabel.TextTransparency = 0.250
+								trinketEspLabel.TextSize = 15.000
+								trinketEspLabel.TextWrapped = true
 							elseif trinket.Color == Color3.fromRGB(30, 185, 30) then
+								local trinketEspHolder = Instance.new("BillboardGui")
+								trinketEspHolder.Name = "TrinketviewHolder"
+								trinketEspHolder.Parent = trinket
+								trinketEspHolder.Active = false
+								trinketEspHolder.Adornee = trinket
+								trinketEspHolder.AlwaysOnTop = true
+								if roguetrinketEsp == true then
+									trinketEspHolder.Enabled = true
+								elseif roguetrinketEsp == false then
+									trinketEspHolder.Enabled = false
+								end
+								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								trinketEspHolder.ResetOnSpawn = false
+								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								trinketEspHolder.ClipsDescendants = true
+
+								local trinketEspLabel = Instance.new("TextLabel")
+								trinketEspLabel.Name = "TrinketView"
+								trinketEspLabel.Parent = trinketEspHolder
+								trinketEspLabel.Active = false
+								trinketEspLabel.BackgroundTransparency = 1.000
+								trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspLabel.ZIndex = 5
+								trinketEspLabel.Font = Enum.Font.SourceSansBold
+								trinketEspLabel.RichText = true
 								trinketEspLabel.Text = "Green Candy"
 								trinketEspLabel.TextColor3 = Color3.fromRGB(30, 185, 30)
 								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 								trinketEspLabel.TextStrokeTransparency = 0.650
 								trinketEspLabel.TextTransparency = 0.250
+								trinketEspLabel.TextSize = 15.000
+								trinketEspLabel.TextWrapped = true
 							elseif trinket.Color == Color3.fromRGB(255, 137, 1) then
+								local trinketEspHolder = Instance.new("BillboardGui")
+								trinketEspHolder.Name = "TrinketviewHolder"
+								trinketEspHolder.Parent = trinket
+								trinketEspHolder.Active = false
+								trinketEspHolder.Adornee = trinket
+								trinketEspHolder.AlwaysOnTop = true
+								if roguetrinketEsp == true then
+									trinketEspHolder.Enabled = true
+								elseif roguetrinketEsp == false then
+									trinketEspHolder.Enabled = false
+								end
+								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								trinketEspHolder.ResetOnSpawn = false
+								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								trinketEspHolder.ClipsDescendants = true
+
+								local trinketEspLabel = Instance.new("TextLabel")
+								trinketEspLabel.Name = "TrinketView"
+								trinketEspLabel.Parent = trinketEspHolder
+								trinketEspLabel.Active = false
+								trinketEspLabel.BackgroundTransparency = 1.000
+								trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								trinketEspLabel.ZIndex = 5
+								trinketEspLabel.Font = Enum.Font.SourceSansBold
+								trinketEspLabel.RichText = true
 								trinketEspLabel.Text = "Orange Candy"
 								trinketEspLabel.TextColor3 = Color3.fromRGB(255, 137, 1)
 								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 								trinketEspLabel.TextStrokeTransparency = 0.650
 								trinketEspLabel.TextTransparency = 0.250
-							else
-								trinketEspLabel.Text = "Unknown Candy"
-								trinketEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-								trinketEspLabel.TextStrokeTransparency = 0.650
-								trinketEspLabel.TextTransparency = 0.250
+								trinketEspLabel.TextSize = 15.000
+								trinketEspLabel.TextWrapped = true
 							end
 						elseif trinket.MeshId == "rbxassetid://5204003946" then
+							local trinketEspHolder = Instance.new("BillboardGui")
+							trinketEspHolder.Name = "TrinketviewHolder"
+							trinketEspHolder.Parent = trinket
+							trinketEspHolder.Active = false
+							trinketEspHolder.Adornee = trinket
+							trinketEspHolder.AlwaysOnTop = true
+							if roguetrinketEsp == true then
+								trinketEspHolder.Enabled = true
+							elseif roguetrinketEsp == false then
+								trinketEspHolder.Enabled = false
+							end
+							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							trinketEspHolder.ResetOnSpawn = false
+							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.ClipsDescendants = true
+
+							local trinketEspLabel = Instance.new("TextLabel")
+							trinketEspLabel.Name = "TrinketView"
+							trinketEspLabel.Parent = trinketEspHolder
+							trinketEspLabel.Active = false
+							trinketEspLabel.BackgroundTransparency = 1.000
+							trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspLabel.ZIndex = 5
+							trinketEspLabel.Font = Enum.Font.SourceSansBold
+							trinketEspLabel.RichText = true
 							trinketEspLabel.Text = "Goblet"
 							trinketEspLabel.TextColor3 = Color3.fromRGB(150, 86, 9)
 							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 							trinketEspLabel.TextStrokeTransparency = 0.650
 							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.MeshId == "rbxassetid://2520762076" then
-							trinketEspLabel.Text = "Howler Friend"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
+							trinketEspLabel.TextSize = 15.000
+							trinketEspLabel.TextWrapped = true
 						elseif trinket.MeshId == "rbxassetid://5196577540" then
+							local trinketEspHolder = Instance.new("BillboardGui")
+							trinketEspHolder.Name = "TrinketviewHolder"
+							trinketEspHolder.Parent = trinket
+							trinketEspHolder.Active = false
+							trinketEspHolder.Adornee = trinket
+							trinketEspHolder.AlwaysOnTop = true
+							if roguetrinketEsp == true then
+								trinketEspHolder.Enabled = true
+							elseif roguetrinketEsp == false then
+								trinketEspHolder.Enabled = false
+							end
+							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							trinketEspHolder.ResetOnSpawn = false
+							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.ClipsDescendants = true
+
+							local trinketEspLabel = Instance.new("TextLabel")
+							trinketEspLabel.Name = "TrinketView"
+							trinketEspLabel.Parent = trinketEspHolder
+							trinketEspLabel.Active = false
+							trinketEspLabel.BackgroundTransparency = 1.000
+							trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspLabel.ZIndex = 5
+							trinketEspLabel.Font = Enum.Font.SourceSansBold
+							trinketEspLabel.RichText = true
 							trinketEspLabel.Text = "Old Amulet"
 							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 							trinketEspLabel.TextStrokeTransparency = 0.650
 							trinketEspLabel.TextTransparency = 0.250
+							trinketEspLabel.TextSize = 15.000
+							trinketEspLabel.TextWrapped = true
 						elseif trinket.MeshId == "rbxassetid://5196782997" then
+							local trinketEspHolder = Instance.new("BillboardGui")
+							trinketEspHolder.Name = "TrinketviewHolder"
+							trinketEspHolder.Parent = trinket
+							trinketEspHolder.Active = false
+							trinketEspHolder.Adornee = trinket
+							trinketEspHolder.AlwaysOnTop = true
+							if roguetrinketEsp == true then
+								trinketEspHolder.Enabled = true
+							elseif roguetrinketEsp == false then
+								trinketEspHolder.Enabled = false
+							end
+							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							trinketEspHolder.ResetOnSpawn = false
+							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.ClipsDescendants = true
+
+							local trinketEspLabel = Instance.new("TextLabel")
+							trinketEspLabel.Name = "TrinketView"
+							trinketEspLabel.Parent = trinketEspHolder
+							trinketEspLabel.Active = false
+							trinketEspLabel.BackgroundTransparency = 1.000
+							trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspLabel.ZIndex = 5
+							trinketEspLabel.Font = Enum.Font.SourceSansBold
+							trinketEspLabel.RichText = true
 							trinketEspLabel.Text = "Old Ring"
 							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 							trinketEspLabel.TextStrokeTransparency = 0.650
 							trinketEspLabel.TextTransparency = 0.250
+							trinketEspLabel.TextSize = 15.000
+							trinketEspLabel.TextWrapped = true
 						elseif trinket.MeshId == "rbxassetid://5196776695" then
+							local trinketEspHolder = Instance.new("BillboardGui")
+							trinketEspHolder.Name = "TrinketviewHolder"
+							trinketEspHolder.Parent = trinket
+							trinketEspHolder.Active = false
+							trinketEspHolder.Adornee = trinket
+							trinketEspHolder.AlwaysOnTop = true
+							if roguetrinketEsp == true then
+								trinketEspHolder.Enabled = true
+							elseif roguetrinketEsp == false then
+								trinketEspHolder.Enabled = false
+							end
+							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							trinketEspHolder.ResetOnSpawn = false
+							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.ClipsDescendants = true
+
+							local trinketEspLabel = Instance.new("TextLabel")
+							trinketEspLabel.Name = "TrinketView"
+							trinketEspLabel.Parent = trinketEspHolder
+							trinketEspLabel.Active = false
+							trinketEspLabel.BackgroundTransparency = 1.000
+							trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspLabel.ZIndex = 5
+							trinketEspLabel.Font = Enum.Font.SourceSansBold
+							trinketEspLabel.RichText = true
 							trinketEspLabel.Text = "Ring"
 							trinketEspLabel.TextColor3 = Color3.fromRGB(163, 162, 165)
 							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 							trinketEspLabel.TextStrokeTransparency = 0.650
 							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.MeshId == "rbxassetid://5204453430" then
-							trinketEspLabel.Text = "Scroll"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(255, 202, 42)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(255, 0, 0) and trinket.Material == Enum.Material.Glass then
-							trinketEspLabel.Text = "Ruby"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
+							trinketEspLabel.TextSize = 15.000
+							trinketEspLabel.TextWrapped = true
 						end
 					elseif trinket.ClassName == "UnionOperation" then
 						if trinket.Color == Color3.fromRGB(111, 113, 125) then
+							local trinketEspHolder = Instance.new("BillboardGui")
+							trinketEspHolder.Name = "TrinketviewHolder"
+							trinketEspHolder.Parent = trinket
+							trinketEspHolder.Active = false
+							trinketEspHolder.Adornee = trinket
+							trinketEspHolder.AlwaysOnTop = true
+							if roguetrinketEsp == true then
+								trinketEspHolder.Enabled = true
+							elseif roguetrinketEsp == false then
+								trinketEspHolder.Enabled = false
+							end
+							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							trinketEspHolder.ResetOnSpawn = false
+							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.ClipsDescendants = true
+
+							local trinketEspLabel = Instance.new("TextLabel")
+							trinketEspLabel.Name = "TrinketView"
+							trinketEspLabel.Parent = trinketEspHolder
+							trinketEspLabel.Active = false
+							trinketEspLabel.BackgroundTransparency = 1.000
+							trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspLabel.ZIndex = 5
+							trinketEspLabel.Font = Enum.Font.SourceSansBold
+							trinketEspLabel.RichText = true
 							trinketEspLabel.Text = "Forgotten Idle"
 							trinketEspLabel.TextColor3 = Color3.fromRGB(111, 113, 125)
 							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 							trinketEspLabel.TextStrokeTransparency = 0.650
 							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(248, 217, 109) then
-							trinketEspLabel.Text = "Scroom Key"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(255, 89, 89) then
-							trinketEspLabel.Text = "Philosopher's Stone"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(29, 46, 58) then
-							trinketEspLabel.Text = "Nightstone"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(248, 248, 248) and trinket.Material == Enum.Material.Neon then
-							if trinket:FindFirstChild("PointLight") then
-								trinketEspLabel.Text = "Amulet of the White King"
-								trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-								trinketEspLabel.TextStrokeTransparency = 0.650
-								trinketEspLabel.TextTransparency = 0.250
-							else
-								trinketEspLabel.Text = "Lannis Amulet"
-								trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-								trinketEspLabel.TextStrokeTransparency = 0.650
-								trinketEspLabel.TextTransparency = 0.250
-							end
+							trinketEspLabel.TextSize = 15.000
+							trinketEspLabel.TextWrapped = true
 						end
 					elseif trinket.ClassName == "Part" then
 						if trinket.Color == Color3.fromRGB(89, 34, 89) then
+							local trinketEspHolder = Instance.new("BillboardGui")
+							trinketEspHolder.Name = "TrinketviewHolder"
+							trinketEspHolder.Parent = trinket
+							trinketEspHolder.Active = false
+							trinketEspHolder.Adornee = trinket
+							trinketEspHolder.AlwaysOnTop = true
+							if roguetrinketEsp == true then
+								trinketEspHolder.Enabled = true
+							elseif roguetrinketEsp == false then
+								trinketEspHolder.Enabled = false
+							end
+							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							trinketEspHolder.ResetOnSpawn = false
+							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.ClipsDescendants = true
+
+							local trinketEspLabel = Instance.new("TextLabel")
+							trinketEspLabel.Name = "TrinketView"
+							trinketEspLabel.Parent = trinketEspHolder
+							trinketEspLabel.Active = false
+							trinketEspLabel.BackgroundTransparency = 1.000
+							trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							trinketEspLabel.ZIndex = 5
+							trinketEspLabel.Font = Enum.Font.SourceSansBold
+							trinketEspLabel.RichText = true
 							trinketEspLabel.Text = "???"
 							trinketEspLabel.TextColor3 = Color3.fromRGB(89, 34, 89)
 							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 							trinketEspLabel.TextStrokeTransparency = 0.650
 							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(164, 187, 190) and trinket.Material == Enum.Material.Glass then
-							trinketEspLabel.Text = "Diamond"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(164, 187, 190)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(0, 184, 49) and trinket.Material == Enum.Material.Glass then
-							trinketEspLabel.Text = "Emerald"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(0, 184, 49)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(16, 42, 220) and trinket.Material == Enum.Material.Glass then
-							trinketEspLabel.Text = "Sapphire"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(16, 42, 220)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(248, 248, 248) and trinket.Material == Enum.Material.Glass then
-							trinketEspLabel.Text = "Opal"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(248, 248, 248)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(255, 0, 191) and trinket.Material == Enum.Material.Glass then
-							if not trinket:FindFirstChildOfClass("Script") then
-								trinketEspLabel.Text = "Rift Gem"
-								trinketEspLabel.TextColor3 = Color3.fromRGB(255, 0, 191)
-								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-								trinketEspLabel.TextStrokeTransparency = 0.650
-								trinketEspLabel.TextTransparency = 0.250
-							end
-						elseif trinket.Color == Color3.fromRGB(254, 85, 100) then
-							if trinket:FindFirstChild("OrbParticle") then
-								trinketEspLabel.Text = "Ice Essence"
-								trinketEspLabel.TextColor3 = Color3.fromRGB(25, 185, 155)
-								trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-								trinketEspLabel.TextStrokeTransparency = 0.650
-								trinketEspLabel.TextTransparency = 0.250
-							end
-						elseif trinket.Color == Color3.fromRGB(255, 255, 0) then
-							trinketEspLabel.Text = "Spider Cloak"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(128, 187, 219) then
-							trinketEspLabel.Text = "Fairfrozen"
-							trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-							trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-							trinketEspLabel.TextStrokeTransparency = 0.650
-							trinketEspLabel.TextTransparency = 0.250
-						elseif trinket.Color == Color3.fromRGB(163, 162, 165) then
-							if trinket:FindFirstChildOfClass("Attachment") then
-								if trinket.Attachment:FindFirstChildOfClass("ParticleEmitter") then
-									if trinket.Attachment.ParticleEmitter.Texture == "rbxassetid://1536547385" then
-										trinketEspLabel.Text = "P.M.A"
-										trinketEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
-										trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-										trinketEspLabel.TextStrokeTransparency = 0.650
-										trinketEspLabel.TextTransparency = 0.250
-									end
-								end
-							end
+							trinketEspLabel.TextSize = 15.000
+							trinketEspLabel.TextWrapped = true
 						end
 					else
+						local trinketEspHolder = Instance.new("BillboardGui")
+						trinketEspHolder.Name = "TrinketviewHolder"
+						trinketEspHolder.Parent = trinket
+						trinketEspHolder.Active = false
+						trinketEspHolder.Adornee = trinket
+						trinketEspHolder.AlwaysOnTop = true
+						if roguetrinketEsp == true then
+							trinketEspHolder.Enabled = true
+						elseif roguetrinketEsp == false then
+							trinketEspHolder.Enabled = false
+						end
+						trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+						trinketEspHolder.ResetOnSpawn = false
+						trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+						trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+						trinketEspHolder.ClipsDescendants = true
+
+						local trinketEspLabel = Instance.new("TextLabel")
+						trinketEspLabel.Name = "TrinketView"
+						trinketEspLabel.Parent = trinketEspHolder
+						trinketEspLabel.Active = false
+						trinketEspLabel.BackgroundTransparency = 1.000
+						trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+						trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+						trinketEspLabel.ZIndex = 5
+						trinketEspLabel.Font = Enum.Font.SourceSansBold
+						trinketEspLabel.RichText = true
 						trinketEspLabel.Text = "Unknown"
 						trinketEspLabel.TextColor3 = Color3.fromRGB(26, 26, 26)
 						trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 						trinketEspLabel.TextStrokeTransparency = 0.900
 						trinketEspLabel.TextTransparency = 0.100
+						trinketEspLabel.TextSize = 15.000
+						trinketEspLabel.TextWrapped = true
 					end
-					trinketEspLabel.TextSize = 15.000
-					trinketEspLabel.TextWrapped = true
+				end
+			end
+			if not trinket:FindFirstChild("GemScrollviewHolder") then
+				task.wait(0.35)
+				if trinket.Parent == game.Workspace.Trinkets then
+					if trinket.ClassName == "MeshPart" then
+						if trinket.MeshId == "rbxassetid://5204453430" then
+							local gemscrollEspHolder = Instance.new("BillboardGui")
+							gemscrollEspHolder.Name = "GemScrollviewHolder"
+							gemscrollEspHolder.Parent = trinket
+							gemscrollEspHolder.Active = false
+							gemscrollEspHolder.Adornee = trinket
+							gemscrollEspHolder.AlwaysOnTop = true
+							if roguegemscrollEsp == true then
+								gemscrollEspHolder.Enabled = true
+							elseif roguegemscrollEsp == false then
+								gemscrollEspHolder.Enabled = false
+							end
+							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							gemscrollEspHolder.ResetOnSpawn = false
+							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.ClipsDescendants = true
+
+							local gemscrollEspLabel = Instance.new("TextLabel")
+							gemscrollEspLabel.Name = "GemScrollView"
+							gemscrollEspLabel.Parent = gemscrollEspHolder
+							gemscrollEspLabel.Active = false
+							gemscrollEspLabel.BackgroundTransparency = 1.000
+							gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspLabel.ZIndex = 5
+							gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+							gemscrollEspLabel.RichText = true
+							gemscrollEspLabel.Text = "Scroll"
+							gemscrollEspLabel.TextColor3 = Color3.fromRGB(255, 202, 42)
+							gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							gemscrollEspLabel.TextStrokeTransparency = 0.650
+							gemscrollEspLabel.TextTransparency = 0.250
+							gemscrollEspLabel.TextSize = 15.000
+							gemscrollEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(255, 0, 0) and trinket.Material == Enum.Material.Glass then
+							local gemscrollEspHolder = Instance.new("BillboardGui")
+							gemscrollEspHolder.Name = "GemScrollviewHolder"
+							gemscrollEspHolder.Parent = trinket
+							gemscrollEspHolder.Active = false
+							gemscrollEspHolder.Adornee = trinket
+							gemscrollEspHolder.AlwaysOnTop = true
+							if roguegemscrollEsp == true then
+								gemscrollEspHolder.Enabled = true
+							elseif roguegemscrollEsp == false then
+								gemscrollEspHolder.Enabled = false
+							end
+							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							gemscrollEspHolder.ResetOnSpawn = false
+							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.ClipsDescendants = true
+
+							local gemscrollEspLabel = Instance.new("TextLabel")
+							gemscrollEspLabel.Name = "GemScrollView"
+							gemscrollEspLabel.Parent = gemscrollEspHolder
+							gemscrollEspLabel.Active = false
+							gemscrollEspLabel.BackgroundTransparency = 1.000
+							gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspLabel.ZIndex = 5
+							gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+							gemscrollEspLabel.RichText = true
+							gemscrollEspLabel.Text = "Ruby"
+							gemscrollEspLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+							gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							gemscrollEspLabel.TextStrokeTransparency = 0.650
+							gemscrollEspLabel.TextTransparency = 0.250
+							gemscrollEspLabel.TextSize = 15.000
+							gemscrollEspLabel.TextWrapped = true
+						end
+					elseif trinket.ClassName == "Part" then
+						if trinket.Color == Color3.fromRGB(164, 187, 190) and trinket.Material == Enum.Material.Glass then
+							local gemscrollEspHolder = Instance.new("BillboardGui")
+							gemscrollEspHolder.Name = "GemScrollviewHolder"
+							gemscrollEspHolder.Parent = trinket
+							gemscrollEspHolder.Active = false
+							gemscrollEspHolder.Adornee = trinket
+							gemscrollEspHolder.AlwaysOnTop = true
+							if roguegemscrollEsp == true then
+								gemscrollEspHolder.Enabled = true
+							elseif roguegemscrollEsp == false then
+								gemscrollEspHolder.Enabled = false
+							end
+							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							gemscrollEspHolder.ResetOnSpawn = false
+							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.ClipsDescendants = true
+
+							local gemscrollEspLabel = Instance.new("TextLabel")
+							gemscrollEspLabel.Name = "GemScrollView"
+							gemscrollEspLabel.Parent = gemscrollEspHolder
+							gemscrollEspLabel.Active = false
+							gemscrollEspLabel.BackgroundTransparency = 1.000
+							gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspLabel.ZIndex = 5
+							gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+							gemscrollEspLabel.RichText = true
+							gemscrollEspLabel.Text = "Diamond"
+							gemscrollEspLabel.TextColor3 = Color3.fromRGB(164, 187, 190)
+							gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							gemscrollEspLabel.TextStrokeTransparency = 0.650
+							gemscrollEspLabel.TextTransparency = 0.250
+							gemscrollEspLabel.TextSize = 15.000
+							gemscrollEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(0, 184, 49) and trinket.Material == Enum.Material.Glass then
+							local gemscrollEspHolder = Instance.new("BillboardGui")
+							gemscrollEspHolder.Name = "GemScrollviewHolder"
+							gemscrollEspHolder.Parent = trinket
+							gemscrollEspHolder.Active = false
+							gemscrollEspHolder.Adornee = trinket
+							gemscrollEspHolder.AlwaysOnTop = true
+							if roguegemscrollEsp == true then
+								gemscrollEspHolder.Enabled = true
+							elseif roguegemscrollEsp == false then
+								gemscrollEspHolder.Enabled = false
+							end
+							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							gemscrollEspHolder.ResetOnSpawn = false
+							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.ClipsDescendants = true
+
+							local gemscrollEspLabel = Instance.new("TextLabel")
+							gemscrollEspLabel.Name = "GemScrollView"
+							gemscrollEspLabel.Parent = gemscrollEspHolder
+							gemscrollEspLabel.Active = false
+							gemscrollEspLabel.BackgroundTransparency = 1.000
+							gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspLabel.ZIndex = 5
+							gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+							gemscrollEspLabel.RichText = true
+							gemscrollEspLabel.Text = "Emerald"
+							gemscrollEspLabel.TextColor3 = Color3.fromRGB(0, 184, 49)
+							gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							gemscrollEspLabel.TextStrokeTransparency = 0.650
+							gemscrollEspLabel.TextTransparency = 0.250
+							gemscrollEspLabel.TextSize = 15.000
+							gemscrollEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(16, 42, 220) and trinket.Material == Enum.Material.Glass then
+							local gemscrollEspHolder = Instance.new("BillboardGui")
+							gemscrollEspHolder.Name = "GemScrollviewHolder"
+							gemscrollEspHolder.Parent = trinket
+							gemscrollEspHolder.Active = false
+							gemscrollEspHolder.Adornee = trinket
+							gemscrollEspHolder.AlwaysOnTop = true
+							if roguegemscrollEsp == true then
+								gemscrollEspHolder.Enabled = true
+							elseif roguegemscrollEsp == false then
+								gemscrollEspHolder.Enabled = false
+							end
+							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							gemscrollEspHolder.ResetOnSpawn = false
+							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.ClipsDescendants = true
+
+							local gemscrollEspLabel = Instance.new("TextLabel")
+							gemscrollEspLabel.Name = "GemScrollView"
+							gemscrollEspLabel.Parent = gemscrollEspHolder
+							gemscrollEspLabel.Active = false
+							gemscrollEspLabel.BackgroundTransparency = 1.000
+							gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspLabel.ZIndex = 5
+							gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+							gemscrollEspLabel.RichText = true
+							gemscrollEspLabel.Text = "Sapphire"
+							gemscrollEspLabel.TextColor3 = Color3.fromRGB(16, 42, 220)
+							gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							gemscrollEspLabel.TextStrokeTransparency = 0.650
+							gemscrollEspLabel.TextTransparency = 0.250
+							gemscrollEspLabel.TextSize = 15.000
+							gemscrollEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(248, 248, 248) and trinket.Material == Enum.Material.Glass then
+							local gemscrollEspHolder = Instance.new("BillboardGui")
+							gemscrollEspHolder.Name = "GemScrollviewHolder"
+							gemscrollEspHolder.Parent = trinket
+							gemscrollEspHolder.Active = false
+							gemscrollEspHolder.Adornee = trinket
+							gemscrollEspHolder.AlwaysOnTop = true
+							if roguegemscrollEsp == true then
+								gemscrollEspHolder.Enabled = true
+							elseif roguegemscrollEsp == false then
+								gemscrollEspHolder.Enabled = false
+							end
+							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							gemscrollEspHolder.ResetOnSpawn = false
+							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.ClipsDescendants = true
+
+							local gemscrollEspLabel = Instance.new("TextLabel")
+							gemscrollEspLabel.Name = "GemScrollView"
+							gemscrollEspLabel.Parent = gemscrollEspHolder
+							gemscrollEspLabel.Active = false
+							gemscrollEspLabel.BackgroundTransparency = 1.000
+							gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							gemscrollEspLabel.ZIndex = 5
+							gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+							gemscrollEspLabel.RichText = true
+							gemscrollEspLabel.Text = "Opal"
+							gemscrollEspLabel.TextColor3 = Color3.fromRGB(248, 248, 248)
+							gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							gemscrollEspLabel.TextStrokeTransparency = 0.650
+							gemscrollEspLabel.TextTransparency = 0.250
+							gemscrollEspLabel.TextSize = 15.000
+							gemscrollEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(254, 85, 100) then
+							if trinket:FindFirstChild("OrbParticle") then
+								local gemscrollEspHolder = Instance.new("BillboardGui")
+								gemscrollEspHolder.Name = "GemScrollviewHolder"
+								gemscrollEspHolder.Parent = trinket
+								gemscrollEspHolder.Active = false
+								gemscrollEspHolder.Adornee = trinket
+								gemscrollEspHolder.AlwaysOnTop = true
+								if roguegemscrollEsp == true then
+									gemscrollEspHolder.Enabled = true
+								elseif roguegemscrollEsp == false then
+									gemscrollEspHolder.Enabled = false
+								end
+								gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								gemscrollEspHolder.ResetOnSpawn = false
+								gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								gemscrollEspHolder.ClipsDescendants = true
+
+								local gemscrollEspLabel = Instance.new("TextLabel")
+								gemscrollEspLabel.Name = "GemScrollView"
+								gemscrollEspLabel.Parent = gemscrollEspHolder
+								gemscrollEspLabel.Active = false
+								gemscrollEspLabel.BackgroundTransparency = 1.000
+								gemscrollEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								gemscrollEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								gemscrollEspLabel.ZIndex = 5
+								gemscrollEspLabel.Font = Enum.Font.SourceSansBold
+								gemscrollEspLabel.RichText = true
+								gemscrollEspLabel.Text = "Ice Essence"
+								gemscrollEspLabel.TextColor3 = Color3.fromRGB(25, 185, 155)
+								gemscrollEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								gemscrollEspLabel.TextStrokeTransparency = 0.650
+								gemscrollEspLabel.TextTransparency = 0.250
+								gemscrollEspLabel.TextSize = 15.000
+								gemscrollEspLabel.TextWrapped = true
+							end
+						end
+					end
+				end
+			end
+			if not trinket:FindFirstChild("ArtifactviewHolder") then
+				task.wait(0.35)
+				if trinket.Parent == game.Workspace.Trinkets then
+					if trinket.ClassName == "MeshPart" then
+						if trinket.MeshId == "rbxassetid://2520762076" then
+							local artifactEspHolder = Instance.new("BillboardGui")
+							artifactEspHolder.Name = "ArtifactviewHolder"
+							artifactEspHolder.Parent = trinket
+							artifactEspHolder.Active = false
+							artifactEspHolder.Adornee = trinket
+							artifactEspHolder.AlwaysOnTop = true
+							if rogueartifactEsp == true then
+								artifactEspHolder.Enabled = true
+							elseif rogueartifactEsp == false then
+								artifactEspHolder.Enabled = false
+							end
+							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							artifactEspHolder.ResetOnSpawn = false
+							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.ClipsDescendants = true
+
+							local artifactEspLabel = Instance.new("TextLabel")
+							artifactEspLabel.Name = "ArtifactView"
+							artifactEspLabel.Parent = artifactEspHolder
+							artifactEspLabel.Active = false
+							artifactEspLabel.BackgroundTransparency = 1.000
+							artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspLabel.ZIndex = 5
+							artifactEspLabel.Font = Enum.Font.SourceSansBold
+							artifactEspLabel.RichText = true
+							artifactEspLabel.Text = "Howler Friend"
+							artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							artifactEspLabel.TextStrokeTransparency = 0.650
+							artifactEspLabel.TextTransparency = 0.250
+							artifactEspLabel.TextSize = 15.000
+							artifactEspLabel.TextWrapped = true
+						end
+					elseif trinket.ClassName == "UnionOperation" then
+						if trinket.Color == Color3.fromRGB(248, 217, 109) then
+							local artifactEspHolder = Instance.new("BillboardGui")
+							artifactEspHolder.Name = "ArtifactviewHolder"
+							artifactEspHolder.Parent = trinket
+							artifactEspHolder.Active = false
+							artifactEspHolder.Adornee = trinket
+							artifactEspHolder.AlwaysOnTop = true
+							if rogueartifactEsp == true then
+								artifactEspHolder.Enabled = true
+							elseif rogueartifactEsp == false then
+								artifactEspHolder.Enabled = false
+							end
+							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							artifactEspHolder.ResetOnSpawn = false
+							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.ClipsDescendants = true
+
+							local artifactEspLabel = Instance.new("TextLabel")
+							artifactEspLabel.Name = "ArtifactView"
+							artifactEspLabel.Parent = artifactEspHolder
+							artifactEspLabel.Active = false
+							artifactEspLabel.BackgroundTransparency = 1.000
+							artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspLabel.ZIndex = 5
+							artifactEspLabel.Font = Enum.Font.SourceSansBold
+							artifactEspLabel.RichText = true
+							artifactEspLabel.Text = "Scroom Key"
+							artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							artifactEspLabel.TextStrokeTransparency = 0.650
+							artifactEspLabel.TextTransparency = 0.250
+							artifactEspLabel.TextSize = 15.000
+							artifactEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(255, 89, 89) then
+							local artifactEspHolder = Instance.new("BillboardGui")
+							artifactEspHolder.Name = "ArtifactviewHolder"
+							artifactEspHolder.Parent = trinket
+							artifactEspHolder.Active = false
+							artifactEspHolder.Adornee = trinket
+							artifactEspHolder.AlwaysOnTop = true
+							if rogueartifactEsp == true then
+								artifactEspHolder.Enabled = true
+							elseif rogueartifactEsp == false then
+								artifactEspHolder.Enabled = false
+							end
+							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							artifactEspHolder.ResetOnSpawn = false
+							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.ClipsDescendants = true
+
+							local artifactEspLabel = Instance.new("TextLabel")
+							artifactEspLabel.Name = "ArtifactView"
+							artifactEspLabel.Parent = artifactEspHolder
+							artifactEspLabel.Active = false
+							artifactEspLabel.BackgroundTransparency = 1.000
+							artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspLabel.ZIndex = 5
+							artifactEspLabel.Font = Enum.Font.SourceSansBold
+							artifactEspLabel.RichText = true
+							artifactEspLabel.Text = "Philosopher's Stone"
+							artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							artifactEspLabel.TextStrokeTransparency = 0.650
+							artifactEspLabel.TextTransparency = 0.250
+							artifactEspLabel.TextSize = 15.000
+							artifactEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(29, 46, 58) then
+							local artifactEspHolder = Instance.new("BillboardGui")
+							artifactEspHolder.Name = "ArtifactviewHolder"
+							artifactEspHolder.Parent = trinket
+							artifactEspHolder.Active = false
+							artifactEspHolder.Adornee = trinket
+							artifactEspHolder.AlwaysOnTop = true
+							if rogueartifactEsp == true then
+								artifactEspHolder.Enabled = true
+							elseif rogueartifactEsp == false then
+								artifactEspHolder.Enabled = false
+							end
+							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							artifactEspHolder.ResetOnSpawn = false
+							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.ClipsDescendants = true
+
+							local artifactEspLabel = Instance.new("TextLabel")
+							artifactEspLabel.Name = "ArtifactView"
+							artifactEspLabel.Parent = artifactEspHolder
+							artifactEspLabel.Active = false
+							artifactEspLabel.BackgroundTransparency = 1.000
+							artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspLabel.ZIndex = 5
+							artifactEspLabel.Font = Enum.Font.SourceSansBold
+							artifactEspLabel.RichText = true
+							artifactEspLabel.Text = "Nightstone"
+							artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							artifactEspLabel.TextStrokeTransparency = 0.650
+							artifactEspLabel.TextTransparency = 0.250
+							artifactEspLabel.TextSize = 15.000
+							artifactEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(248, 248, 248) and trinket.Material == Enum.Material.Neon then
+							if trinket:FindFirstChild("PointLight") then
+								local artifactEspHolder = Instance.new("BillboardGui")
+								artifactEspHolder.Name = "ArtifactviewHolder"
+								artifactEspHolder.Parent = trinket
+								artifactEspHolder.Active = false
+								artifactEspHolder.Adornee = trinket
+								artifactEspHolder.AlwaysOnTop = true
+								if rogueartifactEsp == true then
+									artifactEspHolder.Enabled = true
+								elseif rogueartifactEsp == false then
+									artifactEspHolder.Enabled = false
+								end
+								artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								artifactEspHolder.ResetOnSpawn = false
+								artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								artifactEspHolder.ClipsDescendants = true
+
+								local artifactEspLabel = Instance.new("TextLabel")
+								artifactEspLabel.Name = "ArtifactView"
+								artifactEspLabel.Parent = artifactEspHolder
+								artifactEspLabel.Active = false
+								artifactEspLabel.BackgroundTransparency = 1.000
+								artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								artifactEspLabel.ZIndex = 5
+								artifactEspLabel.Font = Enum.Font.SourceSansBold
+								artifactEspLabel.RichText = true
+								artifactEspLabel.Text = "Amulet of the White King"
+								artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+								artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								artifactEspLabel.TextStrokeTransparency = 0.650
+								artifactEspLabel.TextTransparency = 0.250
+								artifactEspLabel.TextSize = 15.000
+								artifactEspLabel.TextWrapped = true
+							else
+								local artifactEspHolder = Instance.new("BillboardGui")
+								artifactEspHolder.Name = "ArtifactviewHolder"
+								artifactEspHolder.Parent = trinket
+								artifactEspHolder.Active = false
+								artifactEspHolder.Adornee = trinket
+								artifactEspHolder.AlwaysOnTop = true
+								if rogueartifactEsp == true then
+									artifactEspHolder.Enabled = true
+								elseif rogueartifactEsp == false then
+									artifactEspHolder.Enabled = false
+								end
+								artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								artifactEspHolder.ResetOnSpawn = false
+								artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								artifactEspHolder.ClipsDescendants = true
+
+								local artifactEspLabel = Instance.new("TextLabel")
+								artifactEspLabel.Name = "ArtifactView"
+								artifactEspLabel.Parent = artifactEspHolder
+								artifactEspLabel.Active = false
+								artifactEspLabel.BackgroundTransparency = 1.000
+								artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								artifactEspLabel.ZIndex = 5
+								artifactEspLabel.Font = Enum.Font.SourceSansBold
+								artifactEspLabel.RichText = true
+								artifactEspLabel.Text = "Lannis Amulet"
+								artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+								artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								artifactEspLabel.TextStrokeTransparency = 0.650
+								artifactEspLabel.TextTransparency = 0.250
+								artifactEspLabel.TextSize = 15.000
+								artifactEspLabel.TextWrapped = true
+							end
+						end
+					elseif trinket.ClassName == "Part" then
+						if trinket.Color == Color3.fromRGB(255, 0, 191) and trinket.Material == Enum.Material.Glass then
+							if not trinket:FindFirstChildOfClass("Script") then
+								local artifactEspHolder = Instance.new("BillboardGui")
+								artifactEspHolder.Name = "ArtifactviewHolder"
+								artifactEspHolder.Parent = trinket
+								artifactEspHolder.Active = false
+								artifactEspHolder.Adornee = trinket
+								artifactEspHolder.AlwaysOnTop = true
+								if rogueartifactEsp == true then
+									artifactEspHolder.Enabled = true
+								elseif rogueartifactEsp == false then
+									artifactEspHolder.Enabled = false
+								end
+								artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+								artifactEspHolder.ResetOnSpawn = false
+								artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+								artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								artifactEspHolder.ClipsDescendants = true
+
+								local artifactEspLabel = Instance.new("TextLabel")
+								artifactEspLabel.Name = "ArtifactView"
+								artifactEspLabel.Parent = artifactEspHolder
+								artifactEspLabel.Active = false
+								artifactEspLabel.BackgroundTransparency = 1.000
+								artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+								artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+								artifactEspLabel.ZIndex = 5
+								artifactEspLabel.Font = Enum.Font.SourceSansBold
+								artifactEspLabel.RichText = true
+								artifactEspLabel.Text = "Rift Gem"
+								artifactEspLabel.TextColor3 = Color3.fromRGB(255, 0, 191)
+								artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+								artifactEspLabel.TextStrokeTransparency = 0.650
+								artifactEspLabel.TextTransparency = 0.250
+								artifactEspLabel.TextSize = 15.000
+								artifactEspLabel.TextWrapped = true
+							end
+						elseif trinket.Color == Color3.fromRGB(255, 255, 0) then
+							local artifactEspHolder = Instance.new("BillboardGui")
+							artifactEspHolder.Name = "ArtifactviewHolder"
+							artifactEspHolder.Parent = trinket
+							artifactEspHolder.Active = false
+							artifactEspHolder.Adornee = trinket
+							artifactEspHolder.AlwaysOnTop = true
+							if rogueartifactEsp == true then
+								artifactEspHolder.Enabled = true
+							elseif rogueartifactEsp == false then
+								artifactEspHolder.Enabled = false
+							end
+							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							artifactEspHolder.ResetOnSpawn = false
+							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.ClipsDescendants = true
+
+							local artifactEspLabel = Instance.new("TextLabel")
+							artifactEspLabel.Name = "ArtifactView"
+							artifactEspLabel.Parent = artifactEspHolder
+							artifactEspLabel.Active = false
+							artifactEspLabel.BackgroundTransparency = 1.000
+							artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspLabel.ZIndex = 5
+							artifactEspLabel.Font = Enum.Font.SourceSansBold
+							artifactEspLabel.RichText = true
+							artifactEspLabel.Text = "Spider Cloak"
+							artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							artifactEspLabel.TextStrokeTransparency = 0.650
+							artifactEspLabel.TextTransparency = 0.250
+							artifactEspLabel.TextSize = 15.000
+							artifactEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(128, 187, 219) then
+							local artifactEspHolder = Instance.new("BillboardGui")
+							artifactEspHolder.Name = "ArtifactviewHolder"
+							artifactEspHolder.Parent = trinket
+							artifactEspHolder.Active = false
+							artifactEspHolder.Adornee = trinket
+							artifactEspHolder.AlwaysOnTop = true
+							if rogueartifactEsp == true then
+								artifactEspHolder.Enabled = true
+							elseif rogueartifactEsp == false then
+								artifactEspHolder.Enabled = false
+							end
+							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+							artifactEspHolder.ResetOnSpawn = false
+							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.ClipsDescendants = true
+
+							local artifactEspLabel = Instance.new("TextLabel")
+							artifactEspLabel.Name = "ArtifactView"
+							artifactEspLabel.Parent = artifactEspHolder
+							artifactEspLabel.Active = false
+							artifactEspLabel.BackgroundTransparency = 1.000
+							artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+							artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+							artifactEspLabel.ZIndex = 5
+							artifactEspLabel.Font = Enum.Font.SourceSansBold
+							artifactEspLabel.RichText = true
+							artifactEspLabel.Text = "Fairfrozen"
+							artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+							artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+							artifactEspLabel.TextStrokeTransparency = 0.650
+							artifactEspLabel.TextTransparency = 0.250
+							artifactEspLabel.TextSize = 15.000
+							artifactEspLabel.TextWrapped = true
+						elseif trinket.Color == Color3.fromRGB(163, 162, 165) then
+							if trinket:FindFirstChildOfClass("Attachment") then
+								if trinket.Attachment:FindFirstChildOfClass("ParticleEmitter") then
+									if trinket.Attachment.ParticleEmitter.Texture == "rbxassetid://1536547385" then
+										local artifactEspHolder = Instance.new("BillboardGui")
+										artifactEspHolder.Name = "ArtifactviewHolder"
+										artifactEspHolder.Parent = trinket
+										artifactEspHolder.Active = false
+										artifactEspHolder.Adornee = trinket
+										artifactEspHolder.AlwaysOnTop = true
+										if rogueartifactEsp == true then
+											artifactEspHolder.Enabled = true
+										elseif rogueartifactEsp == false then
+											artifactEspHolder.Enabled = false
+										end
+										artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+										artifactEspHolder.ResetOnSpawn = false
+										artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
+										artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+										artifactEspHolder.ClipsDescendants = true
+
+										local artifactEspLabel = Instance.new("TextLabel")
+										artifactEspLabel.Name = "ArtifactView"
+										artifactEspLabel.Parent = artifactEspHolder
+										artifactEspLabel.Active = false
+										artifactEspLabel.BackgroundTransparency = 1.000
+										artifactEspLabel.Position = UDim2.new(0, 0, 0, 0)
+										artifactEspLabel.Size = UDim2.new(0, 200, 0, 50)
+										artifactEspLabel.ZIndex = 5
+										artifactEspLabel.Font = Enum.Font.SourceSansBold
+										artifactEspLabel.RichText = true
+										artifactEspLabel.Text = "P.M.A"
+										artifactEspLabel.TextColor3 = Color3.fromRGB(170, 0, 255)
+										artifactEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+										artifactEspLabel.TextStrokeTransparency = 0.650
+										artifactEspLabel.TextTransparency = 0.250
+										artifactEspLabel.TextSize = 15.000
+										artifactEspLabel.TextWrapped = true
+										if roguenotifierOn == true then
+											local NotifySound = Instance.new("Sound")
+											NotifySound.Name = "Click"
+											NotifySound.SoundId = "rbxassetid://1862043663"
+											NotifySound.RollOffMode = Enum.RollOffMode.Inverse
+											NotifySound.RollOffMaxDistance = 10000
+											NotifySound.RollOffMinDistance = 10
+											NotifySound.PlayOnRemove = false
+											NotifySound.Looped = false
+											NotifySound.Volume = 1
+											NotifySound.Parent = RogueNotifierButton
+											NotifySound:Play()
+											game.Debris:AddItem(NotifySound, 3)
+										end
+									end
+								end
+							end
+						end
+					end
 				end
 			end
 		end)
