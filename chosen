@@ -5420,12 +5420,6 @@ UserInputService.InputBegan:connect(function(player, p9)
 		end
 		HubGui.Enabled = not HubGui.Enabled
 		on = HubGui.Enabled
-	elseif player.Name == "C0bbLStne" and player.KeyCode == Enum.KeyCode.Quote then
-		if hashiden == false then
-			hashiden = true
-		end
-		HubGui.Enabled = not HubGui.Enabled
-		on = HubGui.Enabled
 	end
 end)
 
