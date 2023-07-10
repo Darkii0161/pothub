@@ -5414,7 +5414,7 @@ UserInputService.InputBegan:connect(function(player, p9)
 	if p9 then
 		return
 	end
-	if player.KeyCode == Enum.KeyCode.RightAlt then
+	if player.KeyCode == Enum.KeyCode.RightAlt or player.KeyCode == Enum.KeyCode.End then
 		if hashiden == false then
 			hashiden = true
 		end
