@@ -146,6 +146,7 @@ local RogueEspTitle = Instance.new("TextLabel")
 local RogueTrinketEspButton = Instance.new("TextButton")
 local RogueGemScrollEspButton = Instance.new("TextButton")
 local RogueArtifactEspButton = Instance.new("TextButton")
+local RogueToolViewEspButton = Instance.new("TextButton")
 local RogueNotifierHolder = Instance.new("Folder")
 local RogueNotifierTitle = Instance.new("TextLabel")
 local RogueNotifierButton = Instance.new("TextButton")
@@ -1070,6 +1071,7 @@ JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
 local roguetrinketEsp = false
 local roguegemscrollEsp = false
 local rogueartifactEsp = false
+local roguetoolEsp = false
 local roguenotifierOn = false
 
 --//Voxl Vars
@@ -2290,7 +2292,176 @@ if gameName == "Rogue Lineage Copy" then
 			end
 		end
 	end)
-	
+	RogueToolViewEspButton.Name = "Activator4"
+	RogueToolViewEspButton.Parent = RogueEspHolder
+	RogueToolViewEspButton.Active = false
+	RogueToolViewEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueToolViewEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueToolViewEspButton.BackgroundTransparency = 1.000
+	RogueToolViewEspButton.LayoutOrder = 1
+	RogueToolViewEspButton.Position = UDim2.new(0.5, 85, 1, -575)
+	RogueToolViewEspButton.Selectable = false
+	RogueToolViewEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueToolViewEspButton.Font = Enum.Font.SourceSansSemibold
+	RogueToolViewEspButton.RichText = true
+	RogueToolViewEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Tool Turned Off</stroke>'
+	RogueToolViewEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueToolViewEspButton.TextSize = 16.000
+	RogueToolViewEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueToolViewEspButton.TextTransparency = 0.100
+	RogueToolViewEspButton.TextWrapped = true
+	RogueToolViewEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueToolViewEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD4") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueToolViewEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguetoolEsp == false then
+				if game.Players.LocalPlayer then
+					task.spawn(function()
+						roguetoolEsp = true
+						for i, v in pairs(game.Workspace.Live:GetChildren()) do
+							if v.Name ~= game.Players.LocalPlayer.Name then
+								if v:FindFirstChild("Head") then
+									if v.Head:FindFirstChild("ToolviewHolder") then
+										v.Head.ToolviewHolder.Enabled = true
+									end
+									if not v.Head:FindFirstChild("ToolviewHolder") then
+										local toolEspHolder = Instance.new("BillboardGui")
+										toolEspHolder.Name = "ToolviewHolder"
+										toolEspHolder.Parent = v.Head
+										toolEspHolder.Active = false
+										toolEspHolder.Adornee = v.Head
+										toolEspHolder.AlwaysOnTop = true
+										toolEspHolder.MaxDistance = 99
+										toolEspHolder.ResetOnSpawn = false
+										toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
+										toolEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 3, 0)
+										toolEspHolder.ClipsDescendants = true
+
+										local toolEspLabel = Instance.new("TextLabel")
+										toolEspLabel.Name = "ToolView"
+										toolEspLabel.Parent = toolEspHolder
+										toolEspLabel.Active = false
+										toolEspLabel.BackgroundTransparency = 1.000
+										toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
+										toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
+										toolEspLabel.ZIndex = 5
+										toolEspLabel.Font = Enum.Font.SpecialElite
+										toolEspLabel.RichText = true
+										if v:FindFirstChildWhichIsA("Tool") then
+											toolEspLabel.Text = v:FindFirstChildWhichIsA("Tool").Name
+										elseif not v:FindFirstChildWhichIsA("Tool") then
+											toolEspLabel.Text = ""
+										end
+										toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+										toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
+										toolEspLabel.TextStrokeTransparency = 0
+										toolEspLabel.TextTransparency = 0
+										toolEspLabel.TextSize = 21.000
+										toolEspLabel.TextWrapped = true
+										v.ChildAdded:Connect(function(tool)
+											if tool.ClassName == "Tool" then
+												if v:FindFirstChild("Head") then
+													if v.Head:FindFirstChild("ToolviewHolder") then
+														v.Head.ToolviewHolder.ToolView.Text = tool.Name
+													end
+												end
+											end
+										end)
+										v.ChildRemoved:Connect(function(tool)
+											if tool.ClassName == "Tool" then
+												if v:FindFirstChild("Head") then
+													if v.Head:FindFirstChild("ToolviewHolder") then
+														v.Head.ToolviewHolder.ToolView.Text = ""
+													end
+												end
+											end
+										end)
+									end
+								end
+							end
+						end
+					end)
+					RogueToolViewEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Tool Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD4"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -25, 1, -575)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif roguetoolEsp == true then
+				if game.Players.LocalPlayer then
+					task.spawn(function()
+						roguetoolEsp = false
+						for i, v in pairs(game.Workspace.Live:GetChildren()) do
+							if v:FindFirstChild("Head") then
+								if v.Head:FindFirstChild("ToolviewHolder") then
+									v.Head.ToolviewHolder.Enabled = false
+								end
+							end
+						end
+					end)
+					RogueToolViewEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Tool Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD4"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -25, 1, -575)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+
 	--// Notifier
 	RogueNotifierHolder.Name = "Notifier"
 	RogueNotifierHolder.Parent = DescSheet_3
@@ -2302,7 +2473,7 @@ if gameName == "Rogue Lineage Copy" then
 	RogueNotifierTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	RogueNotifierTitle.BackgroundTransparency = 1.000
 	RogueNotifierTitle.LayoutOrder = 1
-	RogueNotifierTitle.Position = UDim2.new(0.5, 85, 1, -555)
+	RogueNotifierTitle.Position = UDim2.new(0.5, 85, 1, -535)
 	RogueNotifierTitle.Selectable = false
 	RogueNotifierTitle.Size = UDim2.new(0.5, 0, 0, 20)
 	RogueNotifierTitle.Font = Enum.Font.SourceSansSemibold
@@ -2322,7 +2493,7 @@ if gameName == "Rogue Lineage Copy" then
 	RogueNotifierButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	RogueNotifierButton.BackgroundTransparency = 1.000
 	RogueNotifierButton.LayoutOrder = 1
-	RogueNotifierButton.Position = UDim2.new(0.5, 85, 1, -535)
+	RogueNotifierButton.Position = UDim2.new(0.5, 85, 1, -515)
 	RogueNotifierButton.Selectable = false
 	RogueNotifierButton.Size = UDim2.new(0.5, 0, 0, 20)
 	RogueNotifierButton.Font = Enum.Font.SourceSansSemibold
@@ -2358,7 +2529,7 @@ if gameName == "Rogue Lineage Copy" then
 				deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 				deb.BackgroundTransparency = 1.000
 				deb.LayoutOrder = 1
-				deb.Position = UDim2.new(0.5, -43, 1, -535)
+				deb.Position = UDim2.new(0.5, -43, 1, -515)
 				deb.Selectable = false
 				deb.Size = UDim2.new(0.5, 0, 0, 20)
 				deb.Font = Enum.Font.SourceSansSemibold
@@ -2385,7 +2556,7 @@ if gameName == "Rogue Lineage Copy" then
 				deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 				deb.BackgroundTransparency = 1.000
 				deb.LayoutOrder = 1
-				deb.Position = UDim2.new(0.5, -43, 1, -535)
+				deb.Position = UDim2.new(0.5, -43, 1, -515)
 				deb.Selectable = false
 				deb.Size = UDim2.new(0.5, 0, 0, 20)
 				deb.Font = Enum.Font.SourceSansSemibold
@@ -2416,7 +2587,7 @@ if gameName == "Rogue Lineage Copy" then
 	AutoTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	AutoTitle.BackgroundTransparency = 1.000
 	AutoTitle.LayoutOrder = 1
-	AutoTitle.Position = UDim2.new(0.5, 85, 1, -495)
+	AutoTitle.Position = UDim2.new(0.5, 85, 1, -475)
 	AutoTitle.Selectable = false
 	AutoTitle.Size = UDim2.new(0.5, 0, 0, 20)
 	AutoTitle.Font = Enum.Font.SourceSansSemibold
@@ -2436,7 +2607,7 @@ if gameName == "Rogue Lineage Copy" then
 	AutoBardButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	AutoBardButton.BackgroundTransparency = 1.000
 	AutoBardButton.LayoutOrder = 1
-	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -475)
+	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -455)
 	AutoBardButton.Selectable = false
 	AutoBardButton.Size = UDim2.new(0.5, 0, 0, 20)
 	AutoBardButton.Font = Enum.Font.SourceSansSemibold
@@ -2490,7 +2661,7 @@ if gameName == "Rogue Lineage Copy" then
 							alreadyusedbardText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 							alreadyusedbardText.BackgroundTransparency = 1.000
 							alreadyusedbardText.LayoutOrder = 1
-							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -475)
+							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -455)
 							alreadyusedbardText.Selectable = false
 							alreadyusedbardText.Size = UDim2.new(0.5, 0, 0, 20)
 							alreadyusedbardText.Font = Enum.Font.SourceSansSemibold
@@ -2517,7 +2688,7 @@ if gameName == "Rogue Lineage Copy" then
 					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					notfoundcharText.BackgroundTransparency = 1.000
 					notfoundcharText.LayoutOrder = 1
-					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -475)
+					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -455)
 					notfoundcharText.Selectable = false
 					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
 					notfoundcharText.Font = Enum.Font.SourceSansSemibold
@@ -4073,7 +4244,7 @@ Desc_3.Position = UDim2.new(0.5, 0, 0, 47)
 Desc_3.Size = UDim2.new(0.899999976, 0, 1, -60)
 Desc_3.Font = Enum.Font.SourceSans
 Desc_3.RichText = true
-Desc_3.Text = "<b>Campfire Kits</b> can be crafted using <b>1 Wood</b> or <b>3 Sticks</b>.\\nA <b>Flint</b> can be crafted using <b>1 Coal</b> and <b>1 Rock</b>, or bought at a General Store.\\n\\nPlacing down a <b>Campfire Kit</b> and lighting it with a <b>Flint</b> will give you a place to rest and access the Rest Menu.\\n\\nResting will rapidly regenerate your Health, Ether, Reservoir, Blood, and Sanity. You also lose less Stomach and Water when resting at a Campfire.\\n\\nWhen resting, you can Unequip Equipment, view the stats on your Equipment and Weaponry, and view your Mantras.\\n\\nRecalling a Mantra in the Rest Menu will enable you to modify your Mantra at a <b>Mantra Table</b>."
+Desc_3.Text = ""
 Desc_3.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc_3.TextScaled = true
 Desc_3.TextSize = 14.000
@@ -5331,6 +5502,206 @@ if gameName == "Rogue Lineage Copy" then
 			end
 		end)
 	end
+	game.Workspace.Live.ChildAdded:Connect(function(character)
+		if character.Name ~= game.Players.LocalPlayer.Name then
+			if character:FindFirstChild("Head") then
+				if not character.Head:FindFirstChild("ToolviewHolder") then
+					local toolEspHolder = Instance.new("BillboardGui")
+					toolEspHolder.Name = "ToolviewHolder"
+					toolEspHolder.Parent = character.Head
+					toolEspHolder.Active = false
+					toolEspHolder.Adornee = character.Head
+					toolEspHolder.AlwaysOnTop = true
+					if roguetoolEsp == true then
+						toolEspHolder.Enabled = true
+					elseif roguetoolEsp == false then
+						toolEspHolder.Enabled = false
+					end
+					toolEspHolder.MaxDistance = 99
+					toolEspHolder.ResetOnSpawn = false
+					toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
+					toolEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 3, 0)
+					toolEspHolder.ClipsDescendants = true
+
+					local toolEspLabel = Instance.new("TextLabel")
+					toolEspLabel.Name = "ToolView"
+					toolEspLabel.Parent = toolEspHolder
+					toolEspLabel.Active = false
+					toolEspLabel.BackgroundTransparency = 1.000
+					toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
+					toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
+					toolEspLabel.ZIndex = 5
+					toolEspLabel.Font = Enum.Font.SpecialElite
+					toolEspLabel.RichText = true
+					if character:FindFirstChildWhichIsA("Tool") then
+						toolEspLabel.Text = character:FindFirstChildWhichIsA("Tool").Name
+					elseif not character:FindFirstChildWhichIsA("Tool") then
+						toolEspLabel.Text = ""
+					end
+					toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+					toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
+					toolEspLabel.TextStrokeTransparency = 0
+					toolEspLabel.TextTransparency = 0
+					toolEspLabel.TextSize = 21.000
+					toolEspLabel.TextWrapped = true
+					character.ChildAdded:Connect(function(tool)
+						if tool.ClassName == "Tool" then
+							if character:FindFirstChild("Head") then
+								if character.Head:FindFirstChild("ToolviewHolder") then
+									character.Head.ToolviewHolder.ToolView.Text = tool.Name
+								end
+							end
+						end
+					end)
+					character.ChildRemoved:Connect(function(tool)
+						if tool.ClassName == "Tool" then
+							if character:FindFirstChild("Head") then
+								if character.Head:FindFirstChild("ToolviewHolder") then
+									character.Head.ToolviewHolder.ToolView.Text = ""
+								end
+							end
+						end
+					end)
+				end
+			end
+		end
+	end)
+	local CurrentlyViewing = nil
+	local spectateValue
+	local function spectatePlayer(PlayerSpectateName)
+		PlayerSpectateName = tostring(PlayerSpectateName)
+		if not game.Players.LocalPlayer:FindFirstChild("SpectateValue") then
+			spectateValue = Instance.new("StringValue")
+			spectateValue.Name = "SpectateValue"
+			spectateValue.Value = PlayerSpectateName
+			spectateValue.Parent = game.Players.LocalPlayer
+		else
+			spectateValue.Value = PlayerSpectateName
+		end
+		--[[local realSpectate
+		for u, b in pairs(game.Players.LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
+			if b.TextTransparency == 0.3 then
+				for i, v in pairs(game.Workspace.Live:GetChildren()) do
+					if v.Name == b.Text then
+						realSpectate = v.Name
+					end
+				end
+			end
+		end]]
+		print(spectateValue.Value)
+		if game.Workspace.Live:FindFirstChild(spectateValue.Value) then
+			local CameraView = game.Workspace.CurrentCamera
+			CameraView.CameraSubject = game.Workspace.Live[spectateValue.Value].Humanoid
+			CurrentlyViewing = spectateValue.Value
+			print("Spectating: "..spectateValue.Value..".")
+		else
+			warn("Character: "..spectateValue.Value.." is not loaded in the server to Spectate.")
+		end
+	end
+	if game.Players.LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
+		local BoardScrollingFrame = game.Players.LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame
+		for i, v in pairs(BoardScrollingFrame:GetChildren()) do
+			task.spawn(function()
+				v.Name = "PlayerLabel"..i
+				if not v:FindFirstChild("SpectateButton") then
+					local SpectateButton = Instance.new("TextButton")
+					SpectateButton.Name = "SpectateButton"
+					SpectateButton.Active = false
+					SpectateButton.AutoButtonColor = false
+					SpectateButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					SpectateButton.BackgroundTransparency = 1.00
+					SpectateButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
+					SpectateButton.Position = UDim2.new(0, 0, 0, 0)
+					SpectateButton.Size = UDim2.new(1, 0, 0, 20)
+					SpectateButton.Text = ""
+					SpectateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+					SpectateButton.TextStrokeTransparency = 1.00
+					SpectateButton.TextTransparency = 1.00
+					SpectateButton.TextXAlignment = Enum.TextXAlignment.Left
+					if SpectateButton:FindFirstChild("Prestige") then
+						SpectateButton.Prestige:Destroy()
+					end
+					SpectateButton.Parent = v
+					SpectateButton.MouseButton1Click:Connect(function()
+						spectatePlayer(SpectateButton.Parent.Text)
+					end)
+				end
+			end)
+		end
+		BoardScrollingFrame.ChildAdded:Connect(function(label)
+			if label.Name == "PlayerLabel" then
+				wait()
+				for i, v in pairs(label.Parent:GetChildren()) do
+					task.spawn(function()
+						if not v:FindFirstChild("SpectateButton") then
+							v.Name = "PlayerLabel"..i
+							local SpectateButton = Instance.new("TextButton")
+							SpectateButton.Name = "SpectateButton"
+							SpectateButton.Active = false
+							SpectateButton.AutoButtonColor = false
+							SpectateButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							SpectateButton.BackgroundTransparency = 1.00
+							SpectateButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
+							SpectateButton.Position = UDim2.new(0, 0, 0, 0)
+							SpectateButton.Size = UDim2.new(1, 0, 0, 20)
+							SpectateButton.Text = ""
+							SpectateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+							SpectateButton.TextStrokeTransparency = 1.00
+							SpectateButton.TextTransparency = 1.00
+							SpectateButton.TextXAlignment = Enum.TextXAlignment.Left
+							if SpectateButton:FindFirstChild("Prestige") then
+								SpectateButton.Prestige:Destroy()
+							end
+							SpectateButton.Parent = v
+							SpectateButton.MouseButton1Click:Connect(function()
+								spectatePlayer(SpectateButton.Parent.Text)
+							end)
+						end
+					end)
+				end
+			end
+		end)
+		BoardScrollingFrame.ChildRemoved:Connect(function(label)
+			wait()
+			for i, v in pairs(BoardScrollingFrame:GetChildren()) do
+				task.spawn(function()
+					v.Name = "PlayerLabel"..i
+				end)
+			end
+		end)
+	end
+	game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(gui)
+		if gui.ClassName == "ScreenGui" and gui.Name == "LeaderboardGui" then
+			wait()
+			for _, v in pairs(gui.MainFrame.ScrollingFrame:GetChildren()) do
+				task.spawn(function()
+					if not v:FindFirstChild("SpectateButton") then
+						local SpectateButton = Instance.new("TextButton")
+						SpectateButton.Name = "SpectateButton"
+						SpectateButton.Active = false
+						SpectateButton.AutoButtonColor = false
+						SpectateButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+						SpectateButton.BackgroundTransparency = 1.00
+						SpectateButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
+						SpectateButton.Position = UDim2.new(0, 0, 0, 0)
+						SpectateButton.Size = UDim2.new(1, 0, 0, 20)
+						SpectateButton.Text = ""
+						SpectateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+						SpectateButton.TextStrokeTransparency = 1.00
+						SpectateButton.TextTransparency = 1.00
+						SpectateButton.TextXAlignment = Enum.TextXAlignment.Left
+						if SpectateButton:FindFirstChild("Prestige") then
+							SpectateButton.Prestige:Destroy()
+						end
+						SpectateButton.Parent = v
+						SpectateButton.MouseButton1Click:Connect(function()
+							spectatePlayer(SpectateButton.Parent.Text)
+						end)
+					end
+				end)
+			end
+		end
+	end)
 end
 
 if gameName == "VoxlBlade" then
@@ -5431,7 +5802,7 @@ spawn(function()
 			game.Players.LocalPlayer:Kick("gui was deleted??")
 		end
 		if gameName == "Rogue Lineage Copy" then
-			
+
 		end
 		if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680) and game.Workspace:FindFirstChild("CapturePoints") then
 			--//Forest
