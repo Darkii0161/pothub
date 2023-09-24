@@ -21,7 +21,7 @@ if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId ==
 	scr2 = "https://raw.githubusercontent.com/Darkii0161/autobard/main/auto"
 	fullSupp = true
 	print("Found Supported Game: "..gameName)
-elseif game.PlaceId == 12404070010 or game.PlaceId == 12767171440 then
+elseif game.PlaceId == 12404070010 or game.PlaceId == 12767171440 or game.GameId == 4364802005 then
 	gameName = "Shinobi Storm Online Remastered -- Kuro Game"
 	fullSupp = false
 	print("Found Semi-Supported Game: "..gameName)
