@@ -2,7 +2,7 @@ if not game:IsLoaded() then
 	repeat task.wait(0.05) until game:IsLoaded()
 end
 
-for i, v in pairs(game.Players.LocalPlayer:WaitForChild("PlayerGui"):GetDescendants()) do
+for i, v in pairs(game:GetService("CoreGui"):GetDescendants()) do
 	if v.Name == "I6bONBw25jq2b220Lf" then
 		print("Pot script has already been loaded, cannot be ran again")
 		return
@@ -28,6 +28,10 @@ elseif game.PlaceId == 12404070010 or game.PlaceId == 12767171440 or game.GameId
 elseif game.PlaceId == 4111023553 --[[Main Id]] or game.PlaceId == 6032399813 --[[Etrean Id]] or game.PlaceId == 8668476218 --[[Duke Id]] or game.PlaceId == 6473861193 --[[East Id]] or game.PlaceId == 5735553160 --[[Depths Id]] then
 	gameName = "Deepwoken"
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/deepdrip/main/customvisuals'
+	fullSupp = true
+	print("Found Supported Game: "..gameName)
+elseif game.GameId == 2517534599 then
+	gameName = "Lore Game"
 	fullSupp = true
 	print("Found Supported Game: "..gameName)
 elseif game.PlaceId == 185655149 then
@@ -160,6 +164,16 @@ local VoxlShopEspButton = Instance.new("TextButton")
 local VoxlShrineEspButton = Instance.new("TextButton")
 local VoxlInfuserEspButton = Instance.new("TextButton")
 local VoxlSnailsmanEspButton = Instance.new("TextButton")
+--//For Lore Game Esp/Lighting
+local LoreEspHolder = Instance.new("Folder")
+local LoreEspTitle = Instance.new("TextLabel")
+local LorePlayerEspButton = Instance.new("TextButton")
+local LoreMobEspButton = Instance.new("TextButton")
+local LoreNPCEspButton = Instance.new("TextButton")
+local LoreLightingHolder = Instance.new("Folder")
+local LoreLightingTitle = Instance.new("TextLabel")
+local LoreAmbienceButton = Instance.new("TextButton")
+local LoreDOFButton = Instance.new("TextButton")
 
 --Some Functions:
 
@@ -206,7 +220,7 @@ end]]
 --Properties:
 
 HubGui.Name = randomText
-HubGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+HubGui.Parent = game:GetService("CoreGui")
 HubGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 HubGui.DisplayOrder = 5
 HubGui.ResetOnSpawn = false
@@ -1082,6 +1096,14 @@ local voxlshopEsp = false
 local voxlshrineEsp = false
 local voxlinfuserEsp = false
 local voxlsnailsmanEsp = false
+
+--//Lore Vars
+local loreplayerEsp = false
+local loremobEsp = false
+local lorenpcEsp = false
+local loreambienceLighting = false
+local loredofLighting = false
+
 if gameName == "Rogue Lineage Copy" then
 	--// Rogue Esp
 	RogueEspHolder.Name = "RogueEsp"
@@ -1161,7 +1183,7 @@ if gameName == "Rogue Lineage Copy" then
 											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											trinketEspHolder.ResetOnSpawn = false
 											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											trinketEspHolder.ClipsDescendants = true
 
 											local trinketEspLabel = Instance.new("TextLabel")
@@ -1192,7 +1214,7 @@ if gameName == "Rogue Lineage Copy" then
 												trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 												trinketEspHolder.ResetOnSpawn = false
 												trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-												trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 												trinketEspHolder.ClipsDescendants = true
 
 												local trinketEspLabel = Instance.new("TextLabel")
@@ -1222,7 +1244,7 @@ if gameName == "Rogue Lineage Copy" then
 												trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 												trinketEspHolder.ResetOnSpawn = false
 												trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-												trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 												trinketEspHolder.ClipsDescendants = true
 
 												local trinketEspLabel = Instance.new("TextLabel")
@@ -1252,7 +1274,7 @@ if gameName == "Rogue Lineage Copy" then
 												trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 												trinketEspHolder.ResetOnSpawn = false
 												trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-												trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 												trinketEspHolder.ClipsDescendants = true
 
 												local trinketEspLabel = Instance.new("TextLabel")
@@ -1283,7 +1305,7 @@ if gameName == "Rogue Lineage Copy" then
 											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											trinketEspHolder.ResetOnSpawn = false
 											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											trinketEspHolder.ClipsDescendants = true
 
 											local trinketEspLabel = Instance.new("TextLabel")
@@ -1313,7 +1335,7 @@ if gameName == "Rogue Lineage Copy" then
 											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											trinketEspHolder.ResetOnSpawn = false
 											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											trinketEspHolder.ClipsDescendants = true
 
 											local trinketEspLabel = Instance.new("TextLabel")
@@ -1343,7 +1365,7 @@ if gameName == "Rogue Lineage Copy" then
 											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											trinketEspHolder.ResetOnSpawn = false
 											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											trinketEspHolder.ClipsDescendants = true
 
 											local trinketEspLabel = Instance.new("TextLabel")
@@ -1373,7 +1395,7 @@ if gameName == "Rogue Lineage Copy" then
 											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											trinketEspHolder.ResetOnSpawn = false
 											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											trinketEspHolder.ClipsDescendants = true
 
 											local trinketEspLabel = Instance.new("TextLabel")
@@ -1405,7 +1427,7 @@ if gameName == "Rogue Lineage Copy" then
 											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											trinketEspHolder.ResetOnSpawn = false
 											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											trinketEspHolder.ClipsDescendants = true
 
 											local trinketEspLabel = Instance.new("TextLabel")
@@ -1437,7 +1459,7 @@ if gameName == "Rogue Lineage Copy" then
 											trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											trinketEspHolder.ResetOnSpawn = false
 											trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											trinketEspHolder.ClipsDescendants = true
 
 											local trinketEspLabel = Instance.new("TextLabel")
@@ -1584,7 +1606,7 @@ if gameName == "Rogue Lineage Copy" then
 											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											gemscrollEspHolder.ResetOnSpawn = false
 											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											gemscrollEspHolder.ClipsDescendants = true
 
 											local gemscrollEspLabel = Instance.new("TextLabel")
@@ -1614,7 +1636,7 @@ if gameName == "Rogue Lineage Copy" then
 											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											gemscrollEspHolder.ResetOnSpawn = false
 											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											gemscrollEspHolder.ClipsDescendants = true
 
 											local gemscrollEspLabel = Instance.new("TextLabel")
@@ -1646,7 +1668,7 @@ if gameName == "Rogue Lineage Copy" then
 											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											gemscrollEspHolder.ResetOnSpawn = false
 											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											gemscrollEspHolder.ClipsDescendants = true
 
 											local gemscrollEspLabel = Instance.new("TextLabel")
@@ -1676,7 +1698,7 @@ if gameName == "Rogue Lineage Copy" then
 											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											gemscrollEspHolder.ResetOnSpawn = false
 											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											gemscrollEspHolder.ClipsDescendants = true
 
 											local gemscrollEspLabel = Instance.new("TextLabel")
@@ -1706,7 +1728,7 @@ if gameName == "Rogue Lineage Copy" then
 											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											gemscrollEspHolder.ResetOnSpawn = false
 											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											gemscrollEspHolder.ClipsDescendants = true
 
 											local gemscrollEspLabel = Instance.new("TextLabel")
@@ -1736,7 +1758,7 @@ if gameName == "Rogue Lineage Copy" then
 											gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											gemscrollEspHolder.ResetOnSpawn = false
 											gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											gemscrollEspHolder.ClipsDescendants = true
 
 											local gemscrollEspLabel = Instance.new("TextLabel")
@@ -1767,7 +1789,7 @@ if gameName == "Rogue Lineage Copy" then
 												gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 												gemscrollEspHolder.ResetOnSpawn = false
 												gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-												gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 												gemscrollEspHolder.ClipsDescendants = true
 
 												local gemscrollEspLabel = Instance.new("TextLabel")
@@ -1915,7 +1937,7 @@ if gameName == "Rogue Lineage Copy" then
 											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											artifactEspHolder.ResetOnSpawn = false
 											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											artifactEspHolder.ClipsDescendants = true
 
 											local artifactEspLabel = Instance.new("TextLabel")
@@ -1947,7 +1969,7 @@ if gameName == "Rogue Lineage Copy" then
 											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											artifactEspHolder.ResetOnSpawn = false
 											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											artifactEspHolder.ClipsDescendants = true
 
 											local artifactEspLabel = Instance.new("TextLabel")
@@ -1977,7 +1999,7 @@ if gameName == "Rogue Lineage Copy" then
 											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											artifactEspHolder.ResetOnSpawn = false
 											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											artifactEspHolder.ClipsDescendants = true
 
 											local artifactEspLabel = Instance.new("TextLabel")
@@ -2007,7 +2029,7 @@ if gameName == "Rogue Lineage Copy" then
 											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											artifactEspHolder.ResetOnSpawn = false
 											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											artifactEspHolder.ClipsDescendants = true
 
 											local artifactEspLabel = Instance.new("TextLabel")
@@ -2038,7 +2060,7 @@ if gameName == "Rogue Lineage Copy" then
 												artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 												artifactEspHolder.ResetOnSpawn = false
 												artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-												artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 												artifactEspHolder.ClipsDescendants = true
 
 												local artifactEspLabel = Instance.new("TextLabel")
@@ -2068,7 +2090,7 @@ if gameName == "Rogue Lineage Copy" then
 												artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 												artifactEspHolder.ResetOnSpawn = false
 												artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-												artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 												artifactEspHolder.ClipsDescendants = true
 
 												local artifactEspLabel = Instance.new("TextLabel")
@@ -2102,7 +2124,7 @@ if gameName == "Rogue Lineage Copy" then
 												artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 												artifactEspHolder.ResetOnSpawn = false
 												artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-												artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+												artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 												artifactEspHolder.ClipsDescendants = true
 
 												local artifactEspLabel = Instance.new("TextLabel")
@@ -2133,7 +2155,7 @@ if gameName == "Rogue Lineage Copy" then
 											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											artifactEspHolder.ResetOnSpawn = false
 											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											artifactEspHolder.ClipsDescendants = true
 
 											local artifactEspLabel = Instance.new("TextLabel")
@@ -2163,7 +2185,7 @@ if gameName == "Rogue Lineage Copy" then
 											artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 											artifactEspHolder.ResetOnSpawn = false
 											artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-											artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+											artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 											artifactEspHolder.ClipsDescendants = true
 
 											local artifactEspLabel = Instance.new("TextLabel")
@@ -2196,7 +2218,7 @@ if gameName == "Rogue Lineage Copy" then
 														artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 														artifactEspHolder.ResetOnSpawn = false
 														artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-														artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+														artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 														artifactEspHolder.ClipsDescendants = true
 
 														local artifactEspLabel = Instance.new("TextLabel")
@@ -2345,7 +2367,7 @@ if gameName == "Rogue Lineage Copy" then
 										toolEspHolder.MaxDistance = 99
 										toolEspHolder.ResetOnSpawn = false
 										toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
-										toolEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 3, 0)
+										toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
 										toolEspHolder.ClipsDescendants = true
 
 										local toolEspLabel = Instance.new("TextLabel")
@@ -2783,7 +2805,7 @@ elseif gameName == "VoxlBlade" then
 								enemyEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								enemyEspHolder.ResetOnSpawn = false
 								enemyEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								enemyEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+								enemyEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 								enemyEspHolder.ClipsDescendants = true
 
 								local enemyEspLabel = Instance.new("TextLabel")
@@ -3010,7 +3032,7 @@ elseif gameName == "VoxlBlade" then
 									npcEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 									npcEspHolder.ResetOnSpawn = false
 									npcEspHolder.Size = UDim2.new(0, 200, 0, 50)
-									npcEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									npcEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 									npcEspHolder.ClipsDescendants = true
 
 									local npcEspLabel = Instance.new("TextLabel")
@@ -3203,7 +3225,7 @@ elseif gameName == "VoxlBlade" then
 									craftingEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 									craftingEspHolder.ResetOnSpawn = false
 									craftingEspHolder.Size = UDim2.new(0, 200, 0, 50)
-									craftingEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									craftingEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 									craftingEspHolder.ClipsDescendants = true
 
 									local craftingEspLabel = Instance.new("TextLabel")
@@ -3396,7 +3418,7 @@ elseif gameName == "VoxlBlade" then
 									shopEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 									shopEspHolder.ResetOnSpawn = false
 									shopEspHolder.Size = UDim2.new(0, 200, 0, 50)
-									shopEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									shopEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 									shopEspHolder.ClipsDescendants = true
 
 									local shopEspLabel = Instance.new("TextLabel")
@@ -3588,7 +3610,7 @@ elseif gameName == "VoxlBlade" then
 								shrineEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								shrineEspHolder.ResetOnSpawn = false
 								shrineEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								shrineEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+								shrineEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 								shrineEspHolder.ClipsDescendants = true
 
 								local shrineEspLabel = Instance.new("TextLabel")
@@ -3779,7 +3801,7 @@ elseif gameName == "VoxlBlade" then
 								infuserEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								infuserEspHolder.ResetOnSpawn = false
 								infuserEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								infuserEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+								infuserEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 								infuserEspHolder.ClipsDescendants = true
 
 								local infuserEspLabel = Instance.new("TextLabel")
@@ -3971,7 +3993,7 @@ elseif gameName == "VoxlBlade" then
 									snailsmanEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 									snailsmanEspHolder.ResetOnSpawn = false
 									snailsmanEspHolder.Size = UDim2.new(0, 200, 0, 50)
-									snailsmanEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+									snailsmanEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 									snailsmanEspHolder.ClipsDescendants = true
 
 									local snailsmanEspLabel = Instance.new("TextLabel")
@@ -4093,6 +4115,874 @@ elseif gameName == "VoxlBlade" then
 					notfoundcharText.BackgroundTransparency = 1.000
 					notfoundcharText.LayoutOrder = 1
 					notfoundcharText.Position = UDim2.new(0.5, -60, 1, -515)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+elseif gameName == "Lore Game" then
+	LoreEspHolder.Name = "LoreEsp"
+	LoreEspHolder.Parent = DescSheet_3
+
+	LoreEspTitle.Name = "EspTitle"
+	LoreEspTitle.Parent = LoreEspHolder
+	LoreEspTitle.Active = false
+	LoreEspTitle.AnchorPoint = Vector2.new(0.5, 1)
+	LoreEspTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LoreEspTitle.BackgroundTransparency = 1.000
+	LoreEspTitle.LayoutOrder = 1
+	LoreEspTitle.Position = UDim2.new(0.5, 85, 1, -655)
+	LoreEspTitle.Selectable = false
+	LoreEspTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	LoreEspTitle.Font = Enum.Font.SourceSansSemibold
+	LoreEspTitle.RichText = true
+	LoreEspTitle.Text = "<u>General Esp</u>"
+	LoreEspTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LoreEspTitle.TextSize = 18.000
+	LoreEspTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LoreEspTitle.TextTransparency = 0.100
+	LoreEspTitle.TextWrapped = true
+	LoreEspTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	LorePlayerEspButton.Name = "Activator"
+	LorePlayerEspButton.Parent = LoreEspHolder
+	LorePlayerEspButton.Active = false
+	LorePlayerEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	LorePlayerEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LorePlayerEspButton.BackgroundTransparency = 1.000
+	LorePlayerEspButton.LayoutOrder = 1
+	LorePlayerEspButton.Position = UDim2.new(0.5, 85, 1, -635)
+	LorePlayerEspButton.Selectable = false
+	LorePlayerEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	LorePlayerEspButton.Font = Enum.Font.SourceSansSemibold
+	LorePlayerEspButton.RichText = true
+	LorePlayerEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Nearby Players Turned Off</stroke>'
+	LorePlayerEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LorePlayerEspButton.TextSize = 16.000
+	LorePlayerEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LorePlayerEspButton.TextTransparency = 0.100
+	LorePlayerEspButton.TextWrapped = true
+	LorePlayerEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	LorePlayerEspButton.MouseButton1Down:connect(function()
+		if not LoreEspHolder:FindFirstChild("ActivateCD") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = LorePlayerEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if loreplayerEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loreplayerEsp = true
+						for i, v in pairs(game.Workspace:GetChildren()) do
+							if game.Players:FindFirstChild(v.Name) and game.Players.LocalPlayer.Name ~= v.Name then
+								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+									playerEspHandle(v,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
+									if v.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
+										v.HumanoidRootPart.PlayerviewHolder.Enabled = true
+									end
+									if v.HumanoidRootPart:FindFirstChild("PlayerhealthHolder") then
+										v.HumanoidRootPart.PlayerhealthHolder.Enabled = true
+									end
+								end
+							end
+						end
+					end)
+					LorePlayerEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Nearby Players Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = LoreEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -82, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = LoreEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -82, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif loreplayerEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loreplayerEsp = false
+						for i, v in pairs(game.Workspace:GetChildren()) do
+							if game.Players:FindFirstChild(v.Name) and game.Players.LocalPlayer.Name ~= v.Name then
+								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+									if v.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
+										v.HumanoidRootPart.PlayerviewHolder.Enabled = false
+									end
+									if v.HumanoidRootPart:FindFirstChild("PlayerhealthHolder") then
+										v.HumanoidRootPart.PlayerhealthHolder.Enabled = false
+									end
+								end
+							end
+						end
+					end)
+					LorePlayerEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Nearby Players Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = LoreEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -82, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = LoreEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -82, 1, -635)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	LoreMobEspButton.Name = "Activator2"
+	LoreMobEspButton.Parent = LoreEspHolder
+	LoreMobEspButton.Active = false
+	LoreMobEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	LoreMobEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LoreMobEspButton.BackgroundTransparency = 1.000
+	LoreMobEspButton.LayoutOrder = 1
+	LoreMobEspButton.Position = UDim2.new(0.5, 85, 1, -615)
+	LoreMobEspButton.Selectable = false
+	LoreMobEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	LoreMobEspButton.Font = Enum.Font.SourceSansSemibold
+	LoreMobEspButton.RichText = true
+	LoreMobEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Nearby Mobs Turned Off</stroke>'
+	LoreMobEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LoreMobEspButton.TextSize = 16.000
+	LoreMobEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LoreMobEspButton.TextTransparency = 0.100
+	LoreMobEspButton.TextWrapped = true
+	LoreMobEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	LoreMobEspButton.MouseButton1Down:connect(function()
+		if not LoreEspHolder:FindFirstChild("ActivateCD2") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = LoreMobEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if loremobEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loremobEsp = true
+						for i, childType in pairs(game.Workspace:GetChildren()) do
+							if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") and not childType:FindFirstChild("StarterCharacter") then
+								playerEspHandle(childType,loremobEsp,true,Color3.fromRGB(0, 199, 146))
+								if childType.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
+									childType.HumanoidRootPart.PlayerviewHolder.Enabled = true
+								end
+								if childType.HumanoidRootPart:FindFirstChild("PlayerhealthHolder") then
+									childType.HumanoidRootPart.PlayerhealthHolder.Enabled = true
+								end
+							end
+						end
+					end)
+					LoreMobEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Nearby Mobs Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = LoreEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -70, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound2"
+					notfoundcharText.Parent = LoreEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -70, 1, -615)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif loremobEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loremobEsp = false
+						for i, childType in pairs(game.Workspace:GetChildren()) do
+							if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") and not childType:FindFirstChild("StarterCharacter") then
+								if childType.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
+									childType.HumanoidRootPart.PlayerviewHolder.Enabled = false
+								end
+								if childType.HumanoidRootPart:FindFirstChild("PlayerhealthHolder") then
+									childType.HumanoidRootPart.PlayerhealthHolder.Enabled = false
+								end
+							end
+						end
+					end)
+					LoreMobEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Nearby Mobs Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = LoreEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -70, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound2"
+					notfoundcharText.Parent = LoreEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -70, 1, -615)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	LoreNPCEspButton.Name = "Activator3"
+	LoreNPCEspButton.Parent = LoreEspHolder
+	LoreNPCEspButton.Active = false
+	LoreNPCEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	LoreNPCEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LoreNPCEspButton.BackgroundTransparency = 1.000
+	LoreNPCEspButton.LayoutOrder = 1
+	LoreNPCEspButton.Position = UDim2.new(0.5, 85, 1, -595)
+	LoreNPCEspButton.Selectable = false
+	LoreNPCEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	LoreNPCEspButton.Font = Enum.Font.SourceSansSemibold
+	LoreNPCEspButton.RichText = true
+	LoreNPCEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Nearby NPCs Turned Off</stroke>'
+	LoreNPCEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LoreNPCEspButton.TextSize = 16.000
+	LoreNPCEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LoreNPCEspButton.TextTransparency = 0.100
+	LoreNPCEspButton.TextWrapped = true
+	LoreNPCEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	LoreNPCEspButton.MouseButton1Down:connect(function()
+		if not LoreEspHolder:FindFirstChild("ActivateCD3") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = LoreNPCEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if lorenpcEsp == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						lorenpcEsp = true
+						for i, npcType in pairs(game.Workspace.map.NPC:GetDescendants()) do
+							if npcType:IsA("Model") and npcType.Parent:IsA("Folder") and npcType.Parent.Parent.Name == "NPC" then
+								if npcType:FindFirstChild("Humanoid") and npcType:FindFirstChild("HumanoidRootPart") and npcType:FindFirstChild("Body Colors") then
+									playerEspHandle(npcType,lorenpcEsp,false,Color3.fromRGB(139, 139, 207))
+									if npcType.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
+										npcType.HumanoidRootPart.PlayerviewHolder.Enabled = true
+									end
+								end
+							end
+						end
+					end)
+					LoreNPCEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Nearby NPCs Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = LoreEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -69, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound3"
+					notfoundcharText.Parent = LoreEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -69, 1, -595)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif lorenpcEsp == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						lorenpcEsp = false
+						for i, npcType in pairs(game.Workspace.map.NPC:GetDescendants()) do
+							if npcType:IsA("Model") and npcType.Parent:IsA("Folder") and npcType.Parent.Parent.Name == "NPC" then
+								if npcType:FindFirstChild("Humanoid") and npcType:FindFirstChild("HumanoidRootPart") and npcType:FindFirstChild("Body Colors") then
+									if npcType.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
+										npcType.HumanoidRootPart.PlayerviewHolder.Enabled = false
+									end
+								end
+							end
+						end
+					end)
+					LoreNPCEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Nearby NPCs Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = LoreEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -69, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound3"
+					notfoundcharText.Parent = LoreEspHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -69, 1, -595)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	
+	--// Lighting
+	LoreLightingHolder.Name = "LoreLighting"
+	LoreLightingHolder.Parent = DescSheet_3
+
+	LoreLightingTitle.Name = "LightingTitle"
+	LoreLightingTitle.Parent = LoreLightingHolder
+	LoreLightingTitle.Active = false
+	LoreLightingTitle.AnchorPoint = Vector2.new(0.5, 1)
+	LoreLightingTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LoreLightingTitle.BackgroundTransparency = 1.000
+	LoreLightingTitle.LayoutOrder = 1
+	LoreLightingTitle.Position = UDim2.new(0.5, 85, 1, -555)
+	LoreLightingTitle.Selectable = false
+	LoreLightingTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	LoreLightingTitle.Font = Enum.Font.SourceSansSemibold
+	LoreLightingTitle.RichText = true
+	LoreLightingTitle.Text = "<u>General Esp</u>"
+	LoreLightingTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LoreLightingTitle.TextSize = 18.000
+	LoreLightingTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LoreLightingTitle.TextTransparency = 0.100
+	LoreLightingTitle.TextWrapped = true
+	LoreLightingTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	LoreAmbienceButton.Name = "Activator"
+	LoreAmbienceButton.Parent = LoreLightingHolder
+	LoreAmbienceButton.Active = false
+	LoreAmbienceButton.AnchorPoint = Vector2.new(0.5, 1)
+	LoreAmbienceButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LoreAmbienceButton.BackgroundTransparency = 1.000
+	LoreAmbienceButton.LayoutOrder = 1
+	LoreAmbienceButton.Position = UDim2.new(0.5, 85, 1, -535)
+	LoreAmbienceButton.Selectable = false
+	LoreAmbienceButton.Size = UDim2.new(0.5, 0, 0, 20)
+	LoreAmbienceButton.Font = Enum.Font.SourceSansSemibold
+	LoreAmbienceButton.RichText = true
+	LoreAmbienceButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Ambience+ Turned Off</stroke>'
+	LoreAmbienceButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LoreAmbienceButton.TextSize = 16.000
+	LoreAmbienceButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LoreAmbienceButton.TextTransparency = 0.100
+	LoreAmbienceButton.TextWrapped = true
+	LoreAmbienceButton.TextXAlignment = Enum.TextXAlignment.Right
+	LoreAmbienceButton.MouseButton1Down:connect(function()
+		if not LoreLightingHolder:FindFirstChild("ActivateCD") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = LoreAmbienceButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if loreambienceLighting == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loreambienceLighting = true
+						game.Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+					end)
+					LoreAmbienceButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Ambience+ Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = LoreLightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -60, 1, -535)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = LoreLightingHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -60, 1, -535)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif loreambienceLighting == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loreambienceLighting = false
+						game.Lighting.Ambient = Color3.fromRGB(90, 90, 90)
+					end)
+					LoreAmbienceButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Ambience+ Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = LoreLightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -60, 1, -535)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = LoreLightingHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -60, 1, -535)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	LoreDOFButton.Name = "Activator2"
+	LoreDOFButton.Parent = LoreLightingHolder
+	LoreDOFButton.Active = false
+	LoreDOFButton.AnchorPoint = Vector2.new(0.5, 1)
+	LoreDOFButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LoreDOFButton.BackgroundTransparency = 1.000
+	LoreDOFButton.LayoutOrder = 1
+	LoreDOFButton.Position = UDim2.new(0.5, 85, 1, -515)
+	LoreDOFButton.Selectable = false
+	LoreDOFButton.Size = UDim2.new(0.5, 0, 0, 20)
+	LoreDOFButton.Font = Enum.Font.SourceSansSemibold
+	LoreDOFButton.RichText = true
+	LoreDOFButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">DepthOfField+ Turned Off</stroke>'
+	LoreDOFButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LoreDOFButton.TextSize = 16.000
+	LoreDOFButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LoreDOFButton.TextTransparency = 0.100
+	LoreDOFButton.TextWrapped = true
+	LoreDOFButton.TextXAlignment = Enum.TextXAlignment.Right
+	LoreDOFButton.MouseButton1Down:connect(function()
+		if not LoreLightingHolder:FindFirstChild("ActivateCD2") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = LoreDOFButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if loredofLighting == false then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loredofLighting = true
+						game.Lighting.DepthOfField.Enabled = false
+					end)
+					LoreDOFButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">DepthOfField+ Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = LoreLightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -78, 1, -515)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound2"
+					notfoundcharText.Parent = LoreLightingHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -78, 1, -515)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(1)
+						notfoundcharText:Destroy()
+					end)
+				end
+			elseif loredofLighting == true then
+				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+					task.spawn(function()
+						loredofLighting = false
+						game.Lighting.DepthOfField.Enabled = true
+					end)
+					LoreDOFButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">DepthOfField+ Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = LoreLightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -78, 1, -515)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound2"
+					notfoundcharText.Parent = LoreLightingHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, -78, 1, -515)
 					notfoundcharText.Selectable = false
 					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
 					notfoundcharText.Font = Enum.Font.SourceSansSemibold
@@ -4384,7 +5274,7 @@ Desc_4.Position = UDim2.new(0.5, 0, 0, 47)
 Desc_4.Size = UDim2.new(0.899999976, 0, 1, -60)
 Desc_4.Font = Enum.Font.SourceSans
 Desc_4.RichText = true
-Desc_4.Text = '<b><font color="rgb(239, 184, 56)">[Creator - Pot]</font></b><br /><font color="rgb(0, 200, 0)">[Fully Supported Games - Newer Rogue Lineage Copys, Deepwoken, VoxlBlade]</font><br /><font color="rgb(253, 117, 39)">[Semi Supported Games - Shinobi Storm Online Remastered]</font><br />This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts.<br /><i>Sincerely, Pot</i>'
+Desc_4.Text = '<b><font color="rgb(239, 184, 56)">[Creator - Pot]</font></b><br /><font color="rgb(0, 200, 0)">[Fully Supported Games - Newer Rogue Lineage Copys, Deepwoken, VoxlBlade, Lore Game]</font><br /><font color="rgb(253, 117, 39)">[Semi Supported Games - Shinobi Storm Online Remastered]</font><br />This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts.<br /><i>Sincerely, Pot</i>'
 Desc_4.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc_4.TextScaled = true
 Desc_4.TextSize = 18.000
@@ -4445,8 +5335,8 @@ UIGradient_8.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 
 UIGradient_8.Parent = Underline_8
 
 if gameName == "Deepwoken" then
-	game.Workspace.Live.ChildAdded:Connect(function(player)
-		if player.Name == game.Players.LocalPlayer.Name then
+	game.Workspace.Live.ChildAdded:Connect(function(character)
+		if character.Name == game.Players.LocalPlayer.Name then
 			task.wait(1)
 			pcall(function()
 				loadstring(game:HttpGet(scr1))()
@@ -4477,7 +5367,7 @@ if gameName == "Rogue Lineage Copy" then
 							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							trinketEspHolder.ResetOnSpawn = false
 							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							trinketEspHolder.ClipsDescendants = true
 
 							local trinketEspLabel = Instance.new("TextLabel")
@@ -4513,7 +5403,7 @@ if gameName == "Rogue Lineage Copy" then
 								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								trinketEspHolder.ResetOnSpawn = false
 								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 								trinketEspHolder.ClipsDescendants = true
 
 								local trinketEspLabel = Instance.new("TextLabel")
@@ -4548,7 +5438,7 @@ if gameName == "Rogue Lineage Copy" then
 								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								trinketEspHolder.ResetOnSpawn = false
 								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 								trinketEspHolder.ClipsDescendants = true
 
 								local trinketEspLabel = Instance.new("TextLabel")
@@ -4583,7 +5473,7 @@ if gameName == "Rogue Lineage Copy" then
 								trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								trinketEspHolder.ResetOnSpawn = false
 								trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 								trinketEspHolder.ClipsDescendants = true
 
 								local trinketEspLabel = Instance.new("TextLabel")
@@ -4619,7 +5509,7 @@ if gameName == "Rogue Lineage Copy" then
 							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							trinketEspHolder.ResetOnSpawn = false
 							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							trinketEspHolder.ClipsDescendants = true
 
 							local trinketEspLabel = Instance.new("TextLabel")
@@ -4654,7 +5544,7 @@ if gameName == "Rogue Lineage Copy" then
 							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							trinketEspHolder.ResetOnSpawn = false
 							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							trinketEspHolder.ClipsDescendants = true
 
 							local trinketEspLabel = Instance.new("TextLabel")
@@ -4689,7 +5579,7 @@ if gameName == "Rogue Lineage Copy" then
 							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							trinketEspHolder.ResetOnSpawn = false
 							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							trinketEspHolder.ClipsDescendants = true
 
 							local trinketEspLabel = Instance.new("TextLabel")
@@ -4724,7 +5614,7 @@ if gameName == "Rogue Lineage Copy" then
 							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							trinketEspHolder.ResetOnSpawn = false
 							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							trinketEspHolder.ClipsDescendants = true
 
 							local trinketEspLabel = Instance.new("TextLabel")
@@ -4761,7 +5651,7 @@ if gameName == "Rogue Lineage Copy" then
 							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							trinketEspHolder.ResetOnSpawn = false
 							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							trinketEspHolder.ClipsDescendants = true
 
 							local trinketEspLabel = Instance.new("TextLabel")
@@ -4798,7 +5688,7 @@ if gameName == "Rogue Lineage Copy" then
 							trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							trinketEspHolder.ResetOnSpawn = false
 							trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							trinketEspHolder.ClipsDescendants = true
 
 							local trinketEspLabel = Instance.new("TextLabel")
@@ -4834,7 +5724,7 @@ if gameName == "Rogue Lineage Copy" then
 						trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 						trinketEspHolder.ResetOnSpawn = false
 						trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
-						trinketEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+						trinketEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 						trinketEspHolder.ClipsDescendants = true
 
 						local trinketEspLabel = Instance.new("TextLabel")
@@ -4876,7 +5766,7 @@ if gameName == "Rogue Lineage Copy" then
 							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							gemscrollEspHolder.ResetOnSpawn = false
 							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							gemscrollEspHolder.ClipsDescendants = true
 
 							local gemscrollEspLabel = Instance.new("TextLabel")
@@ -4911,7 +5801,7 @@ if gameName == "Rogue Lineage Copy" then
 							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							gemscrollEspHolder.ResetOnSpawn = false
 							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							gemscrollEspHolder.ClipsDescendants = true
 
 							local gemscrollEspLabel = Instance.new("TextLabel")
@@ -4948,7 +5838,7 @@ if gameName == "Rogue Lineage Copy" then
 							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							gemscrollEspHolder.ResetOnSpawn = false
 							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							gemscrollEspHolder.ClipsDescendants = true
 
 							local gemscrollEspLabel = Instance.new("TextLabel")
@@ -4983,7 +5873,7 @@ if gameName == "Rogue Lineage Copy" then
 							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							gemscrollEspHolder.ResetOnSpawn = false
 							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							gemscrollEspHolder.ClipsDescendants = true
 
 							local gemscrollEspLabel = Instance.new("TextLabel")
@@ -5018,7 +5908,7 @@ if gameName == "Rogue Lineage Copy" then
 							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							gemscrollEspHolder.ResetOnSpawn = false
 							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							gemscrollEspHolder.ClipsDescendants = true
 
 							local gemscrollEspLabel = Instance.new("TextLabel")
@@ -5053,7 +5943,7 @@ if gameName == "Rogue Lineage Copy" then
 							gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							gemscrollEspHolder.ResetOnSpawn = false
 							gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							gemscrollEspHolder.ClipsDescendants = true
 
 							local gemscrollEspLabel = Instance.new("TextLabel")
@@ -5089,7 +5979,7 @@ if gameName == "Rogue Lineage Copy" then
 								gemscrollEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								gemscrollEspHolder.ResetOnSpawn = false
 								gemscrollEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								gemscrollEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								gemscrollEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 								gemscrollEspHolder.ClipsDescendants = true
 
 								local gemscrollEspLabel = Instance.new("TextLabel")
@@ -5133,7 +6023,7 @@ if gameName == "Rogue Lineage Copy" then
 							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							artifactEspHolder.ResetOnSpawn = false
 							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							artifactEspHolder.ClipsDescendants = true
 
 							local artifactEspLabel = Instance.new("TextLabel")
@@ -5170,7 +6060,7 @@ if gameName == "Rogue Lineage Copy" then
 							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							artifactEspHolder.ResetOnSpawn = false
 							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							artifactEspHolder.ClipsDescendants = true
 
 							local artifactEspLabel = Instance.new("TextLabel")
@@ -5205,7 +6095,7 @@ if gameName == "Rogue Lineage Copy" then
 							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							artifactEspHolder.ResetOnSpawn = false
 							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							artifactEspHolder.ClipsDescendants = true
 
 							local artifactEspLabel = Instance.new("TextLabel")
@@ -5240,7 +6130,7 @@ if gameName == "Rogue Lineage Copy" then
 							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							artifactEspHolder.ResetOnSpawn = false
 							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							artifactEspHolder.ClipsDescendants = true
 
 							local artifactEspLabel = Instance.new("TextLabel")
@@ -5276,7 +6166,7 @@ if gameName == "Rogue Lineage Copy" then
 								artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								artifactEspHolder.ResetOnSpawn = false
 								artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 								artifactEspHolder.ClipsDescendants = true
 
 								local artifactEspLabel = Instance.new("TextLabel")
@@ -5311,7 +6201,7 @@ if gameName == "Rogue Lineage Copy" then
 								artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								artifactEspHolder.ResetOnSpawn = false
 								artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 								artifactEspHolder.ClipsDescendants = true
 
 								local artifactEspLabel = Instance.new("TextLabel")
@@ -5350,7 +6240,7 @@ if gameName == "Rogue Lineage Copy" then
 								artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 								artifactEspHolder.ResetOnSpawn = false
 								artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-								artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+								artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 								artifactEspHolder.ClipsDescendants = true
 
 								local artifactEspLabel = Instance.new("TextLabel")
@@ -5386,7 +6276,7 @@ if gameName == "Rogue Lineage Copy" then
 							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							artifactEspHolder.ResetOnSpawn = false
 							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							artifactEspHolder.ClipsDescendants = true
 
 							local artifactEspLabel = Instance.new("TextLabel")
@@ -5421,7 +6311,7 @@ if gameName == "Rogue Lineage Copy" then
 							artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 							artifactEspHolder.ResetOnSpawn = false
 							artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-							artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+							artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 							artifactEspHolder.ClipsDescendants = true
 
 							local artifactEspLabel = Instance.new("TextLabel")
@@ -5459,7 +6349,7 @@ if gameName == "Rogue Lineage Copy" then
 										artifactEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 										artifactEspHolder.ResetOnSpawn = false
 										artifactEspHolder.Size = UDim2.new(0, 200, 0, 50)
-										artifactEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 1, 0)
+										artifactEspHolder.StudsOffset = Vector3.new(0, 1, 0)
 										artifactEspHolder.ClipsDescendants = true
 
 										local artifactEspLabel = Instance.new("TextLabel")
@@ -5520,7 +6410,7 @@ if gameName == "Rogue Lineage Copy" then
 					toolEspHolder.MaxDistance = 99
 					toolEspHolder.ResetOnSpawn = false
 					toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
-					toolEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 3, 0)
+					toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
 					toolEspHolder.ClipsDescendants = true
 
 					local toolEspLabel = Instance.new("TextLabel")
@@ -5722,7 +6612,7 @@ if gameName == "VoxlBlade" then
 			enemyEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
 			enemyEspHolder.ResetOnSpawn = false
 			enemyEspHolder.Size = UDim2.new(0, 200, 0, 50)
-			enemyEspHolder.StudsOffsetWorldSpace = Vector3.new(0, 5, 0)
+			enemyEspHolder.StudsOffset = Vector3.new(0, 5, 0)
 			enemyEspHolder.ClipsDescendants = true
 
 			local enemyEspLabel = Instance.new("TextLabel")
@@ -5780,6 +6670,119 @@ if gameName == "VoxlBlade" then
 	end)
 end
 
+if gameName == "Lore Game" then
+	function playerEspHandle(character,espType,living,chosenColor)
+		if not character.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
+			local playerEspHolder = Instance.new("BillboardGui")
+			playerEspHolder.Name = "PlayerviewHolder"
+			playerEspHolder.Parent = character.HumanoidRootPart
+			playerEspHolder.Active = false
+			playerEspHolder.Adornee = character.HumanoidRootPart
+			playerEspHolder.AlwaysOnTop = true
+			if espType == true then
+				playerEspHolder.Enabled = true
+			elseif espType == false then
+				playerEspHolder.Enabled = false
+			end
+			playerEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+			playerEspHolder.ResetOnSpawn = false
+			playerEspHolder.Size = UDim2.new(10, 0, 1, 0)
+			playerEspHolder.StudsOffset = Vector3.new(0, 3, 0)
+			playerEspHolder.ClipsDescendants = false
+
+			local playerEspLabel = Instance.new("TextLabel")
+			playerEspLabel.Name = "PlayerView"
+			playerEspLabel.Parent = playerEspHolder
+			playerEspLabel.Active = false
+			playerEspLabel.BackgroundTransparency = 1.000
+			playerEspLabel.Position = UDim2.new(0, 0, 0, 0)
+			playerEspLabel.Size = UDim2.new(1, 0, 1, 0)
+			playerEspLabel.ZIndex = 5
+			playerEspLabel.Font = Enum.Font.SourceSansBold
+			playerEspLabel.RichText = true
+			playerEspLabel.Text = character.Name
+			playerEspLabel.TextColor3 = chosenColor
+			playerEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+			playerEspLabel.TextStrokeTransparency = 0
+			playerEspLabel.TextTransparency = 0
+			playerEspLabel.TextSize = 14.000
+			playerEspLabel.TextScaled = false
+			playerEspLabel.TextWrapped = false
+		end
+		if not character.HumanoidRootPart:FindFirstChild("PlayerhealthHolder") and living then
+			local healthBarHolder = Instance.new("BillboardGui")
+			healthBarHolder.Name = "PlayerhealthHolder"
+			healthBarHolder.Parent = character.HumanoidRootPart
+			healthBarHolder.Active = false
+			healthBarHolder.Adornee = character.HumanoidRootPart
+			healthBarHolder.AlwaysOnTop = true
+			if espType == true then
+				healthBarHolder.Enabled = true
+			elseif espType == false then
+				healthBarHolder.Enabled = false
+			end
+			healthBarHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+			healthBarHolder.ResetOnSpawn = false
+			healthBarHolder.Size = UDim2.new(0.75, 0, 3, 0)
+			healthBarHolder.SizeOffset = Vector2.new(-4, 0)
+			healthBarHolder.ClipsDescendants = false
+
+			local healthBarFrame = Instance.new("Frame")
+			healthBarFrame.Name = "HealthBar"
+			healthBarFrame.Parent = healthBarHolder
+			healthBarFrame.Active = false
+			healthBarFrame.BackgroundColor3 = Color3.fromRGB(70, 23, 0)
+			healthBarFrame.BackgroundTransparency = 0
+			healthBarFrame.BorderSizePixel = 1.000
+			healthBarFrame.Position = UDim2.new(0, 0, 0, 0)
+			healthBarFrame.Rotation = 180
+			healthBarFrame.Size = UDim2.new(1, 0, 1, 0)
+			healthBarFrame.ZIndex = 5
+
+			local healthMeterFrame = Instance.new("Frame")
+			healthMeterFrame.Name = "HealthMeter"
+			healthMeterFrame.Parent = healthBarFrame
+			healthMeterFrame.Active = false
+			healthMeterFrame.BackgroundColor3 = chosenColor
+			healthMeterFrame.BackgroundTransparency = 0
+			healthMeterFrame.BorderSizePixel = 0
+			healthMeterFrame.Position = UDim2.new(0, 0, 0, 0)
+			healthMeterFrame.Rotation = 0
+			local CurrentHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+			healthMeterFrame.Size = UDim2.new(1, 0, CurrentHealth, 0)
+			local NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+			local function HealthApply()
+				NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+				game.TweenService:Create(healthMeterFrame, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {
+					Size = UDim2.new(1, 0, NewHealth, 0)
+				}):Play()
+			end
+			character.Humanoid.HealthChanged:connect(HealthApply)
+			character.Humanoid:GetPropertyChangedSignal("MaxHealth"):connect(HealthApply)
+			HealthApply()
+			healthMeterFrame.ZIndex = 5
+		end
+	end
+	game.Workspace.ChildAdded:Connect(function(child)
+		if game.Players:FindFirstChild(child.Name) and game.Players.LocalPlayer.Name ~= child.Name then
+			if child:FindFirstChild("Humanoid") and child:FindFirstChild("HumanoidRootPart") then
+				playerEspHandle(child,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
+			end
+		end
+	end)
+	for i, childType in pairs(game.Workspace:GetChildren()) do
+		if game.Players:FindFirstChild(childType.Name) and game.Players.LocalPlayer.Name ~= childType.Name then
+			if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") then
+				playerEspHandle(childType,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
+			end
+		else
+			if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") and not childType:FindFirstChild("StarterCharacter") then
+				playerEspHandle(childType,loremobEsp,true,Color3.fromRGB(0, 199, 146))
+			end
+		end
+	end
+end
+
 local on = false
 UserInputService.InputBegan:connect(function(player, p9)
 	if p9 then
@@ -5794,11 +6797,12 @@ UserInputService.InputBegan:connect(function(player, p9)
 	end
 end)
 
+local lorecheckingNPCs = false
 spawn(function()
 	task.wait(1)
 	while true do
 		task.wait(1.75)
-		if not game.Players.LocalPlayer.PlayerGui:FindFirstChild(HubGui.Name) then
+		if not game:GetService("CoreGui"):FindFirstChild(HubGui.Name) then
 			game.Players.LocalPlayer:Kick("gui was deleted??")
 		end
 		if gameName == "Rogue Lineage Copy" then
@@ -5874,6 +6878,33 @@ spawn(function()
 					end
 					v.EnemyviewHolder.EnemyView.TextSize = 15.000
 					v.EnemyviewHolder.EnemyView.TextWrapped = true
+				end
+			end
+		end
+		if gameName == "Lore Game" then
+			for i, childType in pairs(game.Workspace:GetChildren()) do
+				if game.Players:FindFirstChild(childType.Name) and game.Players.LocalPlayer.Name ~= childType.Name then
+					if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") then
+						playerEspHandle(childType,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
+					end
+				else
+					if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") and not childType:FindFirstChild("StarterCharacter") then
+						playerEspHandle(childType,loremobEsp,true,Color3.fromRGB(0, 199, 146))
+					end
+				end
+			end
+			for i, npcType in pairs(game.Workspace.map.NPC:GetDescendants()) do
+				if npcType:IsA("Model") and npcType.Parent:IsA("Folder") and npcType.Parent.Parent.Name == "NPC" then
+					if npcType:FindFirstChild("Humanoid") and npcType:FindFirstChild("HumanoidRootPart") and npcType:FindFirstChild("Body Colors") then
+						if not lorecheckingNPCs then
+							lorecheckingNPCs = true
+							npcType.ChildAdded:Connect(function(child)
+								playerEspHandle(npcType,lorenpcEsp,false,Color3.fromRGB(139, 139, 207))
+							end)
+						else
+							playerEspHandle(npcType,lorenpcEsp,false,Color3.fromRGB(139, 139, 207))
+						end
+					end
 				end
 			end
 		end
