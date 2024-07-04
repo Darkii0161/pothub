@@ -14,8 +14,12 @@ local gameName = ""
 local scr1 = ''
 local scr2 = ''
 local fullSupp = false
-
-if game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 or game.GameId == 3400722193 or game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680 or game.GameId == 4544356586 or game.GameId == 4769949081 or game.GameId == 5575409971 then
+if game.GameId == 1087859240 then
+	gameName = "Rogue Lineage"
+	scr2 = "https://raw.githubusercontent.com/Darkii0161/autobard/main/auto"
+	fullSupp = true
+	print("Found Supported Game: "..gameName)
+elseif game.PlaceId == 10787992628 or game.PlaceId == 11412701341 or game.PlaceId == 10046661315 or game.PlaceId == 10215650900 or game.PlaceId == 12159215859 or game.GameId == 3400722193 or game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680 or game.GameId == 4544356586 or game.GameId == 4769949081 or game.GameId == 5575409971 then
 	gameName = "Rogue Lineage Copy"
 	scr1 = 'https://raw.githubusercontent.com/Darkii0161/rcopy/main/unidrip'
 	scr2 = "https://raw.githubusercontent.com/Darkii0161/autobard/main/auto"
@@ -140,6 +144,15 @@ local BurialCapture = Instance.new("TextLabel")
 local JobIdHolder = Instance.new("Folder")
 local JobIdTitle = Instance.new("TextLabel")
 local JobIdBox = Instance.new("TextBox")
+--//For Rogue Movement
+local MovementHolder = Instance.new("Folder")
+local MovementTitle = Instance.new("TextLabel")
+local SpeedTitle = Instance.new("TextLabel")
+local ClimbTitle = Instance.new("TextLabel")
+local SpeedBox = Instance.new("TextBox")
+local ClimbBox = Instance.new("TextBox")
+local SpeedOverlay = Instance.new("ImageLabel")
+local ClimbOverlay = Instance.new("ImageLabel")
 --//For AutoBard Functions
 local AutoHolder = Instance.new("Folder")
 local AutoTitle = Instance.new("TextLabel")
@@ -177,6 +190,14 @@ local LoreDOFButton = Instance.new("TextButton")
 
 --Some Functions:
 
+local function isNumber(input)
+	return tonumber(input) ~= nil
+end
+
+local function isWholeNumber(number)
+	return number % 1 == 0
+end
+
 local function randomString(length)
 	local chars = {}
 	for i = 1, length do
@@ -196,7 +217,7 @@ end
 
 -- Function to type the text into the TextLabel
 local function typeText(chosentext,textload, charDelay)
-	spawn(function()
+	task.spawn(function()
 		local typedText = ""
 		for i = 1, #textload do
 			typedText = typedText .. textload:sub(i, i) -- Add the next character to the typed text
@@ -333,7 +354,7 @@ UITextSizeConstraint.MaxTextSize = 14
 UITextSizeConstraint.MinTextSize = 12
 
 
-local totalwaitTime = 15
+local totalwaitTime = 12
 local loadwaitTime = 0
 while true do
 	task.wait(0.5)
@@ -602,7 +623,7 @@ DescHide.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 DescHide.TextTransparency = 1--0.100
 DescHide.TextWrapped = true
 local hashiden = false
-spawn(function()
+task.spawn(function()
 	local HideGUITextTween1 = TweenService:Create(DescHide, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
 		TextTransparency = 0.100
 	})
@@ -1088,6 +1109,12 @@ local rogueartifactEsp = false
 local roguetoolEsp = false
 local roguenotifierOn = false
 
+--//Real Rogue Vars
+local realroguespeedBoost
+local realrogueclimbBoost
+local realroguespeedValue = 0
+local realrogueclimbValue = 0
+
 --//Voxl Vars
 local voxlenemyEsp = false
 local voxlnpcEsp = false
@@ -1103,8 +1130,499 @@ local loremobEsp = false
 local lorenpcEsp = false
 local loreambienceLighting = false
 local loredofLighting = false
+if gameName == "Rogue Lineage" then
+	--// Real Rogue Esp
+	RogueEspHolder.Name = "RogueEsp"
+	RogueEspHolder.Parent = DescSheet_3
 
-if gameName == "Rogue Lineage Copy" then
+	RogueEspTitle.Name = "EspTitle"
+	RogueEspTitle.Parent = RogueEspHolder
+	RogueEspTitle.Active = false
+	RogueEspTitle.AnchorPoint = Vector2.new(0.5, 1)
+	RogueEspTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueEspTitle.BackgroundTransparency = 1.000
+	RogueEspTitle.LayoutOrder = 1
+	RogueEspTitle.Position = UDim2.new(0.5, 85, 1, -655)
+	RogueEspTitle.Selectable = false
+	RogueEspTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueEspTitle.Font = Enum.Font.SourceSansSemibold
+	RogueEspTitle.RichText = true
+	RogueEspTitle.Text = "<u>General Esp</u>"
+	RogueEspTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueEspTitle.TextSize = 18.000
+	RogueEspTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueEspTitle.TextTransparency = 0.100
+	RogueEspTitle.TextWrapped = true
+	RogueEspTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	RogueToolViewEspButton.Name = "Activator"
+	RogueToolViewEspButton.Parent = RogueEspHolder
+	RogueToolViewEspButton.Active = false
+	RogueToolViewEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueToolViewEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueToolViewEspButton.BackgroundTransparency = 1.000
+	RogueToolViewEspButton.LayoutOrder = 1
+	RogueToolViewEspButton.Position = UDim2.new(0.5, 85, 1, -635)
+	RogueToolViewEspButton.Selectable = false
+	RogueToolViewEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueToolViewEspButton.Font = Enum.Font.SourceSansSemibold
+	RogueToolViewEspButton.RichText = true
+	RogueToolViewEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Tool Turned Off</stroke>'
+	RogueToolViewEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueToolViewEspButton.TextSize = 16.000
+	RogueToolViewEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueToolViewEspButton.TextTransparency = 0.100
+	RogueToolViewEspButton.TextWrapped = true
+	RogueToolViewEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueToolViewEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueToolViewEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguetoolEsp == false then
+				if game.Players.LocalPlayer then
+					task.spawn(function()
+						roguetoolEsp = true
+						for i, v in pairs(game.Workspace.Live:GetChildren()) do
+							if v.Name ~= game.Players.LocalPlayer.Name then
+								if v:FindFirstChild("Head") then
+									if v.Head:FindFirstChild("ToolviewHolder") then
+										v.Head.ToolviewHolder.Enabled = true
+									end
+									if not v.Head:FindFirstChild("ToolviewHolder") then
+										local toolEspHolder = Instance.new("BillboardGui")
+										toolEspHolder.Name = "ToolviewHolder"
+										toolEspHolder.Parent = v.Head
+										toolEspHolder.Active = false
+										toolEspHolder.Adornee = v.Head
+										toolEspHolder.AlwaysOnTop = true
+										toolEspHolder.MaxDistance = 125
+										toolEspHolder.ResetOnSpawn = false
+										toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
+										toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
+										toolEspHolder.ClipsDescendants = true
+
+										local toolEspLabel = Instance.new("TextLabel")
+										toolEspLabel.Name = "ToolView"
+										toolEspLabel.Parent = toolEspHolder
+										toolEspLabel.Active = false
+										toolEspLabel.BackgroundTransparency = 1.000
+										toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
+										toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
+										toolEspLabel.ZIndex = 5
+										toolEspLabel.Font = Enum.Font.SpecialElite
+										toolEspLabel.RichText = true
+										if v:FindFirstChildWhichIsA("Tool") then
+											toolEspLabel.Text = v:FindFirstChildWhichIsA("Tool").Name
+										elseif not v:FindFirstChildWhichIsA("Tool") then
+											toolEspLabel.Text = ""
+										end
+										toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+										toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
+										toolEspLabel.TextStrokeTransparency = 0
+										toolEspLabel.TextTransparency = 0
+										toolEspLabel.TextSize = 21.000
+										toolEspLabel.TextWrapped = true
+										v.ChildAdded:Connect(function(tool)
+											if tool.ClassName == "Tool" then
+												if v:FindFirstChild("Head") then
+													if v.Head:FindFirstChild("ToolviewHolder") then
+														v.Head.ToolviewHolder.ToolView.Text = tool.Name
+													end
+												end
+											end
+										end)
+										v.ChildRemoved:Connect(function(tool)
+											if tool.ClassName == "Tool" then
+												if v:FindFirstChild("Head") then
+													if v.Head:FindFirstChild("ToolviewHolder") then
+														v.Head.ToolviewHolder.ToolView.Text = ""
+													end
+												end
+											end
+										end)
+									end
+								end
+							end
+						end
+					end)
+					RogueToolViewEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Tool Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -25, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif roguetoolEsp == true then
+				if game.Players.LocalPlayer then
+					task.spawn(function()
+						roguetoolEsp = false
+						for i, v in pairs(game.Workspace.Live:GetChildren()) do
+							if v:FindFirstChild("Head") then
+								if v.Head:FindFirstChild("ToolviewHolder") then
+									v.Head.ToolviewHolder.Enabled = false
+								end
+							end
+						end
+					end)
+					RogueToolViewEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Tool Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD4"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -25, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	--// Auto
+	AutoHolder.Name = "Auto"
+	AutoHolder.Parent = DescSheet_3
+
+	AutoTitle.Name = "AutoTitle"
+	AutoTitle.Parent = AutoHolder
+	AutoTitle.Active = false
+	AutoTitle.AnchorPoint = Vector2.new(0.5, 1)
+	AutoTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	AutoTitle.BackgroundTransparency = 1.000
+	AutoTitle.LayoutOrder = 1
+	AutoTitle.Position = UDim2.new(0.5, 85, 1, -535)
+	AutoTitle.Selectable = false
+	AutoTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	AutoTitle.Font = Enum.Font.SourceSansSemibold
+	AutoTitle.RichText = true
+	AutoTitle.Text = "<u>Auto</u>"
+	AutoTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	AutoTitle.TextSize = 18.000
+	AutoTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	AutoTitle.TextTransparency = 0.100
+	AutoTitle.TextWrapped = true
+	AutoTitle.TextXAlignment = Enum.TextXAlignment.Right
+
+	AutoBardButton.Name = "AutoBard"
+	AutoBardButton.Parent = AutoHolder
+	AutoBardButton.Active = false
+	AutoBardButton.AnchorPoint = Vector2.new(0.5, 1)
+	AutoBardButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	AutoBardButton.BackgroundTransparency = 1.000
+	AutoBardButton.LayoutOrder = 1
+	AutoBardButton.Position = UDim2.new(0.5, 85, 1, -515)
+	AutoBardButton.Selectable = false
+	AutoBardButton.Size = UDim2.new(0.5, 0, 0, 20)
+	AutoBardButton.Font = Enum.Font.SourceSansSemibold
+	AutoBardButton.RichText = true
+	AutoBardButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
+	AutoBardButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	AutoBardButton.TextSize = 16.000
+	AutoBardButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	AutoBardButton.TextTransparency = 0.100
+	AutoBardButton.TextWrapped = true
+	AutoBardButton.TextXAlignment = Enum.TextXAlignment.Right
+	AutoBardButton.MouseButton1Down:connect(function()
+		if not AutoBardButton:FindFirstChild("Wait") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = AutoBardButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			local deb = Instance.new("Folder")
+			deb.Name = "Wait"
+			deb.Parent = AutoBardButton
+			AutoBardButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Bard Player</stroke>'
+			task.spawn(function()
+				task.wait(4)
+				AutoBardButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Bard Player</stroke>'
+				deb:Destroy()
+			end)
+			if scr2 ~= "" then
+				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
+					if game.Workspace.Live[game.Players.LocalPlayer.Name]:FindFirstChild("HumanoidRootPart") then
+						if not game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart:FindFirstChild("ZOobjc4ccPtui9fcbmp34YW28VkB") then
+							pcall(function()
+								loadstring(game:HttpGet(scr2))()
+								local usedautoBard = Instance.new("Folder")
+								usedautoBard.Name = "ZOobjc4ccPtui9fcbmp34YW28VkB"
+								usedautoBard.Parent = game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart
+							end)
+						else
+							local alreadyusedbardText = Instance.new("TextLabel")
+							alreadyusedbardText.Name = "AutoBardUsed"
+							alreadyusedbardText.Parent = AutoHolder
+							alreadyusedbardText.Active = false
+							alreadyusedbardText.AnchorPoint = Vector2.new(0.5, 1)
+							alreadyusedbardText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							alreadyusedbardText.BackgroundTransparency = 1.000
+							alreadyusedbardText.LayoutOrder = 1
+							alreadyusedbardText.Position = UDim2.new(0.5, 0, 1, -515)
+							alreadyusedbardText.Selectable = false
+							alreadyusedbardText.Size = UDim2.new(0.5, 0, 0, 20)
+							alreadyusedbardText.Font = Enum.Font.SourceSansSemibold
+							alreadyusedbardText.RichText = true
+							alreadyusedbardText.Text = "Already used"
+							alreadyusedbardText.TextColor3 = Color3.fromRGB(28, 36, 35)
+							alreadyusedbardText.TextSize = 16.000
+							alreadyusedbardText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+							alreadyusedbardText.TextTransparency = 0.600
+							alreadyusedbardText.TextWrapped = true
+							alreadyusedbardText.TextXAlignment = Enum.TextXAlignment.Right
+							task.spawn(function()
+								task.wait(2)
+								alreadyusedbardText:Destroy()
+							end)
+						end
+					end
+				else
+					local notfoundcharText = Instance.new("TextLabel")
+					notfoundcharText.Name = "CharNotFound"
+					notfoundcharText.Parent = AutoHolder
+					notfoundcharText.Active = false
+					notfoundcharText.AnchorPoint = Vector2.new(0.5, 1)
+					notfoundcharText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					notfoundcharText.BackgroundTransparency = 1.000
+					notfoundcharText.LayoutOrder = 1
+					notfoundcharText.Position = UDim2.new(0.5, 0, 1, -515)
+					notfoundcharText.Selectable = false
+					notfoundcharText.Size = UDim2.new(0.5, 0, 0, 20)
+					notfoundcharText.Font = Enum.Font.SourceSansSemibold
+					notfoundcharText.RichText = true
+					notfoundcharText.Text = "Character not found"
+					notfoundcharText.TextColor3 = Color3.fromRGB(28, 36, 35)
+					notfoundcharText.TextSize = 16.000
+					notfoundcharText.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					notfoundcharText.TextTransparency = 0.600
+					notfoundcharText.TextWrapped = true
+					notfoundcharText.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(2)
+						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	--// Movement
+	MovementHolder.Name = "Movement"
+	MovementHolder.Parent = DescSheet_3
+
+	--// MovementTitle
+	MovementTitle.Name = "MovementTitle"
+	MovementTitle.Parent = MovementHolder
+	MovementTitle.Active = false
+	MovementTitle.AnchorPoint = Vector2.new(0.5, 1)
+	MovementTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	MovementTitle.BackgroundTransparency = 1.000
+	MovementTitle.LayoutOrder = 1
+	MovementTitle.Position = UDim2.new(0.5, -85, 1, -715)
+	MovementTitle.Selectable = false
+	MovementTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	MovementTitle.Font = Enum.Font.SourceSansSemibold
+	MovementTitle.RichText = true
+	MovementTitle.Text = "<u>Movement</u>"
+	MovementTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	MovementTitle.TextSize = 18.000
+	MovementTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	MovementTitle.TextTransparency = 0.100
+	MovementTitle.TextWrapped = true
+	MovementTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+	--// SpeedTitle
+	SpeedTitle.Name = "SpeedTitle"
+	SpeedTitle.Parent = MovementHolder
+	SpeedTitle.Active = false
+	SpeedTitle.AnchorPoint = Vector2.new(0.5, 1)
+	SpeedTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	SpeedTitle.BackgroundTransparency = 1.000
+	SpeedTitle.LayoutOrder = 1
+	SpeedTitle.Position = UDim2.new(0.5, -85, 1, -695)
+	SpeedTitle.Selectable = false
+	SpeedTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	SpeedTitle.Font = Enum.Font.SourceSansSemibold
+	SpeedTitle.RichText = true
+	SpeedTitle.Text = "Speed Value"
+	SpeedTitle.TextColor3 = Color3.fromRGB(55, 71, 69)
+	SpeedTitle.TextSize = 18.000
+	SpeedTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	SpeedTitle.TextTransparency = 0.100
+	SpeedTitle.TextWrapped = true
+	SpeedTitle.TextXAlignment = Enum.TextXAlignment.Left
+	
+	--// SpeedBox
+	SpeedBox.Name = "SpeedBox"
+	SpeedBox.Parent = MovementHolder
+	SpeedBox.Active = true
+	SpeedBox.AnchorPoint = Vector2.new(0, 1)
+	SpeedBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	SpeedBox.BackgroundTransparency = 1.000
+	SpeedBox.LayoutOrder = 1
+	SpeedBox.Position = UDim2.new(0.25, -85, 1, -675)
+	SpeedBox.ClearTextOnFocus = false
+	SpeedBox.Selectable = false
+	SpeedBox.Size = UDim2.new(0.25, 0, 0, 20)
+	SpeedBox.Font = Enum.Font.SourceSansSemibold
+	SpeedBox.RichText = true
+	SpeedBox.Text = ""
+	SpeedBox.PlaceholderColor3 = Color3.fromRGB(111, 111, 165)
+	SpeedBox.PlaceholderText = "0"
+	SpeedBox.TextColor3 = Color3.fromRGB(85, 85, 127)
+	SpeedBox.TextSize = 18.000
+	SpeedBox.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	SpeedBox.TextTransparency = 0.100
+	SpeedBox.TextWrapped = true
+	SpeedBox.TextXAlignment = Enum.TextXAlignment.Center
+	SpeedBox:GetPropertyChangedSignal("Text"):Connect(function()
+		if SpeedBox.Text == "" then
+			realroguespeedValue = 0
+		end
+		if not isNumber(SpeedBox.Text) then
+			realroguespeedValue = 0
+		end
+		if isNumber(SpeedBox.Text) then
+			realroguespeedValue = tonumber(SpeedBox.Text)
+		end
+		applySpeedBoost(realroguespeedValue)
+	end)
+	
+	--// SpeedOverlay
+	SpeedOverlay.Name = "SpeedOverlay"
+	SpeedOverlay.Parent = SpeedBox
+	SpeedOverlay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	SpeedOverlay.BackgroundTransparency = 1.000
+	SpeedOverlay.BorderSizePixel = 0
+	SpeedOverlay.Position = UDim2.new(0, -3, 0, -3)
+	SpeedOverlay.Size = UDim2.new(1, 6, 1, 6)
+	SpeedOverlay.ZIndex = 2
+	SpeedOverlay.Image = "http://www.roblox.com/asset/?id=4280422108"
+	SpeedOverlay.ImageColor3 = Color3.fromRGB(183, 197, 211)
+	SpeedOverlay.ScaleType = Enum.ScaleType.Slice
+	SpeedOverlay.SliceCenter = Rect.new(14, 14, 18, 18)
+	
+	--// ClimbTitle
+	ClimbTitle.Name = "SpeedTitle"
+	ClimbTitle.Parent = MovementHolder
+	ClimbTitle.Active = false
+	ClimbTitle.AnchorPoint = Vector2.new(0.5, 1)
+	ClimbTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ClimbTitle.BackgroundTransparency = 1.000
+	ClimbTitle.LayoutOrder = 1
+	ClimbTitle.Position = UDim2.new(0.5, -85, 1, -635)
+	ClimbTitle.Selectable = false
+	ClimbTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	ClimbTitle.Font = Enum.Font.SourceSansSemibold
+	ClimbTitle.RichText = true
+	ClimbTitle.Text = "Climb Value"
+	ClimbTitle.TextColor3 = Color3.fromRGB(55, 71, 69)
+	ClimbTitle.TextSize = 18.000
+	ClimbTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	ClimbTitle.TextTransparency = 0.100
+	ClimbTitle.TextWrapped = true
+	ClimbTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+	--// ClimbBox
+	ClimbBox.Name = "ClimbBox"
+	ClimbBox.Parent = MovementHolder
+	ClimbBox.Active = true
+	ClimbBox.AnchorPoint = Vector2.new(0, 1)
+	ClimbBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ClimbBox.BackgroundTransparency = 1.000
+	ClimbBox.LayoutOrder = 1
+	ClimbBox.Position = UDim2.new(0.25, -85, 1, -615)
+	ClimbBox.ClearTextOnFocus = false
+	ClimbBox.Selectable = false
+	ClimbBox.Size = UDim2.new(0.25, 0, 0, 20)
+	ClimbBox.Font = Enum.Font.SourceSansSemibold
+	ClimbBox.RichText = true
+	ClimbBox.Text = ""
+	ClimbBox.PlaceholderColor3 = Color3.fromRGB(111, 111, 165)
+	ClimbBox.PlaceholderText = "0"
+	ClimbBox.TextColor3 = Color3.fromRGB(85, 85, 127)
+	ClimbBox.TextSize = 18.000
+	ClimbBox.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	ClimbBox.TextTransparency = 0.100
+	ClimbBox.TextWrapped = true
+	ClimbBox.TextXAlignment = Enum.TextXAlignment.Center
+	ClimbBox:GetPropertyChangedSignal("Text"):Connect(function()
+		if ClimbBox.Text == "" then
+			realrogueclimbValue = 0
+		end
+		if not isNumber(ClimbBox.Text) then
+			realrogueclimbValue = 0
+		end
+		if isNumber(ClimbBox.Text) then
+			realrogueclimbValue = tonumber(ClimbBox.Text)
+		end
+		applyClimbBoost(realrogueclimbValue)
+	end)
+
+	--// ClimbOverlay
+	ClimbOverlay.Name = "SpeedOverlay"
+	ClimbOverlay.Parent = ClimbBox
+	ClimbOverlay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ClimbOverlay.BackgroundTransparency = 1.000
+	ClimbOverlay.BorderSizePixel = 0
+	ClimbOverlay.Position = UDim2.new(0, -3, 0, -3)
+	ClimbOverlay.Size = UDim2.new(1, 6, 1, 6)
+	ClimbOverlay.ZIndex = 2
+	ClimbOverlay.Image = "http://www.roblox.com/asset/?id=4280422108"
+	ClimbOverlay.ImageColor3 = Color3.fromRGB(183, 197, 211)
+	ClimbOverlay.ScaleType = Enum.ScaleType.Slice
+	ClimbOverlay.SliceCenter = Rect.new(14, 14, 18, 18)
+elseif gameName == "Rogue Lineage Copy" then
 	--// Rogue Esp
 	RogueEspHolder.Name = "RogueEsp"
 	RogueEspHolder.Parent = DescSheet_3
@@ -4673,7 +5191,7 @@ elseif gameName == "Lore Game" then
 			end
 		end
 	end)
-	
+
 	--// Lighting
 	LoreLightingHolder.Name = "LoreLighting"
 	LoreLightingHolder.Parent = DescSheet_3
@@ -5274,7 +5792,7 @@ Desc_4.Position = UDim2.new(0.5, 0, 0, 47)
 Desc_4.Size = UDim2.new(0.899999976, 0, 1, -60)
 Desc_4.Font = Enum.Font.SourceSans
 Desc_4.RichText = true
-Desc_4.Text = '<b><font color="rgb(239, 184, 56)">[Creator - Pot]</font></b><br /><font color="rgb(0, 200, 0)">[Fully Supported Games - Newer Rogue Lineage Copys, Deepwoken, VoxlBlade, Lore Game]</font><br /><font color="rgb(253, 117, 39)">[Semi Supported Games - Shinobi Storm Online Remastered]</font><br />This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts.<br /><i>Sincerely, Pot</i>'
+Desc_4.Text = '<b><font color="rgb(239, 184, 56)">[Creator - Pot]</font></b><br /><font color="rgb(0, 200, 0)">[Fully Supported Games - Rogue Lineage, Newer Rogue Lineage Copys, Deepwoken, VoxlBlade, Lore Game]</font><br /><font color="rgb(253, 117, 39)">[Semi Supported Games - Shinobi Storm Online Remastered]</font><br />This script is a WIP and is subject to change and recieve more updates. These updates include adding more supported games specifically games I like, choose, and play frequently. Updates also include the general addition of more features for certain scripts.<br /><i>Sincerely, Pot</i>'
 Desc_4.TextColor3 = Color3.fromRGB(28, 36, 35)
 Desc_4.TextScaled = true
 Desc_4.TextSize = 18.000
@@ -5334,6 +5852,20 @@ Underline_8.Size = UDim2.new(1, 0, 0, 1)
 UIGradient_8.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 UIGradient_8.Parent = Underline_8
 
+function applySpeedBoost(value)
+	if realroguespeedBoost == nil then
+		return
+	end
+	realroguespeedBoost.Value = value
+end
+
+function applyClimbBoost(value)
+	if realrogueclimbBoost == nil then
+		return
+	end
+	realrogueclimbBoost.Value = value
+end
+
 if gameName == "Deepwoken" then
 	game.Workspace.Live.ChildAdded:Connect(function(character)
 		if character.Name == game.Players.LocalPlayer.Name then
@@ -5341,6 +5873,92 @@ if gameName == "Deepwoken" then
 			pcall(function()
 				loadstring(game:HttpGet(scr1))()
 			end)
+		end
+	end)
+end
+
+if gameName == "Rogue Lineage" then
+	game.Workspace.Live.ChildAdded:Connect(function(character)
+		if character.Name ~= game.Players.LocalPlayer.Name then
+			if character:FindFirstChild("Head") then
+				if not character.Head:FindFirstChild("ToolviewHolder") then
+					local toolEspHolder = Instance.new("BillboardGui")
+					toolEspHolder.Name = "ToolviewHolder"
+					toolEspHolder.Parent = character.Head
+					toolEspHolder.Active = false
+					toolEspHolder.Adornee = character.Head
+					toolEspHolder.AlwaysOnTop = true
+					if roguetoolEsp == true then
+						toolEspHolder.Enabled = true
+					elseif roguetoolEsp == false then
+						toolEspHolder.Enabled = false
+					end
+					toolEspHolder.MaxDistance = 125
+					toolEspHolder.ResetOnSpawn = false
+					toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
+					toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
+					toolEspHolder.ClipsDescendants = true
+
+					local toolEspLabel = Instance.new("TextLabel")
+					toolEspLabel.Name = "ToolView"
+					toolEspLabel.Parent = toolEspHolder
+					toolEspLabel.Active = false
+					toolEspLabel.BackgroundTransparency = 1.000
+					toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
+					toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
+					toolEspLabel.ZIndex = 5
+					toolEspLabel.Font = Enum.Font.SpecialElite
+					toolEspLabel.RichText = true
+					if character:FindFirstChildWhichIsA("Tool") then
+						toolEspLabel.Text = character:FindFirstChildWhichIsA("Tool").Name
+					elseif not character:FindFirstChildWhichIsA("Tool") then
+						toolEspLabel.Text = ""
+					end
+					toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+					toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
+					toolEspLabel.TextStrokeTransparency = 0
+					toolEspLabel.TextTransparency = 0
+					toolEspLabel.TextSize = 21.000
+					toolEspLabel.TextWrapped = true
+					character.ChildAdded:Connect(function(tool)
+						if tool.ClassName == "Tool" then
+							if character:FindFirstChild("Head") then
+								if character.Head:FindFirstChild("ToolviewHolder") then
+									character.Head.ToolviewHolder.ToolView.Text = tool.Name
+								end
+							end
+						end
+					end)
+					character.ChildRemoved:Connect(function(tool)
+						if tool.ClassName == "Tool" then
+							if character:FindFirstChild("Head") then
+								if character.Head:FindFirstChild("ToolviewHolder") then
+									character.Head.ToolviewHolder.ToolView.Text = ""
+								end
+							end
+						end
+					end)
+				end
+			end
+		elseif character.Name == game.Players.LocalPlayer.Name then
+			if not character:FindFirstChild("Boosts") then
+				character:WaitForChild("Boosts")
+			end
+			realroguespeedBoost = Instance.new("NumberValue")
+			realroguespeedBoost.Name = "SpeedBoost"
+			realroguespeedBoost.Parent = character:FindFirstChild("Boosts")
+			realroguespeedBoost.Value = realroguespeedValue
+			
+			realrogueclimbBoost = Instance.new("NumberValue")
+			realrogueclimbBoost.Name = "ClimbBoost"
+			realrogueclimbBoost.Parent = character:FindFirstChild("Boosts")
+			realrogueclimbBoost.Value = realrogueclimbValue
+		end
+	end)
+	game.Workspace.Live.ChildRemoved:Connect(function(character)
+		if character.Name == game.Players.LocalPlayer.Name then
+			realroguespeedBoost = nil
+			realrogueclimbBoost = nil
 		end
 	end)
 end
@@ -6520,7 +7138,7 @@ if gameName == "Rogue Lineage Copy" then
 		end
 		BoardScrollingFrame.ChildAdded:Connect(function(label)
 			if label.Name == "PlayerLabel" then
-				wait()
+				task.wait()
 				for i, v in pairs(label.Parent:GetChildren()) do
 					task.spawn(function()
 						if not v:FindFirstChild("SpectateButton") then
@@ -6552,7 +7170,7 @@ if gameName == "Rogue Lineage Copy" then
 			end
 		end)
 		BoardScrollingFrame.ChildRemoved:Connect(function(label)
-			wait()
+			task.wait()
 			for i, v in pairs(BoardScrollingFrame:GetChildren()) do
 				task.spawn(function()
 					v.Name = "PlayerLabel"..i
@@ -6562,7 +7180,7 @@ if gameName == "Rogue Lineage Copy" then
 	end
 	game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(gui)
 		if gui.ClassName == "ScreenGui" and gui.Name == "LeaderboardGui" then
-			wait()
+			task.wait()
 			for _, v in pairs(gui.MainFrame.ScrollingFrame:GetChildren()) do
 				task.spawn(function()
 					if not v:FindFirstChild("SpectateButton") then
@@ -6798,7 +7416,7 @@ UserInputService.InputBegan:connect(function(player, p9)
 end)
 
 local lorecheckingNPCs = false
-spawn(function()
+task.spawn(function()
 	task.wait(1)
 	while true do
 		task.wait(1.75)
