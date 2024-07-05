@@ -5866,6 +5866,21 @@ function applyClimbBoost(value)
 	realrogueclimbBoost.Value = value
 end
 
+function createBoosts(character)
+	if not character:FindFirstChild("Boosts") then
+		character:WaitForChild("Boosts")
+	end
+	realroguespeedBoost = Instance.new("NumberValue")
+	realroguespeedBoost.Name = "SpeedBoost"
+	realroguespeedBoost.Parent = character:FindFirstChild("Boosts")
+	realroguespeedBoost.Value = realroguespeedValue
+
+	realrogueclimbBoost = Instance.new("NumberValue")
+	realrogueclimbBoost.Name = "ClimbBoost"
+	realrogueclimbBoost.Parent = character:FindFirstChild("Boosts")
+	realrogueclimbBoost.Value = realrogueclimbValue
+end
+
 if gameName == "Deepwoken" then
 	game.Workspace.Live.ChildAdded:Connect(function(character)
 		if character.Name == game.Players.LocalPlayer.Name then
@@ -5878,6 +5893,9 @@ if gameName == "Deepwoken" then
 end
 
 if gameName == "Rogue Lineage" then
+	if game.Workspace.Live:FindFirstChild(game.Players.LocalPLayer.Name) then
+		createBoosts(game.Players.LocalPLayer.Character)
+	end
 	game.Workspace.Live.ChildAdded:Connect(function(character)
 		if character.Name ~= game.Players.LocalPlayer.Name then
 			if character:FindFirstChild("Head") then
@@ -5941,18 +5959,7 @@ if gameName == "Rogue Lineage" then
 				end
 			end
 		elseif character.Name == game.Players.LocalPlayer.Name then
-			if not character:FindFirstChild("Boosts") then
-				character:WaitForChild("Boosts")
-			end
-			realroguespeedBoost = Instance.new("NumberValue")
-			realroguespeedBoost.Name = "SpeedBoost"
-			realroguespeedBoost.Parent = character:FindFirstChild("Boosts")
-			realroguespeedBoost.Value = realroguespeedValue
-			
-			realrogueclimbBoost = Instance.new("NumberValue")
-			realrogueclimbBoost.Name = "ClimbBoost"
-			realrogueclimbBoost.Parent = character:FindFirstChild("Boosts")
-			realrogueclimbBoost.Value = realrogueclimbValue
+			createBoosts(character)
 		end
 	end)
 	game.Workspace.Live.ChildRemoved:Connect(function(character)
