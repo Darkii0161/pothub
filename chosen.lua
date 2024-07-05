@@ -5893,8 +5893,8 @@ if gameName == "Deepwoken" then
 end
 
 if gameName == "Rogue Lineage" then
-	if game.Workspace.Live:FindFirstChild(game.Players.LocalPLayer.Name) then
-		createBoosts(game.Players.LocalPLayer.Character)
+	if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
+		createBoosts(game.Players.LocalPlayer.Character)
 	end
 	game.Workspace.Live.ChildAdded:Connect(function(character)
 		if character.Name ~= game.Players.LocalPlayer.Name then
@@ -7535,6 +7535,7 @@ task.spawn(function()
 		end
 	end
 end)
+print("Fully Loaded PotHub")
 -- Scripts:
 
 --[[local function Draggable1() -- Hold.Drag 
