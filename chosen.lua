@@ -1,14 +1,20 @@
 if not game:IsLoaded() then
 	repeat task.wait(0.05) until game:IsLoaded()
 end
+if getgenv().b23knv8key ~= nil --[[or (type(getgenv().b23knv8key) == "string" and string.len(getgenv().b23knv8key) ~= 15)]] then
+	print("Pot script has already been loaded, cannot be ran again")
+	return
+end
 
-for i, v in pairs(game:GetService("CoreGui"):GetDescendants()) do
+getgenv().b23knv8key = true--tostring(randomString(15))
+
+--[[for i, v in pairs(game:GetService("CoreGui"):GetDescendants()) do
 	if v.Name == "I6bONBw25jq2b220Lf" then
 		print("Pot script has already been loaded, cannot be ran again")
 		return
 	end
-end
-print("Game is loaded!".." Running Pot Script.")
+end]]
+print("Game is loaded!".." Checking supported gameList.")
 
 local gameName = ""
 local scr1 = ''
@@ -50,11 +56,13 @@ else
 	print("This game isn't supported by the Pot Script!.")
 	return
 end
+local LocalPlayer = game:GetService("Players").LocalPlayer
 
 -- Services:
 
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
+local CollectionService = game:GetService("CollectionService")
 
 -- Instances:
 
@@ -153,6 +161,12 @@ local SpeedBox = Instance.new("TextBox")
 local ClimbBox = Instance.new("TextBox")
 local SpeedOverlay = Instance.new("ImageLabel")
 local ClimbOverlay = Instance.new("ImageLabel")
+--//For Rogue Lighting
+local LightingHolder = Instance.new("Folder")
+local LightingTitle = Instance.new("TextLabel")
+local RogueFullBrightButton = Instance.new("TextButton")
+local RogueShadowsButton = Instance.new("TextButton")
+local RogueNoFogButton = Instance.new("TextButton")
 --//For AutoBard Functions
 local AutoHolder = Instance.new("Folder")
 local AutoTitle = Instance.new("TextLabel")
@@ -164,6 +178,8 @@ local RogueTrinketEspButton = Instance.new("TextButton")
 local RogueGemScrollEspButton = Instance.new("TextButton")
 local RogueArtifactEspButton = Instance.new("TextButton")
 local RogueToolViewEspButton = Instance.new("TextButton")
+local RogueLeaderboardEspButton = Instance.new("TextButton")
+local RoguePlayerEspButton = Instance.new("TextButton")
 local RogueNotifierHolder = Instance.new("Folder")
 local RogueNotifierTitle = Instance.new("TextLabel")
 local RogueNotifierButton = Instance.new("TextButton")
@@ -198,7 +214,7 @@ local function isWholeNumber(number)
 	return number % 1 == 0
 end
 
-local function randomString(length)
+function randomString(length)
 	local chars = {}
 	for i = 1, length do
 		local randomCharType = math.random(1, 3) -- Choose a random character type (1 = lowercase letter, 2 = uppercase letter, 3 = number)
@@ -247,7 +263,7 @@ HubGui.DisplayOrder = 5
 HubGui.ResetOnSpawn = false
 
 local detFolder = Instance.new("Folder")
-detFolder.Name = "I6bONBw25jq2b220Lf"
+detFolder.Name = randomString(15)
 detFolder.Parent = HubGui
 
 HubFrame.Name = "HubFrame"
@@ -1107,7 +1123,15 @@ local roguetrinketEsp = false
 local roguegemscrollEsp = false
 local rogueartifactEsp = false
 local roguetoolEsp = false
+local rogueleaderboardEsp = false
+local rogueplayerEsp = false
+local roguefullbrightOn = false
+local setFullBrightAmbienceSignal = nil
+local rogueshadowsOn = true
+local roguenofogOn = false
+local setNoFogSignal = nil
 local roguenotifierOn = false
+local isGaia = game.PlaceId == 5208655184
 
 --//Real Rogue Vars
 local realroguespeedBoost
@@ -1189,11 +1213,11 @@ if gameName == "Rogue Lineage" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if roguetoolEsp == false then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguetoolEsp = true
 						for i, v in pairs(game.Workspace.Live:GetChildren()) do
-							if v.Name ~= game.Players.LocalPlayer.Name then
+							if v.Name ~= LocalPlayer.Name then
 								if v:FindFirstChild("Head") then
 									if v.Head:FindFirstChild("ToolviewHolder") then
 										v.Head.ToolviewHolder.Enabled = true
@@ -1283,7 +1307,7 @@ if gameName == "Rogue Lineage" then
 					end)
 				end
 			elseif roguetoolEsp == true then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguetoolEsp = false
 						for i, v in pairs(game.Workspace.Live:GetChildren()) do
@@ -1297,7 +1321,7 @@ if gameName == "Rogue Lineage" then
 					RogueToolViewEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Tool Turned Off</stroke>'
 
 					local deb = Instance.new("TextLabel")
-					deb.Name = "ActivateCD4"
+					deb.Name = "ActivateCD"
 					deb.Parent = RogueEspHolder
 					deb.Active = false
 					deb.AnchorPoint = Vector2.new(0.5, 1)
@@ -1305,6 +1329,345 @@ if gameName == "Rogue Lineage" then
 					deb.BackgroundTransparency = 1.000
 					deb.LayoutOrder = 1
 					deb.Position = UDim2.new(0.5, -25, 1, -635)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	
+	RogueLeaderboardEspButton.Name = "Activator2"
+	RogueLeaderboardEspButton.Parent = RogueEspHolder
+	RogueLeaderboardEspButton.Active = false
+	RogueLeaderboardEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueLeaderboardEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueLeaderboardEspButton.BackgroundTransparency = 1.000
+	RogueLeaderboardEspButton.LayoutOrder = 1
+	RogueLeaderboardEspButton.Position = UDim2.new(0.5, 85, 1, -615)
+	RogueLeaderboardEspButton.Selectable = false
+	RogueLeaderboardEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueLeaderboardEspButton.Font = Enum.Font.SourceSansSemibold
+	RogueLeaderboardEspButton.RichText = true
+	RogueLeaderboardEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Leaderboard Turned Off</stroke>'
+	RogueLeaderboardEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueLeaderboardEspButton.TextSize = 16.000
+	RogueLeaderboardEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueLeaderboardEspButton.TextTransparency = 0.100
+	RogueLeaderboardEspButton.TextWrapped = true
+	RogueLeaderboardEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueLeaderboardEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD2") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueLeaderboardEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if rogueleaderboardEsp == false then
+				if LocalPlayer then
+					task.spawn(function()
+						rogueleaderboardEsp = true
+					end)
+					RogueLeaderboardEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Leaderboard Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -70, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif rogueleaderboardEsp == true then
+				if LocalPlayer then
+					task.spawn(function()
+						rogueleaderboardEsp = false
+					end)
+					RogueLeaderboardEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Leaderboard Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -70, 1, -615)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	
+	RogueTrinketEspButton.Name = "Activator3"
+	RogueTrinketEspButton.Parent = RogueEspHolder
+	RogueTrinketEspButton.Active = false
+	RogueTrinketEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueTrinketEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueTrinketEspButton.BackgroundTransparency = 1.000
+	RogueTrinketEspButton.LayoutOrder = 1
+	RogueTrinketEspButton.Position = UDim2.new(0.5, 85, 1, -595)
+	RogueTrinketEspButton.Selectable = false
+	RogueTrinketEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueTrinketEspButton.Font = Enum.Font.SourceSansSemibold
+	RogueTrinketEspButton.RichText = true
+	RogueTrinketEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Trinkets Turned Off</stroke>'
+	RogueTrinketEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueTrinketEspButton.TextSize = 16.000
+	RogueTrinketEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueTrinketEspButton.TextTransparency = 0.100
+	RogueTrinketEspButton.TextWrapped = true
+	RogueTrinketEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueTrinketEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD3") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueTrinketEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguetrinketEsp == false then
+				if LocalPlayer then
+					task.spawn(function()
+						roguetrinketEsp = true
+						if not HubGui:FindFirstChild("B1") then
+							HubGui:WaitForChild("B1")
+						end
+						for _, v in pairs(HubGui.B1:GetChildren()) do
+							v.Enabled = true
+						end
+					end)
+					RogueTrinketEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Trinkets Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -45, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif roguetrinketEsp == true then
+				if LocalPlayer then
+					task.spawn(function()
+						roguetrinketEsp = false
+						if not HubGui:FindFirstChild("B1") then
+							HubGui:WaitForChild("B1")
+						end
+						for _, v in pairs(HubGui.B1:GetChildren()) do
+							v.Enabled = false
+						end
+					end)
+					RogueTrinketEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Trinkets Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -45, 1, -595)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	
+	RoguePlayerEspButton.Name = "Activator4"
+	RoguePlayerEspButton.Parent = RogueEspHolder
+	RoguePlayerEspButton.Active = false
+	RoguePlayerEspButton.AnchorPoint = Vector2.new(0.5, 1)
+	RoguePlayerEspButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RoguePlayerEspButton.BackgroundTransparency = 1.000
+	RoguePlayerEspButton.LayoutOrder = 1
+	RoguePlayerEspButton.Position = UDim2.new(0.5, 85, 1, -575)
+	RoguePlayerEspButton.Selectable = false
+	RoguePlayerEspButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RoguePlayerEspButton.Font = Enum.Font.SourceSansSemibold
+	RoguePlayerEspButton.RichText = true
+	RoguePlayerEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Players Turned Off</stroke>'
+	RoguePlayerEspButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RoguePlayerEspButton.TextSize = 16.000
+	RoguePlayerEspButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RoguePlayerEspButton.TextTransparency = 0.100
+	RoguePlayerEspButton.TextWrapped = true
+	RoguePlayerEspButton.TextXAlignment = Enum.TextXAlignment.Right
+	RoguePlayerEspButton.MouseButton1Down:connect(function()
+		if not RogueEspHolder:FindFirstChild("ActivateCD4") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RoguePlayerEspButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if rogueplayerEsp == false then
+				if LocalPlayer then
+					task.spawn(function()
+						rogueplayerEsp = true
+						if not HubGui:FindFirstChild("B2") then
+							HubGui:WaitForChild("B2")
+						end
+						if not HubGui:FindFirstChild("B3") then
+							HubGui:WaitForChild("B3")
+						end
+						for _, v in pairs(HubGui.B2:GetChildren()) do
+							v.Enabled = true
+						end
+						for _, v in pairs(HubGui.B3:GetChildren()) do
+							v.Enabled = true
+						end
+					end)
+					RoguePlayerEspButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Players Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD4"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -40, 1, -575)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif rogueplayerEsp == true then
+				if LocalPlayer then
+					task.spawn(function()
+						rogueplayerEsp = false
+						if not HubGui:FindFirstChild("B2") then
+							HubGui:WaitForChild("B2")
+						end
+						if not HubGui:FindFirstChild("B3") then
+							HubGui:WaitForChild("B3")
+						end
+						for _, v in pairs(HubGui.B2:GetChildren()) do
+							v.Enabled = false
+						end
+						for _, v in pairs(HubGui.B3:GetChildren()) do
+							v.Enabled = false
+						end
+					end)
+					RoguePlayerEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Players Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD4"
+					deb.Parent = RogueEspHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -40, 1, -575)
 					deb.Selectable = false
 					deb.Size = UDim2.new(0.5, 0, 0, 20)
 					deb.Font = Enum.Font.SourceSansSemibold
@@ -1391,14 +1754,14 @@ if gameName == "Rogue Lineage" then
 				deb:Destroy()
 			end)
 			if scr2 ~= "" then
-				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
-					if game.Workspace.Live[game.Players.LocalPlayer.Name]:FindFirstChild("HumanoidRootPart") then
-						if not game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart:FindFirstChild("ZOobjc4ccPtui9fcbmp34YW28VkB") then
+				if game.Workspace.Live:FindFirstChild(LocalPlayer.Name) then
+					if game.Workspace.Live[LocalPlayer.Name]:FindFirstChild("HumanoidRootPart") then
+						if not game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart:FindFirstChild("ZOobjc4ccPtui9fcbmp34YW28VkB") then
 							pcall(function()
 								loadstring(game:HttpGet(scr2))()
 								local usedautoBard = Instance.new("Folder")
 								usedautoBard.Name = "ZOobjc4ccPtui9fcbmp34YW28VkB"
-								usedautoBard.Parent = game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart
+								usedautoBard.Parent = game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart
 							end)
 						else
 							local alreadyusedbardText = Instance.new("TextLabel")
@@ -1451,6 +1814,347 @@ if gameName == "Rogue Lineage" then
 					task.spawn(function()
 						task.wait(2)
 						notfoundcharText:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	--// Lighting
+	LightingHolder.Name = "Lighting"
+	LightingHolder.Parent = DescSheet_3
+
+	LightingTitle.Name = "LightingTitle"
+	LightingTitle.Parent = LightingHolder
+	LightingTitle.Active = false
+	LightingTitle.AnchorPoint = Vector2.new(0.5, 1)
+	LightingTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	LightingTitle.BackgroundTransparency = 1.000
+	LightingTitle.LayoutOrder = 1
+	LightingTitle.Position = UDim2.new(0.5, 85, 1, -435)
+	LightingTitle.Selectable = false
+	LightingTitle.Size = UDim2.new(0.5, 0, 0, 20)
+	LightingTitle.Font = Enum.Font.SourceSansSemibold
+	LightingTitle.RichText = true
+	LightingTitle.Text = "<u>Lighting</u>"
+	LightingTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+	LightingTitle.TextSize = 18.000
+	LightingTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	LightingTitle.TextTransparency = 0.100
+	LightingTitle.TextWrapped = true
+	LightingTitle.TextXAlignment = Enum.TextXAlignment.Right
+	
+	RogueFullBrightButton.Name = "Activator"
+	RogueFullBrightButton.Parent = LightingHolder
+	RogueFullBrightButton.Active = false
+	RogueFullBrightButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueFullBrightButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueFullBrightButton.BackgroundTransparency = 1.000
+	RogueFullBrightButton.LayoutOrder = 1
+	RogueFullBrightButton.Position = UDim2.new(0.5, 85, 1, -415)
+	RogueFullBrightButton.Selectable = false
+	RogueFullBrightButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueFullBrightButton.Font = Enum.Font.SourceSansSemibold
+	RogueFullBrightButton.RichText = true
+	RogueFullBrightButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Fullbright Turned Off</stroke>'
+	RogueFullBrightButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueFullBrightButton.TextSize = 16.000
+	RogueFullBrightButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueFullBrightButton.TextTransparency = 0.100
+	RogueFullBrightButton.TextWrapped = true
+	RogueFullBrightButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueFullBrightButton.MouseButton1Down:connect(function()
+		if not LightingHolder:FindFirstChild("ActivateCD") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueFullBrightButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguefullbrightOn == false then
+				if LocalPlayer then
+					task.spawn(function()
+						roguefullbrightOn = true
+						setFullBrightAmbienceSignal = game:GetService("Lighting"):GetPropertyChangedSignal("Ambient"):Connect(function()
+							game.Lighting.Ambient = Color3.fromRGB(215, 215, 215)
+							game.Lighting.Brightness = 0.75
+						end)
+						game.Lighting.Ambient = Color3.fromRGB(215, 215, 215)
+					end)
+					RogueFullBrightButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Fullbright Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = LightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -55, 1, -415)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif roguefullbrightOn == true then
+				if LocalPlayer then
+					task.spawn(function()
+						roguefullbrightOn = false
+						setFullBrightAmbienceSignal:Disconnect()
+						setFullBrightAmbienceSignal = nil
+					end)
+					RogueFullBrightButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Fullbright Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD"
+					deb.Parent = LightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -55, 1, -415)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	
+	RogueShadowsButton.Name = "Activator2"
+	RogueShadowsButton.Parent = LightingHolder
+	RogueShadowsButton.Active = false
+	RogueShadowsButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueShadowsButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueShadowsButton.BackgroundTransparency = 1.000
+	RogueShadowsButton.LayoutOrder = 1
+	RogueShadowsButton.Position = UDim2.new(0.5, 85, 1, -395)
+	RogueShadowsButton.Selectable = false
+	RogueShadowsButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueShadowsButton.Font = Enum.Font.SourceSansSemibold
+	RogueShadowsButton.RichText = true
+	RogueShadowsButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Shadows Turned On</stroke>'
+	RogueShadowsButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueShadowsButton.TextSize = 16.000
+	RogueShadowsButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueShadowsButton.TextTransparency = 0.100
+	RogueShadowsButton.TextWrapped = true
+	RogueShadowsButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueShadowsButton.MouseButton1Down:connect(function()
+		if not LightingHolder:FindFirstChild("ActivateCD2") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueShadowsButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if rogueshadowsOn == false then
+				if LocalPlayer then
+					task.spawn(function()
+						rogueshadowsOn = true
+						game:GetService("Lighting").GlobalShadows = true
+					end)
+					RogueShadowsButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">Shadows Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = LightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -50, 1, -395)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif rogueshadowsOn == true then
+				if LocalPlayer then
+					task.spawn(function()
+						rogueshadowsOn = false
+						game:GetService("Lighting").GlobalShadows = false
+					end)
+					RogueShadowsButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Shadows Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD2"
+					deb.Parent = LightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -50, 1, -395)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			end
+		end
+	end)
+	
+	RogueNoFogButton.Name = "Activator3"
+	RogueNoFogButton.Parent = LightingHolder
+	RogueNoFogButton.Active = false
+	RogueNoFogButton.AnchorPoint = Vector2.new(0.5, 1)
+	RogueNoFogButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	RogueNoFogButton.BackgroundTransparency = 1.000
+	RogueNoFogButton.LayoutOrder = 1
+	RogueNoFogButton.Position = UDim2.new(0.5, 85, 1, -375)
+	RogueNoFogButton.Selectable = false
+	RogueNoFogButton.Size = UDim2.new(0.5, 0, 0, 20)
+	RogueNoFogButton.Font = Enum.Font.SourceSansSemibold
+	RogueNoFogButton.RichText = true
+	RogueNoFogButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">NoFog Turned Off</stroke>'
+	RogueNoFogButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+	RogueNoFogButton.TextSize = 16.000
+	RogueNoFogButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+	RogueNoFogButton.TextTransparency = 0.100
+	RogueNoFogButton.TextWrapped = true
+	RogueNoFogButton.TextXAlignment = Enum.TextXAlignment.Right
+	RogueNoFogButton.MouseButton1Down:connect(function()
+		if not LightingHolder:FindFirstChild("ActivateCD3") then
+			local ClickSound = Instance.new("Sound")
+			ClickSound.Name = "Click"
+			ClickSound.SoundId = "rbxassetid://4729721770"
+			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+			ClickSound.RollOffMaxDistance = 10000
+			ClickSound.RollOffMinDistance = 10
+			ClickSound.PlayOnRemove = false
+			ClickSound.Looped = false
+			ClickSound.Volume = 0.095
+			ClickSound.Parent = RogueNoFogButton
+			ClickSound:Play()
+			game.Debris:AddItem(ClickSound, 0.3)
+			if roguenofogOn == false then
+				if LocalPlayer then
+					task.spawn(function()
+						roguenofogOn = true
+						setNoFogSignal = game:GetService("Lighting"):GetPropertyChangedSignal("FogEnd"):Connect(function()
+							game.Lighting.FogEnd = 100000
+						end)
+						game.Lighting.FogEnd = 100000
+					end)
+					RogueNoFogButton.Text = '<stroke color="#00A2FF" joins="miter" thickness="1.5" transparency="0.65">NoFog Turned On</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = LightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -35, 1, -375)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
+					end)
+				end
+			elseif roguenofogOn == true then
+				if LocalPlayer then
+					task.spawn(function()
+						roguenofogOn = false
+						setNoFogSignal:Disconnect()
+						setNoFogSignal = nil
+					end)
+					RogueNoFogButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">NoFog Turned Off</stroke>'
+
+					local deb = Instance.new("TextLabel")
+					deb.Name = "ActivateCD3"
+					deb.Parent = LightingHolder
+					deb.Active = false
+					deb.AnchorPoint = Vector2.new(0.5, 1)
+					deb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					deb.BackgroundTransparency = 1.000
+					deb.LayoutOrder = 1
+					deb.Position = UDim2.new(0.5, -35, 1, -375)
+					deb.Selectable = false
+					deb.Size = UDim2.new(0.5, 0, 0, 20)
+					deb.Font = Enum.Font.SourceSansSemibold
+					deb.RichText = true
+					deb.Text = "Wait"
+					deb.TextColor3 = Color3.fromRGB(28, 36, 35)
+					deb.TextSize = 16.000
+					deb.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+					deb.TextTransparency = 0.600
+					deb.TextWrapped = true
+					deb.TextXAlignment = Enum.TextXAlignment.Right
+					task.spawn(function()
+						task.wait(0.5)
+						deb:Destroy()
 					end)
 				end
 			end
@@ -1622,6 +2326,117 @@ if gameName == "Rogue Lineage" then
 	ClimbOverlay.ImageColor3 = Color3.fromRGB(183, 197, 211)
 	ClimbOverlay.ScaleType = Enum.ScaleType.Slice
 	ClimbOverlay.SliceCenter = Rect.new(14, 14, 18, 18)
+	
+	--//Check Triggers
+	if isGaia then
+		local triggers = workspace.MonsterSpawns.Triggers
+		local triggeredLocations = {
+			["Crypt"] = triggers.CryptTrigger.LastSpawned,
+			["Castle Rock"] = triggers.CastleRockSnake.LastSpawned,
+			["Snake Pit"] = triggers.MazeSnakes.LastSpawned,
+			["Sunken Passage"] = triggers.evileye1.LastSpawned,
+		}
+
+		local function formatTime(seconds)
+			local minutes = math.floor(seconds / 60)
+			local hours = math.floor(minutes / 60)
+			local days = math.floor(hours / 24)
+			local formattedTime = ''
+
+			if days > 0 then
+				formattedTime = formattedTime .. days .. 'd '
+				hours = hours % 24
+			end
+
+			if hours > 0 then
+				formattedTime = formattedTime .. hours .. 'h '
+				minutes = minutes % 60
+			end
+
+			if minutes > 0 then
+				formattedTime = formattedTime .. minutes .. 'm'
+				seconds = seconds % 60
+			end
+
+			return formattedTime
+		end
+
+		local function convertTime(dateTime)
+			return os.time({year=dateTime.Year,month=dateTime.Month,day=dateTime.Day,hour=dateTime.Hour,min=dateTime.Minute,sec=dateTime.Second})
+		end
+		
+		local TriggersHolder = Instance.new("Folder")
+		TriggersHolder.Name = "Triggers"
+		TriggersHolder.Parent = DescSheet_3
+		
+		--// TriggersTitle
+		local TriggerTitle = Instance.new("TextLabel")
+		TriggerTitle.Name = "TriggersTitle"
+		TriggerTitle.Parent = TriggersHolder
+		TriggerTitle.Active = false
+		TriggerTitle.AnchorPoint = Vector2.new(0.5, 1)
+		TriggerTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TriggerTitle.BackgroundTransparency = 1.000
+		TriggerTitle.LayoutOrder = 1
+		TriggerTitle.Position = UDim2.new(0.5, -85, 1, -555)
+		TriggerTitle.Selectable = false
+		TriggerTitle.Size = UDim2.new(0.5, 0, 0, 20)
+		TriggerTitle.Font = Enum.Font.SourceSansSemibold
+		TriggerTitle.RichText = true
+		TriggerTitle.Text = "<u>LastTriggered</u>"
+		TriggerTitle.TextColor3 = Color3.fromRGB(28, 36, 35)
+		TriggerTitle.TextSize = 18.000
+		TriggerTitle.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+		TriggerTitle.TextTransparency = 0.100
+		TriggerTitle.TextWrapped = true
+		TriggerTitle.TextXAlignment = Enum.TextXAlignment.Left
+		
+		local numLabels = 0
+		for name, lastSpawned in next, triggeredLocations do
+			numLabels = numLabels + 20
+			local label = Instance.new("TextLabel")
+			label.Name = name
+			label.Parent = TriggersHolder
+			label.Active = false
+			label.AnchorPoint = Vector2.new(0.5, 1)
+			label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			label.BackgroundTransparency = 1.000
+			label.LayoutOrder = 1
+			label.Position = UDim2.new(0.5, -85, 1, (-555 + numLabels))
+			label.Selectable = false
+			label.Size = UDim2.new(0.5, 0, 0, 20)
+			label.Font = Enum.Font.SourceSansItalic
+			label.RichText = true
+			label.TextColor3 = Color3.fromRGB(28, 36, 35)
+			label.TextSize = 18.000
+			label.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+			label.TextTransparency = 0.100
+			label.TextWrapped = true
+			label.TextXAlignment = Enum.TextXAlignment.Left
+
+			local function onLastSpawnedChanged()
+				if (lastSpawned.Value == 0) then
+					label.Text = string.format('%s - Never taken', name)
+					return
+				end
+
+				local lastSpawnedLocal = DateTime.fromUnixTimestamp(lastSpawned.Value):ToLocalTime()
+				local currentTime = DateTime.now():ToLocalTime()
+
+				local diff = os.difftime(convertTime(currentTime),convertTime(lastSpawnedLocal))
+				label.Text = string.format('%s - %s ago', name, formatTime(diff));
+			end
+			onLastSpawnedChanged()
+			lastSpawned:GetPropertyChangedSignal("Value"):Connect(onLastSpawnedChanged)
+
+			task.spawn(function()
+				while true do
+					onLastSpawnedChanged()
+					task.wait(60)
+				end
+			end)
+		end
+	end
 elseif gameName == "Rogue Lineage Copy" then
 	--// Rogue Esp
 	RogueEspHolder.Name = "RogueEsp"
@@ -1681,7 +2496,7 @@ elseif gameName == "Rogue Lineage Copy" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if roguetrinketEsp == false then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguetrinketEsp = true
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -2031,7 +2846,7 @@ elseif gameName == "Rogue Lineage Copy" then
 					end)
 				end
 			elseif roguetrinketEsp == true then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguetrinketEsp = false
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -2104,7 +2919,7 @@ elseif gameName == "Rogue Lineage Copy" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if roguegemscrollEsp == false then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguegemscrollEsp = true
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -2362,7 +3177,7 @@ elseif gameName == "Rogue Lineage Copy" then
 					end)
 				end
 			elseif roguegemscrollEsp == true then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguegemscrollEsp = false
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -2435,7 +3250,7 @@ elseif gameName == "Rogue Lineage Copy" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if rogueartifactEsp == false then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						rogueartifactEsp = true
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -2793,7 +3608,7 @@ elseif gameName == "Rogue Lineage Copy" then
 					end)
 				end
 			elseif rogueartifactEsp == true then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						rogueartifactEsp = false
 						for i, v in pairs(game.Workspace.Trinkets:GetChildren()) do
@@ -2866,11 +3681,11 @@ elseif gameName == "Rogue Lineage Copy" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if roguetoolEsp == false then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguetoolEsp = true
 						for i, v in pairs(game.Workspace.Live:GetChildren()) do
-							if v.Name ~= game.Players.LocalPlayer.Name then
+							if v.Name ~= LocalPlayer.Name then
 								if v:FindFirstChild("Head") then
 									if v.Head:FindFirstChild("ToolviewHolder") then
 										v.Head.ToolviewHolder.Enabled = true
@@ -2960,7 +3775,7 @@ elseif gameName == "Rogue Lineage Copy" then
 					end)
 				end
 			elseif roguetoolEsp == true then
-				if game.Players.LocalPlayer then
+				if LocalPlayer then
 					task.spawn(function()
 						roguetoolEsp = false
 						for i, v in pairs(game.Workspace.Live:GetChildren()) do
@@ -3183,14 +3998,14 @@ elseif gameName == "Rogue Lineage Copy" then
 				deb:Destroy()
 			end)
 			if scr2 ~= "" then
-				if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
-					if game.Workspace.Live[game.Players.LocalPlayer.Name]:FindFirstChild("HumanoidRootPart") then
-						if not game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart:FindFirstChild("ZOobjc4ccPtui9fcbmp34YW28VkB") then
+				if game.Workspace.Live:FindFirstChild(LocalPlayer.Name) then
+					if game.Workspace.Live[LocalPlayer.Name]:FindFirstChild("HumanoidRootPart") then
+						if not game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart:FindFirstChild("ZOobjc4ccPtui9fcbmp34YW28VkB") then
 							pcall(function()
 								loadstring(game:HttpGet(scr2))()
 								local usedautoBard = Instance.new("Folder")
 								usedautoBard.Name = "ZOobjc4ccPtui9fcbmp34YW28VkB"
-								usedautoBard.Parent = game.Workspace.Live[game.Players.LocalPlayer.Name].HumanoidRootPart
+								usedautoBard.Parent = game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart
 							end)
 						else
 							local alreadyusedbardText = Instance.new("TextLabel")
@@ -3306,7 +4121,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlenemyEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlenemyEsp = true
 						for i, v in pairs(game.Workspace.NPCS:GetChildren()) do
@@ -3433,7 +4248,7 @@ elseif gameName == "VoxlBlade" then
 					end)
 				end
 			elseif voxlenemyEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlenemyEsp = false
 						for i, v in pairs(game.Workspace.NPCS:GetChildren()) do
@@ -3531,7 +4346,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlnpcEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlnpcEsp = true
 						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
@@ -3627,7 +4442,7 @@ elseif gameName == "VoxlBlade" then
 					end)
 				end
 			elseif voxlnpcEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlnpcEsp = false
 						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
@@ -3725,7 +4540,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlcraftingEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlcraftingEsp = true
 						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
@@ -3820,7 +4635,7 @@ elseif gameName == "VoxlBlade" then
 					end)
 				end
 			elseif voxlcraftingEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlcraftingEsp = false
 						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
@@ -3918,7 +4733,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlshopEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlshopEsp = true
 						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
@@ -4013,7 +4828,7 @@ elseif gameName == "VoxlBlade" then
 					end)
 				end
 			elseif voxlshopEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlshopEsp = false
 						for i, v in pairs(game.Workspace.Interactables:GetChildren()) do
@@ -4111,7 +4926,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlshrineEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlshrineEsp = true
 						for i, v in pairs(game.Workspace.Shrines:GetChildren()) do
@@ -4204,7 +5019,7 @@ elseif gameName == "VoxlBlade" then
 					end)
 				end
 			elseif voxlshrineEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlshrineEsp = false
 						for i, v in pairs(game.Workspace.Shrines:GetChildren()) do
@@ -4302,7 +5117,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlinfuserEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlinfuserEsp = true
 						for i, v in pairs(game.Workspace.Infusers:GetChildren()) do
@@ -4395,7 +5210,7 @@ elseif gameName == "VoxlBlade" then
 					end)
 				end
 			elseif voxlinfuserEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlinfuserEsp = false
 						for i, v in pairs(game.Workspace.Infusers:GetChildren()) do
@@ -4493,7 +5308,7 @@ elseif gameName == "VoxlBlade" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if voxlsnailsmanEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlsnailsmanEsp = true
 						for i, v in pairs(game.Workspace.Map:GetDescendants()) do
@@ -4588,7 +5403,7 @@ elseif gameName == "VoxlBlade" then
 					end)
 				end
 			elseif voxlsnailsmanEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						voxlsnailsmanEsp = false
 						for i, v in pairs(game.Workspace.Map:GetDescendants()) do
@@ -4710,11 +5525,11 @@ elseif gameName == "Lore Game" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if loreplayerEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loreplayerEsp = true
 						for i, v in pairs(game.Workspace:GetChildren()) do
-							if game.Players:FindFirstChild(v.Name) and game.Players.LocalPlayer.Name ~= v.Name then
+							if game.Players:FindFirstChild(v.Name) and LocalPlayer.Name ~= v.Name then
 								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
 									playerEspHandle(v,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
 									if v.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
@@ -4780,11 +5595,11 @@ elseif gameName == "Lore Game" then
 					end)
 				end
 			elseif loreplayerEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loreplayerEsp = false
 						for i, v in pairs(game.Workspace:GetChildren()) do
-							if game.Players:FindFirstChild(v.Name) and game.Players.LocalPlayer.Name ~= v.Name then
+							if game.Players:FindFirstChild(v.Name) and LocalPlayer.Name ~= v.Name then
 								if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
 									if v.HumanoidRootPart:FindFirstChild("PlayerviewHolder") then
 										v.HumanoidRootPart.PlayerviewHolder.Enabled = false
@@ -4885,7 +5700,7 @@ elseif gameName == "Lore Game" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if loremobEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loremobEsp = true
 						for i, childType in pairs(game.Workspace:GetChildren()) do
@@ -4953,7 +5768,7 @@ elseif gameName == "Lore Game" then
 					end)
 				end
 			elseif loremobEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loremobEsp = false
 						for i, childType in pairs(game.Workspace:GetChildren()) do
@@ -5056,7 +5871,7 @@ elseif gameName == "Lore Game" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if lorenpcEsp == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						lorenpcEsp = true
 						for i, npcType in pairs(game.Workspace.map.NPC:GetDescendants()) do
@@ -5123,7 +5938,7 @@ elseif gameName == "Lore Game" then
 					end)
 				end
 			elseif lorenpcEsp == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						lorenpcEsp = false
 						for i, npcType in pairs(game.Workspace.map.NPC:GetDescendants()) do
@@ -5250,7 +6065,7 @@ elseif gameName == "Lore Game" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if loreambienceLighting == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loreambienceLighting = true
 						game.Lighting.Ambient = Color3.fromRGB(255, 255, 255)
@@ -5308,7 +6123,7 @@ elseif gameName == "Lore Game" then
 					end)
 				end
 			elseif loreambienceLighting == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loreambienceLighting = false
 						game.Lighting.Ambient = Color3.fromRGB(90, 90, 90)
@@ -5402,7 +6217,7 @@ elseif gameName == "Lore Game" then
 			ClickSound:Play()
 			game.Debris:AddItem(ClickSound, 0.3)
 			if loredofLighting == false then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loredofLighting = true
 						game.Lighting.DepthOfField.Enabled = false
@@ -5460,7 +6275,7 @@ elseif gameName == "Lore Game" then
 					end)
 				end
 			elseif loredofLighting == true then
-				if game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name) then
+				if game.Workspace:FindFirstChild(LocalPlayer.Name) then
 					task.spawn(function()
 						loredofLighting = false
 						game.Lighting.DepthOfField.Enabled = true
@@ -5883,7 +6698,7 @@ end
 
 if gameName == "Deepwoken" then
 	game.Workspace.Live.ChildAdded:Connect(function(character)
-		if character.Name == game.Players.LocalPlayer.Name then
+		if character.Name == LocalPlayer.Name then
 			task.wait(1)
 			pcall(function()
 				loadstring(game:HttpGet(scr1))()
@@ -5893,11 +6708,939 @@ if gameName == "Deepwoken" then
 end
 
 if gameName == "Rogue Lineage" then
-	if game.Workspace.Live:FindFirstChild(game.Players.LocalPlayer.Name) then
-		createBoosts(game.Players.LocalPlayer.Character)
+	local b1 = Instance.new("Folder")
+	b1.Name = "B1"
+	b1.Parent = HubGui
+	local b2 = Instance.new("Folder")
+	b2.Name = "B2"
+	b2.Parent = HubGui
+	local b3 = Instance.new("Folder")
+	b3.Name = "B3"
+	b3.Parent = HubGui
+	local artifactTable = {
+		"Rift Gem",
+		"Fairfrozen",
+		"Scroom Key",
+		"Howler Friend",
+		--"Amulet of the White King",
+		--"Lannis's Amulet",
+		--"Philosopher's Stone",
+		--"Nightstone",
+		"Scroll",
+	}
+
+	function artifactTypeSummon(name)
+		if name == "Rift Gem" then
+			local artifact = Instance.new("Part")
+			artifact.Size = Vector3.new(0.8, 0.524, 0.8)
+			artifact.BrickColor = BrickColor.new("Hot pink")
+			artifact.Material = Enum.Material.Glass
+			artifact.Transparency = 0.2
+			artifact.Reflectance = 0.2
+			artifact.Rotation = Vector3.new(180, -83.247, 180)
+			artifact.Shape = Enum.PartType.Block
+			local specialMesh = Instance.new("SpecialMesh")
+			specialMesh.MeshType = Enum.MeshType.FileMesh
+			specialMesh.MeshId = "rbxassetid://%202877143560%20"
+			specialMesh.Offset = Vector3.new(0, 0, 0)
+			specialMesh.Scale = Vector3.new(0.4, 0.4, 0.4)
+			specialMesh.VertexColor = Vector3.new(1, 1, 1)
+			specialMesh.Parent = artifact
+			return artifact
+		elseif name == "Fairfrozen" then
+			local artifact = Instance.new("Part")
+			artifact.Size = Vector3.new(0.8, 0.8, 0.8)
+			artifact.BrickColor = BrickColor.new("Pastel Blue")
+			artifact.Material = Enum.Material.Neon
+			artifact.Transparency = 0
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(0, -82.371, 0)
+			artifact.Shape = Enum.PartType.Block
+			local specialMesh = Instance.new("SpecialMesh")
+			specialMesh.MeshType = Enum.MeshType.Sphere
+			specialMesh.MeshId = ""
+			specialMesh.Offset = Vector3.new(0, 0, 0)
+			specialMesh.Scale = Vector3.new(1, 1, 1)
+			specialMesh.VertexColor = Vector3.new(1, 1, 1)
+			specialMesh.Parent = artifact
+			local pointLight = Instance.new("PointLight")
+			pointLight.Brightness = 3
+			pointLight.Color = Color3.fromRGB(66, 246, 255)
+			pointLight.Range = 5
+			pointLight.Shadows = false
+			pointLight.Enabled = true
+			pointLight.Parent = artifact
+			return artifact
+		elseif name == "Scroom Key" then
+			local artifact = Instance.new("Part")
+			artifact.Size = Vector3.new(1.768, 0.53, 0.173)
+			--artifact.BrickColor = BrickColor.new("Gold")
+			artifact.Color = Color3.fromRGB(83, 68, 22)
+			artifact.Material = Enum.Material.Granite
+			artifact.Transparency = 0
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(180, -80.845, 180)
+			--artifact.MeshId = "rbxassetid://5194202662"
+			local specialMesh = Instance.new("SpecialMesh")
+			specialMesh.MeshType = Enum.MeshType.FileMesh
+			specialMesh.MeshId = "rbxassetid://5194202662"
+			specialMesh.Offset = Vector3.new(0, 0, 0)
+			specialMesh.Scale = Vector3.new(0.146, 0.146, 0.146)
+			specialMesh.VertexColor = Vector3.new(1, 1, 1)
+			specialMesh.Parent = artifact
+			local pointLight = Instance.new("PointLight")
+			pointLight.Brightness = 0.5
+			pointLight.Color = Color3.fromRGB(255, 231, 48)
+			pointLight.Range = 8
+			pointLight.Shadows = false
+			pointLight.Enabled = true
+			pointLight.Parent = artifact
+			return artifact
+		elseif name == "Howler Friend" then
+			local artifact = Instance.new("Part")
+			artifact.Size = Vector3.new(0.51, 0.25, 1.48)
+			artifact.BrickColor = BrickColor.new("Lily white")
+			artifact.Material = Enum.Material.Plastic
+			artifact.Transparency = 0
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(180, -78.734, 180)
+			--artifact.MeshId = "rbxassetid://%202520762076%20"
+			local specialMesh = Instance.new("SpecialMesh")
+			specialMesh.MeshType = Enum.MeshType.FileMesh
+			specialMesh.MeshId = "rbxassetid://%202520762076%20"
+			specialMesh.Offset = Vector3.new(0, 0, 0)
+			specialMesh.Scale = Vector3.new(0.006, 0.006, 0.006)
+			specialMesh.VertexColor = Vector3.new(1, 1, 1)
+			specialMesh.Parent = artifact
+			local pointLight = Instance.new("PointLight")
+			pointLight.Brightness = 3
+			pointLight.Color = Color3.fromRGB(255, 119, 28)
+			pointLight.Range = 5
+			pointLight.Shadows = false
+			pointLight.Enabled = true
+			pointLight.Parent = artifact
+			return artifact
+		elseif name == "Amulet of the White King" then
+			local artifact = Instance.new("Part")
+			artifact.Size = Vector3.new(1.30843, 0.209904, 2.05215)
+			artifact.BrickColor = BrickColor.new("Institutional white")
+			artifact.Material = Enum.Material.Metal
+			artifact.Transparency = 0
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(0, -84.222, 0)
+			--artifact.MeshId = "rbxassetid://5197099782"
+			local specialMesh = Instance.new("SpecialMesh")
+			specialMesh.MeshType = Enum.MeshType.FileMesh
+			specialMesh.MeshId = "rbxassetid://5197099782"
+			specialMesh.Offset = Vector3.new(0, 0, 0)
+			specialMesh.Scale = Vector3.new(0.01, 0.01, 0.01)
+			specialMesh.VertexColor = Vector3.new(1, 1, 1)
+			specialMesh.Parent = artifact
+			local meshPart = Instance.new("Part")
+			meshPart.Size = Vector3.new(0.66647, 0.0450174, 0.698702)
+			meshPart.BrickColor = BrickColor.new("Institutional white")
+			meshPart.Material = Enum.Material.Neon
+			meshPart.Transparency = 0
+			meshPart.Reflectance = 0
+			meshPart.Rotation = Vector3.new(0, -80.513, 0)
+			--meshPart.MeshId = "rbxassetid://5197111525"
+			meshPart.Parent = artifact
+			local specialMesh2 = Instance.new("SpecialMesh")
+			specialMesh2.MeshType = Enum.MeshType.FileMesh
+			specialMesh2.MeshId = "rbxassetid://5197111525"
+			specialMesh2.Offset = Vector3.new(0, 0, 0)
+			specialMesh2.Scale = Vector3.new(0.01, 0.01, 0.01)
+			specialMesh2.VertexColor = Vector3.new(1, 1, 1)
+			specialMesh2.Parent = meshPart
+			local weld = Instance.new("Weld")
+			weld.Part0 = artifact
+			weld.Part1 = meshPart
+			weld.C0 = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+			weld.C1 = CFrame.new(0, 0, 1.23000002, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+			weld.Parent = artifact
+			local pointLight = Instance.new("PointLight")
+			pointLight.Brightness = 3
+			pointLight.Color = Color3.fromRGB(255, 255, 255)
+			pointLight.Range = 5
+			pointLight.Shadows = false
+			pointLight.Enabled = true
+			pointLight.Parent = meshPart
+			return artifact
+		elseif name == "Lannis's Amulet" then
+			local artifact = Instance.new("MeshPart")
+			artifact.Size = Vector3.new(1.36541, 0.219008, 2.19874)
+			artifact.BrickColor = BrickColor.new("Institutional white")
+			artifact.Material = Enum.Material.Metal
+			artifact.Transparency = 0
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(180, -79.852, 180)
+			artifact.MeshId = "rbxassetid://5196963069"
+			local meshPart = Instance.new("MeshPart")
+			meshPart.Size = Vector3.new(0.126072, 0.139455, 0.587461)
+			meshPart.BrickColor = BrickColor.new("Institutional white")
+			meshPart.Material = Enum.Material.Neon
+			meshPart.Transparency = 0
+			meshPart.Reflectance = 0
+			meshPart.Rotation = Vector3.new(0, -82.925, 0)
+			meshPart.MeshId = "rbxassetid://5197111525"
+			meshPart.Parent = artifact
+			local weld = Instance.new("Weld")
+			weld.Part0 = artifact
+			weld.Part1 = meshPart
+			weld.C0 = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+			weld.C1 = CFrame.new(0, 0, 1.35000002, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+			weld.Parent = artifact
+			local pointLight = Instance.new("PointLight")
+			pointLight.Brightness = 3
+			pointLight.Color = Color3.fromRGB(235, 0, 255)
+			pointLight.Range = 5
+			pointLight.Shadows = false
+			pointLight.Enabled = true
+			pointLight.Parent = meshPart
+			return artifact
+		elseif name == "Philosopher's Stone" then
+			local artifact = Instance.new("MeshPart")
+			artifact.Size = Vector3.new(0.611057, 0.650687, 1.00816)
+			artifact.BrickColor = BrickColor.new("Bright red")
+			artifact.Material = Enum.Material.Neon
+			artifact.Transparency = 0.7
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(180, -84.354, 180)
+			artifact.MeshId = "rbxassetid://5197200959"
+			local meshPart = Instance.new("MeshPart")
+			meshPart.Size = Vector3.new(0.566817, 0.5917, 0.934427)
+			meshPart.BrickColor = BrickColor.new("Really red")
+			meshPart.Material = Enum.Material.Slate
+			meshPart.Transparency = 0.5
+			meshPart.Reflectance = 0
+			meshPart.Rotation = Vector3.new(180, -86.061, 180)
+			meshPart.MeshId = "rbxassetid://5197200959"
+			meshPart.Parent = artifact
+			local meshPart2 = Instance.new("MeshPart")
+			meshPart2.Size = Vector3.new(0.522577, 0.54746, 0.860694)
+			meshPart2.BrickColor = BrickColor.new("Really red")
+			meshPart2.Material = Enum.Material.Glass
+			meshPart2.Transparency = 0.5
+			meshPart2.Reflectance = 0
+			meshPart2.Rotation = Vector3.new(180, -86.061, 180)
+			meshPart2.MeshId = "rbxassetid://5197200959"
+			meshPart2.Parent = artifact
+			local meshPart3 = Instance.new("MeshPart")
+			meshPart3.Size = Vector3.new(0.434097, 0.414741, 0.683734)
+			meshPart3.BrickColor = BrickColor.new("Really red")
+			meshPart3.Material = Enum.Material.Neon
+			meshPart3.Transparency = 0
+			meshPart3.Reflectance = 0
+			meshPart3.Rotation = Vector3.new(180, -86.061, 180)
+			meshPart3.MeshId = "rbxassetid://5197200959"
+			meshPart3.Parent = artifact
+			local weld = Instance.new("Weld")
+			weld.Part0 = artifact
+			weld.Part1 = meshPart
+			weld.C0 = CFrame.new(0, 0, 0, 0.999556065, 5.83680304e-08, 0.029793568, -5.53229071e-08, 1, -1.03031368e-07, -0.029793568, 1.01337363e-07, 0.999556065)
+			weld.C1 = CFrame.new(0, 0, 0, 0.99999994, -2.51487564e-09, 5.19491732e-06, 2.51488785e-09, 1, -1.33437794e-09, -5.19491732e-06, 1.33439926e-09, 0.99999994)
+			weld.Parent = artifact
+			local weld2 = Instance.new("Weld")
+			weld2.Part0 = artifact
+			weld2.Part1 = meshPart2
+			weld2.C0 = CFrame.new(0, 0, 0, 0.999556065, 5.83680304e-08, 0.029793568, -5.53229071e-08, 1, -1.03031368e-07, -0.029793568, 1.01337363e-07, 0.999556065)
+			weld2.C1 = CFrame.new(0, 0, 0, 0.99999994, -4.81712803e-08, 5.19491732e-06, 4.81708824e-08, 1, 7.76950344e-08, -5.19491732e-06, -7.7694807e-08, 0.99999994)
+			weld2.Parent = artifact
+			local weld3 = Instance.new("Weld")
+			weld3.Part0 = artifact
+			weld3.Part1 = meshPart3
+			weld3.C0 = CFrame.new(0, 0, 0, 0.999556065, 5.83680304e-08, 0.029793568, -5.53229071e-08, 1, -1.03031368e-07, -0.029793568, 1.01337363e-07, 0.999556065)
+			weld3.C1 = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+			weld3.Parent = artifact
+			local pointLight = Instance.new("PointLight")
+			pointLight.Brightness = 3
+			pointLight.Color = Color3.fromRGB(255, 0, 12)
+			pointLight.Range = 5
+			pointLight.Shadows = true
+			pointLight.Enabled = true
+			pointLight.Parent = artifact
+			return artifact
+		elseif name == "Nightstone" then
+			local artifact = Instance.new("MeshPart")
+			artifact.Size = Vector3.new(0.53755, 0.607373, 0.674289)
+			artifact.BrickColor = BrickColor.new("Black")
+			artifact.Material = Enum.Material.Neon
+			artifact.Transparency = 0.15
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(180, -75.882, 180)
+			artifact.MeshId = "rbxassetid://5197185024"
+			local meshPart = Instance.new("MeshPart")
+			meshPart.Size = Vector3.new(0.477195, 0.501753, 0.568669)
+			meshPart.BrickColor = BrickColor.new("Black")
+			meshPart.Material = Enum.Material.Neon
+			meshPart.Transparency = 0
+			meshPart.Reflectance = 0
+			meshPart.Rotation = Vector3.new(180, -75.882, 180)
+			meshPart.MeshId = "rbxassetid://51971850249"
+			meshPart.Parent = artifact
+			local weld = Instance.new("Weld")
+			weld.Part0 = artifact
+			weld.Part1 = meshPart
+			weld.C0 = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+			weld.C1 = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+			weld.Parent = artifact
+			local pointLight = Instance.new("PointLight")
+			pointLight.Brightness = 3
+			pointLight.Color = Color3.fromRGB(0, 0, 0)
+			pointLight.Range = 5
+			pointLight.Shadows = false
+			pointLight.Enabled = true
+			pointLight.Parent = artifact
+			return artifact
+		elseif name == "Scroll" then
+			local artifact = Instance.new("Part")
+			artifact.Size = Vector3.new(1.66, 0.48, 0.34)
+			artifact.BrickColor = BrickColor.new("Medium stone grey")
+			artifact.Material = Enum.Material.Plastic
+			artifact.Transparency = 0
+			artifact.Reflectance = 0
+			artifact.Rotation = Vector3.new(180, -75.882, 180)
+			--artifact.MeshId = "rbxassetid://5197185024"
+			local specialMesh = Instance.new("SpecialMesh")
+			specialMesh.MeshType = Enum.MeshType.FileMesh
+			specialMesh.MeshId = "rbxassetid://60791940%20"
+			specialMesh.Offset = Vector3.new(0, 0, 0)
+			specialMesh.Scale = Vector3.new(0.4, 0.4, 0.4)
+			specialMesh.TextureId = "http://www.roblox.com/asset/?id=60791957"
+			specialMesh.VertexColor = Vector3.new(1, 1, 1)
+			specialMesh.Parent = artifact
+			return artifact
+		end
+	end
+
+	function spawnArtifacts(char)
+		local numArtis = 50
+		local artifacts = {}
+		local scrollTypes = {
+			"Snarvindur",
+			"Hoppa",
+			"Percutiens",
+			"Mori",
+			"Pondus",
+			"Snarvindur",
+			"Terra Maledicta",
+		}
+
+		for i = 1, numArtis do
+			local artifactChoice = artifactTable[math.random(1, #artifactTable)]
+			local artifact = artifactTypeSummon(artifactChoice)
+			artifact.Anchored = true
+			artifact.CanCollide = false
+			artifact.Position = char.HumanoidRootPart.Position + Vector3.new(math.random(-14, 14), math.random(2, 3), math.random(-14, 14))
+			artifact.Parent = workspace
+			if artifactChoice == "Scroll" then
+				artifactChoice = "Scroll of "..scrollTypes[math.random(1, #scrollTypes)]
+			end
+			artifact:SetAttribute("AName", artifactChoice)
+			table.insert(artifacts, artifact)
+		end
+
+		local playPart = Instance.new("Part")
+		playPart.Anchored = true
+		playPart.CanCollide = false
+		playPart.CanTouch = false
+		playPart.Size = Vector3.new(1, 1, 1)
+		playPart.Transparency = 1
+		playPart.CFrame = char.HumanoidRootPart.CFrame + Vector3.new(0, 2.5, 0)
+		playPart.Parent = game.Workspace
+		game.Debris:AddItem(playPart, 2.75)
+
+		local summonSound = Instance.new("Sound")
+		summonSound.SoundId = "rbxassetid://2048663224"
+		summonSound.RollOffMode = Enum.RollOffMode.InverseTapered
+		summonSound.RollOffMaxDistance = 300
+		summonSound.Volume = 0.4
+		summonSound.TimePosition = 0.1
+		summonSound.Parent = playPart
+
+		summonSound:Play()
+		floatAndRotateArtis(artifacts)
+	end
+
+	function floatAndRotateArtis(artifacts)
+		for _, artifact in ipairs(artifacts) do
+			local goal = {}
+			goal.Position = artifact.Position + Vector3.new(0, 2.5, 0)
+			goal.Orientation = Vector3.new(math.random(-360, 360), math.random(-360, 360), math.random(-360, 360))
+
+			local tweenInfo = TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false)
+			local tween = TweenService:Create(artifact, tweenInfo, goal)
+
+			tween:Play()
+
+			task.delay(1.8, function()
+				tween:Cancel()
+				artifact.Anchored = false
+				artifact.CanCollide = true
+				game.Debris:AddItem(artifact, 300)
+				local clickDetector = Instance.new("ClickDetector")
+				clickDetector.MaxActivationDistance = 10
+				clickDetector.Parent = artifact
+				clickDetector.MouseClick:Once(function(Player)
+					local artiTool = Instance.new("Tool")
+					artiTool.Name = tostring(artifact:GetAttribute("AName"))
+					artiTool.RequiresHandle = true
+					artiTool.CanBeDropped = false
+					artiTool.Parent = Player.Backpack
+					if string.find(artifact:GetAttribute("AName"), "Scroll") then
+						artifact:SetAttribute("AName", "Scroll")
+					end
+
+					local artifactModel = artifactTypeSummon(artifact:GetAttribute("AName"))
+					artifactModel.Name = "Handle"
+					artifactModel.Anchored = false
+					artifactModel.CanCollide = false
+					artifactModel.Parent = artiTool
+					artifact:Destroy()
+				end)
+			end)
+		end
+	end
+	function findPlayer(playerName)
+		local function getPlayerFromName(playerName)
+			local Players = game:GetService("Players")
+			for _, v in next, Players:GetPlayers() do
+				if (v.Name:lower():sub(1, #playerName) == playerName:lower()) then
+					return v
+				end
+			end
+		end
+		
+		local playerToReturn = getPlayerFromName(playerName)
+		return playerToReturn
+	end
+	function spectatePlayer(playerName)
+		playerName = tostring(playerName)
+		local player = findPlayer(playerName)
+		local playerHumanoid = player and player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+
+		if playerHumanoid then
+			workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
+			workspace.CurrentCamera.CameraSubject = playerHumanoid
+		end
+	end
+	local trinketsData = {}
+	do --// Set Trinkets
+		Trinkets = {
+			{
+				["MeshId"] = "5204003946";
+				["Name"] = "Goblet";
+				["Color"] = Color3.fromRGB(216, 216, 216);
+			};
+			{
+				["MeshId"] = "5196776695";
+				["Name"] = "Ring";
+				["Color"] = Color3.fromRGB(216, 216, 216);
+			};
+			{
+				["MeshId"] = "5196782997";
+				["Name"] = "Old Ring";
+				["Color"] = Color3.fromRGB(216, 216, 216);
+			};
+			{
+				["Name"] = "Emerald";
+				["Color"] = Color3.fromRGB(0, 167, 0);
+			};
+			{
+				["Name"] = "Ruby";
+				["Color"] = Color3.fromRGB(255, 0, 0);
+			};
+			{
+				["Name"] = "Sapphire";
+				["Color"] = Color3.fromRGB(3, 100, 220);
+			};
+			{
+				["Name"] = "Diamond";
+				["Color"] = Color3.fromRGB(190, 212, 239);
+			};
+			{
+				["Name"] = "Rift Gem";
+				["Rare"] = true;
+				["Color"] = Color3.fromRGB(230, 29, 248);
+			};
+			{
+				["Name"] = "Fairfrozen";
+				["Rare"] = true;
+				["Color"] = Color3.fromRGB(112, 243, 255);
+			};
+			{
+				["MeshId"] = "5204453430";
+				["Name"] = "Scroll";
+				["Color"] = Color3.fromRGB(255, 189, 34);
+			};
+			{
+				["Name"] = "Old Amulet";
+				["MeshId"] = "5196577540";
+				["Color"] = Color3.fromRGB(216, 216, 216);
+			};
+			{
+				["Name"] = "Amulet";
+				["MeshId"] = "5196551436";
+				["Color"] = Color3.fromRGB(216, 216, 216);
+			};
+			{
+				["Name"] = "Idol Of The Forgotten";
+				["ParticleEmitter"] = true;
+				["Color"] = Color3.fromRGB(216, 216, 216);
+			};
+			{
+				["Name"] = "Opal";
+				["VertexColor"] = Vector3.new(1, 1, 1);
+				["MeshType"] = "Sphere";
+				["Color"] = Color3.fromRGB(255, 255, 255);
+			},
+			{
+				["Name"] = "Candy";
+				["MeshId"] = '4103271893';
+				["Color"] = Color3.fromRGB(214, 107, 0);
+			},
+			{
+				["Name"] = "Idol Of War";
+				["Color"] = Color3.fromRGB(194, 87, 87);
+			},
+			{
+				["Texture"] = "20443483";
+				["Name"] = "Ya'alda";
+				--["Rare"] = true;
+				["Color"] = Color3.fromRGB(160, 0, 240);
+			};
+			{
+				["Texture"] = "1536547385";
+				["Name"] = "Phoenix Down";
+				["Rare"] = true;
+				["Color"] = Color3.fromRGB(232, 162, 0);
+			};
+			{
+				["Texture"] = "20443483";
+				["ParticleEmitter"] = true;
+				["PointLight"] = true;
+				["Name"] = "Ice Essence";
+				["Rare"] = true;
+				["Color"] = Color3.fromRGB(74, 221, 221);
+			};
+			{
+				["Name"] = "Amulet of the White King";
+				["Rare"] = true;
+				["MeshId"] = "5197099782";
+				["Color"] = Color3.fromRGB(222, 255, 247);
+			};
+			{
+				["Name"] = "Lannis's Amulet";
+				["Rare"] = true;
+				["MeshId"] = "5196963069";
+				["Color"] = Color3.fromRGB(171, 171, 255);
+			};
+			{
+				["Name"] = "Night Stone";
+				["Rare"] = true;
+				["MeshId"] = "5197185024";
+				["Color"] = Color3.fromRGB(186, 177, 186);
+			};
+			{
+				["Name"] = "Philosopher's Stone";
+				["Rare"] = true;
+				["MeshId"] = "5197200959";
+				["Color"] = Color3.fromRGB(214, 42, 30);
+			};
+			{
+				["Name"] = "Spider Cloak";
+				["Rare"] = true;
+				["Color"] = Color3.fromRGB(186, 48, 255);
+			};
+			{
+				["Name"] = "Howler Friend";
+				["Rare"] = true;
+				["MeshId"] = "2520762076";
+				["Color"] = Color3.fromRGB(255, 255, 255);
+			};
+			{
+				["Name"] = "Scroom Key";
+				["Rare"] = true;
+				["MeshId"] = "5194202662";
+				["Color"] = Color3.fromRGB(255, 251, 137);
+			},
+			{
+				["Name"] = 'Mysterious Artifact',
+				["Rare"] = true;
+				["Color"] = Color3.fromRGB(119, 238, 0);
+			}
+		};
+
+		for _, trinket in next, Trinkets do
+			trinketsData[trinket.Name] = trinket
+		end
+	end
+	local function getId(id)
+		return id:gsub('%%20', ''):gsub('%D', '')
+	end
+	local function findInTable(tab, index, value)
+		for i, v in next, tab do
+			if v[index] == value then
+				return v
+			end
+		end
+	end
+	function getTrinketType(v)
+		if (v.Name == "Part" or v.Name == "Handle" or v.Name == "MeshPart") and (v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart")) then
+			local Mesh = (v:IsA("MeshPart") and v) or v:FindFirstChildOfClass("SpecialMesh")
+			local ParticleEmitter = v:FindFirstChildOfClass("ParticleEmitter")
+			local Attachment = v:FindFirstChildOfClass("Attachment")
+			local PointLight = v:FindFirstChildOfClass("PointLight")
+			local Material = v.Material
+			local className = v.ClassName
+			local Size = v.Size
+			local SizeMagnitude = Size.Magnitude
+			local Color = v.BrickColor.Name
+
+			if (className == "MeshPart" and Material == Enum.Material.Metal) then
+				if (v.MeshId == "rbxassetid://5197099782") then
+					return trinketsData["Amulet of the White King"]
+				elseif (v.MeshId == "rbxassetid://5196963069") then
+					return trinketsData["Lannis's Amulet"]
+				end
+			end
+
+			if(className == "Part" and v.Shape == Enum.PartType.Block and Material == Enum.Material.Neon and Color == "Pastel Blue" and Mesh.MeshId == "") then
+				return trinketsData["Fairfrozen"]
+			end
+
+			if (Material == Enum.Material.Neon and className == "MeshPart") then
+				if (Color == "Bright red" and v.MeshId == "rbxassetid://5197200959" and v.Transparency == 0.7) then
+					return trinketsData["Philosopher's Stone"]
+				elseif (Color == "Black" and v.MeshId == "rbxassetid://5197185024" and v.Transparency == 0.15) then
+					return trinketsData["Night Stone"]
+				end
+			end
+
+			if (Material == Enum.Material.Granite and v.MeshId == "rbxassetid://5194202662" and v.Transparency == 0 and PointLight and PointLight.Brightness == 0.5) then
+				return trinketsData["Scroom Key"]
+			end
+
+			if(className == "MeshPart" and getId(v.MeshId) == "2520762076") then
+				return trinketsData["Howler Friend"]
+			end
+
+			if(Mesh and getId(Mesh.MeshId) == "2877143560") then
+				if(string.find(Color, "green")) then
+					return trinketsData["Emerald"]
+				elseif(Color == "Really red") then
+					return trinketsData["Ruby"]
+				elseif(Color == "Lapis") then
+					return trinketsData["Sapphire"]
+				elseif(string.find(Color, "blue")) then
+					return trinketsData["Diamond"]
+				else
+					return trinketsData["Rift Gem"]
+				end
+			end
+			
+			if (className == "UnionOperation" and Color == "Fossil" and Material == Enum.Material.Mud) then
+				return trinketsData["Idol Of War"]
+			end
+
+			if(ParticleEmitter and ParticleEmitter.Texture:find("20443483") and SizeMagnitude > 0.6 and SizeMagnitude < 0.8 and v.Transparency == 1 and Material == Enum.Material.Neon) then
+				if(className == "Part") then
+					return trinketsData["Ice Essence"]
+				end
+				return trinketsData["Spider Cloak"]
+			end
+
+			if(ParticleEmitter) then
+				local TextureId = ParticleEmitter.Texture:gsub("%D", "")
+				local Trinket = findInTable(Trinkets, "Texture", TextureId)
+
+				if(Trinket) then
+					return Trinket
+				end
+			end
+
+			if(Mesh and Mesh.MeshId ~= "") then
+				local MeshId = Mesh.MeshId:gsub("%D", "")
+				local Trinket = findInTable(Trinkets, "MeshId", MeshId)
+
+				if(Trinket) then
+					return Trinket
+				end
+			end
+
+			if(ParticleEmitter and Material == Enum.Material.Slate) then
+				return trinketsData["Idol Of The Forgotten"]
+			end
+
+			if(Attachment) then
+				if(Attachment:FindFirstChildOfClass("ParticleEmitter")) then
+					local ParticleEmitter2 = Attachment:FindFirstChildOfClass("ParticleEmitter")
+
+					if (ParticleEmitter2) then
+						local TextureId = getId(ParticleEmitter2.Texture)
+						if(TextureId == '1536547385') then
+							if(ParticleEmitter2.Size.Keypoints[1].Value ~= 0) then
+								return trinketsData['Mysterious Artifact']
+							end
+
+							return trinketsData['Phoenix Down']
+						end
+						local Trinket = findInTable(Trinkets, "Texture", TextureId);
+						return Trinket
+					end
+				end
+			end
+
+			if(Mesh and Mesh:IsA('SpecialMesh') and Mesh.MeshType.Name == 'Sphere' and Mesh.VertexColor == Vector3.new(1, 1, 1)) then
+				return trinketsData.Opal
+			end
+		end
+	end
+	local objectsRaycastFilter = RaycastParams.new();
+	objectsRaycastFilter.FilterType = Enum.RaycastFilterType.Whitelist
+	objectsRaycastFilter.FilterDescendantsInstances = {workspace.AreaMarkers}
+	local function onChildAdded(object)
+		task.wait(1)
+		if not object:IsA("BasePart") then
+			return
+		end
+		if object:GetAttribute("AName") then
+			return
+		end
+
+		local trinketType = getTrinketType(object)
+		if not trinketType or not object:FindFirstChildWhichIsA("ClickDetector", true) then
+			return
+		end
+		
+		if CollectionService:HasTag(object, "HasB1") then
+			return
+		end
+
+		local location = workspace:Raycast(object.Position, Vector3.new(0, 5000, 0), objectsRaycastFilter)
+		location = location and location.Instance.Name or "???"
+		
+		local trinketEspHolder = Instance.new("BillboardGui")
+		trinketEspHolder.Parent = b1
+		trinketEspHolder.Active = false
+		trinketEspHolder.Adornee = object
+		trinketEspHolder.AlwaysOnTop = true
+		if roguetrinketEsp then
+			trinketEspHolder.Enabled = true
+		elseif not roguetrinketEsp then
+			trinketEspHolder.Enabled = false
+		end
+		trinketEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+		trinketEspHolder.ResetOnSpawn = false
+		trinketEspHolder.Size = UDim2.new(0, 200, 0, 50)
+		trinketEspHolder.StudsOffset = Vector3.new(0, -1, 0)
+		trinketEspHolder.ClipsDescendants = true
+
+		local trinketEspLabel = Instance.new("TextLabel")
+		trinketEspLabel.Parent = trinketEspHolder
+		trinketEspLabel.Active = false
+		trinketEspLabel.BackgroundTransparency = 1.000
+		trinketEspLabel.Position = UDim2.new(0, 0, 0, 0)
+		trinketEspLabel.Size = UDim2.new(0, 200, 0, 50)
+		trinketEspLabel.ZIndex = 5
+		trinketEspLabel.FontFace = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Regular, Enum.FontStyle.Italic)
+		trinketEspLabel.RichText = true
+		trinketEspLabel.Text = trinketType.Name..'<br /> <font size="12">'..location..'</font>'
+		trinketEspLabel.TextColor3 = trinketType.Color
+		trinketEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+		trinketEspLabel.TextStrokeTransparency = 0
+		trinketEspLabel.TextTransparency = 0
+		trinketEspLabel.TextSize = 13.000
+		trinketEspLabel.TextWrapped = true
+		
+		CollectionService:AddTag(object, "HasB1")
+		if trinketType.Rare then
+			local artifactFound = Instance.new("Sound")
+			artifactFound.SoundId = "rbxassetid://3398620867"
+			artifactFound.Parent = trinketEspHolder
+			artifactFound:Play()
+			game.Debris:AddItem(artifactFound, 2)
+		end
+		
+		local checkParentSignal
+		checkParentSignal = object:GetPropertyChangedSignal("Parent"):Connect(function()
+			if (object.Parent) then
+				return
+			end
+			trinketEspHolder:Destroy()
+			checkParentSignal:Disconnect()
+		end)
+	end
+	function getRoguePlayerStats(Player)
+		if isGaia then
+			return Player:GetAttribute('FirstName') or 'Unknown', Player:GetAttribute('LastName') or 'Unknown'
+		else
+			local leaderstats = Player:FindFirstChild('leaderstats')
+			local firstName = leaderstats and leaderstats:FindFirstChild('FirstName')
+			local lastName = leaderstats and leaderstats:FindFirstChild('LastName')
+
+			if (not leaderstats or not firstName or not lastName) then
+				return 'Unknown', 'Unknown'
+			end
+
+			return firstName.Value, lastName.Value
+		end
+	end
+	function rogueEntityEspHandle(character, espType, ismob, chosenColor)
+		local entityEspHolder
+		local entityEspLabel
+		local Player = game:GetService("Players"):GetPlayerFromCharacter(character)
+		local firstName, lastName = getRoguePlayerStats(Player)
+		local nameHolder = nil
+		--local gameName = ""
+		--local gameNameSignal = nil
+		for _, v in pairs(character:GetChildren()) do
+			if string.find(v.Name, firstName) then
+				nameHolder = v
+				--gameName = v.Name
+				break
+			end
+		end
+		nameHolder:GetPropertyChangedSignal("Name"):Connect(function()
+			--gameName = nameHolder.Name
+			if nameHolder.Name ~= "" then
+				entityEspLabel.Text = nameHolder.Name..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']'
+			end
+		end)
+		if not CollectionService:HasTag(character.HumanoidRootPart, "HasB2") then
+			CollectionService:AddTag(character.HumanoidRootPart, "HasB2")
+			
+			entityEspHolder = Instance.new("BillboardGui")
+			entityEspHolder.Parent = b2
+			entityEspHolder.Active = false
+			entityEspHolder.Adornee = character.HumanoidRootPart
+			entityEspHolder.AlwaysOnTop = true
+			if espType == true then
+				entityEspHolder.Enabled = true
+			elseif espType == false then
+				entityEspHolder.Enabled = false
+			end
+			entityEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+			entityEspHolder.ResetOnSpawn = false
+			entityEspHolder.Size = UDim2.new(10, 0, 1, 0)
+			entityEspHolder.StudsOffset = Vector3.new(0, -3.5, 0)
+			entityEspHolder.ClipsDescendants = false
+
+			entityEspLabel = Instance.new("TextLabel")
+			entityEspLabel.Parent = entityEspHolder
+			entityEspLabel.Active = false
+			entityEspLabel.BackgroundTransparency = 1.000
+			entityEspLabel.Position = UDim2.new(0, 0, 0, 0)
+			entityEspLabel.Size = UDim2.new(1, 0, 1, 0)
+			entityEspLabel.ZIndex = 6
+			entityEspLabel.FontFace = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
+			entityEspLabel.RichText = true
+			entityEspLabel.LineHeight = 1.1
+			entityEspLabel.Text = nameHolder.Name..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']'
+			entityEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+			entityEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+			entityEspLabel.TextStrokeTransparency = 0
+			entityEspLabel.TextTransparency = 0
+			entityEspLabel.TextSize = 14.000
+			entityEspLabel.TextScaled = false
+			entityEspLabel.TextWrapped = false
+			Player.CharacterRemoving:Once(function()
+				entityEspHolder:Destroy()
+			end)
+		end
+		if not CollectionService:HasTag(character.HumanoidRootPart, "HasB3") --[[and ismob]] then
+			CollectionService:AddTag(character.HumanoidRootPart, "HasB3")
+			local healthBarHolder = Instance.new("BillboardGui")
+			healthBarHolder.Parent = b3
+			healthBarHolder.Active = false
+			healthBarHolder.Adornee = character.HumanoidRootPart
+			healthBarHolder.AlwaysOnTop = true
+			if espType == true then
+				healthBarHolder.Enabled = true
+			elseif espType == false then
+				healthBarHolder.Enabled = false
+			end
+			healthBarHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+			healthBarHolder.ResetOnSpawn = false
+			healthBarHolder.Size = UDim2.new(0.4, 0, 5, 0)
+			healthBarHolder.SizeOffset = Vector2.new(-7, 0)
+			healthBarHolder.ClipsDescendants = false
+
+			local healthBarFrame = Instance.new("Frame")
+			healthBarFrame.Parent = healthBarHolder
+			healthBarFrame.Active = false
+			healthBarFrame.BackgroundColor3 = Color3.fromRGB(70, 23, 0)
+			healthBarFrame.BackgroundTransparency = 0
+			healthBarFrame.BorderSizePixel = 1.000
+			healthBarFrame.Position = UDim2.new(0, 0, 0, 0)
+			healthBarFrame.Rotation = 180
+			healthBarFrame.Size = UDim2.new(1, 0, 1, 0)
+			healthBarFrame.ZIndex = 5
+
+			local healthMeterFrame = Instance.new("Frame")
+			healthMeterFrame.Parent = healthBarFrame
+			healthMeterFrame.Active = false
+			healthMeterFrame.BackgroundColor3 = chosenColor
+			healthMeterFrame.BackgroundTransparency = 0
+			healthMeterFrame.BorderSizePixel = 0
+			healthMeterFrame.Position = UDim2.new(0, 0, 0, 0)
+			healthMeterFrame.Rotation = 0
+			Player.CharacterRemoving:Once(function()
+				healthBarHolder:Destroy()
+			end)
+			local CurrentHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+			healthMeterFrame.Size = UDim2.new(1, 0, CurrentHealth, 0)
+			local NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+			local function HealthApply()
+				NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+				game.TweenService:Create(healthMeterFrame, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {
+					Size = UDim2.new(1, 0, NewHealth, 0)
+				}):Play()
+				entityEspLabel.Text = nameHolder.Name..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']'
+			end
+			character.Humanoid.HealthChanged:connect(HealthApply)
+			character.Humanoid:GetPropertyChangedSignal("MaxHealth"):connect(HealthApply)
+			HealthApply()
+			healthMeterFrame.ZIndex = 5
+		end
+	end
+	task.spawn(function()
+		while task.wait(1) do
+			local leaderboardGui = LocalPlayer:FindFirstChild("PlayerGui") and LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui")
+			
+			if leaderboardGui and not leaderboardGui.Enabled then
+				leaderboardGui.Enabled = true
+			end
+			if rogueleaderboardEsp == false then
+				if leaderboardGui and leaderboardGui.Enabled and not game.Workspace.Live:FindFirstChild(LocalPlayer.Name) then
+					leaderboardGui.Enabled = false
+				end
+			end
+		end
+	end)
+
+	task.spawn(function()
+		if not LocalPlayer.Character and not LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
+			local newLeaderboardGui = game.StarterGui:FindFirstChild("LeaderboardGui"):Clone()
+			newLeaderboardGui.Parent = LocalPlayer.PlayerGui
+
+			LocalPlayer.CharacterAdded:Wait()
+			newLeaderboardGui:Destroy()
+		end
+	end)
+	
+	if game.Workspace.Live:FindFirstChild(LocalPlayer.Name) then
+		createBoosts(LocalPlayer.Character)
+		if not LocalPlayer.Backpack:FindFirstChild("Artifactus") then
+			local artifactTool = Instance.new("Tool")
+			artifactTool.Name = "Artifactus"
+			artifactTool.RequiresHandle = false
+			artifactTool.CanBeDropped = false
+			artifactTool.Parent = LocalPlayer.Backpack
+		end
 	end
 	game.Workspace.Live.ChildAdded:Connect(function(character)
-		if character.Name ~= game.Players.LocalPlayer.Name then
+		if character.Name ~= LocalPlayer.Name then
 			if character:FindFirstChild("Head") then
 				if not character.Head:FindFirstChild("ToolviewHolder") then
 					local toolEspHolder = Instance.new("BillboardGui")
@@ -5958,16 +7701,79 @@ if gameName == "Rogue Lineage" then
 					end)
 				end
 			end
-		elseif character.Name == game.Players.LocalPlayer.Name then
+			rogueEntityEspHandle(character, rogueplayerEsp, nil, Color3.fromRGB(206, 61, 48))
+			local Player = game:GetService("Players"):GetPlayerFromCharacter(character)
+			if (Player) and (Player.Backpack:FindFirstChild("Observe") or character:FindFirstChild("Observe")) then
+				if not CollectionService:HasTag(Player, "HasObs") then
+					CollectionService:AddTag(Player, "HasObs")
+					local firstName, lastName = getRoguePlayerStats(Player)
+					local nameHolder = nil
+					for _, v in pairs(character:GetChildren()) do
+						if string.find(v.Name, firstName) then
+							nameHolder = v
+							break
+						end
+					end
+					game:GetService("StarterGui"):SetCore("SendNotification",{
+						Title = "Illusionist Found",
+						Text = nameHolder.Name.."["..Player.Name.."] has Observe.",
+						Duration = 25,
+						Button1 = "Panic",
+						Button2 = "Dismiss",
+					})
+				end
+			end
+		elseif character.Name == LocalPlayer.Name then
 			createBoosts(character)
+			if not LocalPlayer.Backpack:FindFirstChild("Artifactus") then
+				local artifactTool = Instance.new("Tool")
+				artifactTool.Name = "Artifactus"
+				artifactTool.RequiresHandle = false
+				artifactTool.CanBeDropped = false
+				artifactTool.Parent = LocalPlayer.Backpack
+			end
 		end
 	end)
 	game.Workspace.Live.ChildRemoved:Connect(function(character)
-		if character.Name == game.Players.LocalPlayer.Name then
+		if character.Name == LocalPlayer.Name then
 			realroguespeedBoost = nil
 			realrogueclimbBoost = nil
 		end
 	end)
+	task.spawn(function()
+		for _, child in pairs(game.Workspace:GetChildren()) do
+			onChildAdded(child)
+		end
+	end)
+	task.spawn(function()
+		for _, entity in pairs(game.Workspace.Live:GetChildren()) do
+			local Player = game:GetService("Players"):GetPlayerFromCharacter(entity)
+			if Player and Player ~= LocalPlayer then
+				rogueEntityEspHandle(entity, rogueplayerEsp, nil, Color3.fromRGB(206, 61, 48))
+				if (Player) and (Player.Backpack:FindFirstChild("Observe") or entity:FindFirstChild("Observe")) then
+					if not CollectionService:HasTag(Player, "HasObs") then
+						CollectionService:AddTag(Player, "HasObs")
+						local firstName, lastName = getRoguePlayerStats(Player)
+						local nameHolder = nil
+						for _, v in pairs(entity:GetChildren()) do
+							if string.find(v.Name, firstName) then
+								nameHolder = v
+								break
+							end
+						end
+						game:GetService("StarterGui"):SetCore("SendNotification",{
+							Title = "Illusionist Found",
+							Text = nameHolder.Name.."["..Player.Name.."] has Observe.",
+							Duration = 25,
+							Button1 = "Panic",
+							Button2 = "Dismiss",
+						})
+					end
+				end
+			end
+		end
+	end)
+	game.Workspace.ChildAdded:Connect(onChildAdded)
 end
 
 if gameName == "Rogue Lineage Copy" then
@@ -7018,7 +8824,7 @@ if gameName == "Rogue Lineage Copy" then
 		end)
 	end
 	game.Workspace.Live.ChildAdded:Connect(function(character)
-		if character.Name ~= game.Players.LocalPlayer.Name then
+		if character.Name ~= LocalPlayer.Name then
 			if character:FindFirstChild("Head") then
 				if not character.Head:FindFirstChild("ToolviewHolder") then
 					local toolEspHolder = Instance.new("BillboardGui")
@@ -7085,16 +8891,16 @@ if gameName == "Rogue Lineage Copy" then
 	local spectateValue
 	local function spectatePlayer(PlayerSpectateName)
 		PlayerSpectateName = tostring(PlayerSpectateName)
-		if not game.Players.LocalPlayer:FindFirstChild("SpectateValue") then
+		if not LocalPlayer:FindFirstChild("SpectateValue") then
 			spectateValue = Instance.new("StringValue")
 			spectateValue.Name = "SpectateValue"
 			spectateValue.Value = PlayerSpectateName
-			spectateValue.Parent = game.Players.LocalPlayer
+			spectateValue.Parent = LocalPlayer
 		else
 			spectateValue.Value = PlayerSpectateName
 		end
 		--[[local realSpectate
-		for u, b in pairs(game.Players.LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
+		for u, b in pairs(LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
 			if b.TextTransparency == 0.3 then
 				for i, v in pairs(game.Workspace.Live:GetChildren()) do
 					if v.Name == b.Text then
@@ -7113,8 +8919,8 @@ if gameName == "Rogue Lineage Copy" then
 			warn("Character: "..spectateValue.Value.." is not loaded in the server to Spectate.")
 		end
 	end
-	if game.Players.LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
-		local BoardScrollingFrame = game.Players.LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame
+	if LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
+		local BoardScrollingFrame = LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame
 		for i, v in pairs(BoardScrollingFrame:GetChildren()) do
 			task.spawn(function()
 				v.Name = "PlayerLabel"..i
@@ -7185,7 +8991,7 @@ if gameName == "Rogue Lineage Copy" then
 			end
 		end)
 	end
-	game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(gui)
+	LocalPlayer.PlayerGui.ChildAdded:Connect(function(gui)
 		if gui.ClassName == "ScreenGui" and gui.Name == "LeaderboardGui" then
 			task.wait()
 			for _, v in pairs(gui.MainFrame.ScrollingFrame:GetChildren()) do
@@ -7389,14 +9195,14 @@ if gameName == "Lore Game" then
 		end
 	end
 	game.Workspace.ChildAdded:Connect(function(child)
-		if game.Players:FindFirstChild(child.Name) and game.Players.LocalPlayer.Name ~= child.Name then
+		if game.Players:FindFirstChild(child.Name) and LocalPlayer.Name ~= child.Name then
 			if child:FindFirstChild("Humanoid") and child:FindFirstChild("HumanoidRootPart") then
 				playerEspHandle(child,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
 			end
 		end
 	end)
 	for i, childType in pairs(game.Workspace:GetChildren()) do
-		if game.Players:FindFirstChild(childType.Name) and game.Players.LocalPlayer.Name ~= childType.Name then
+		if game.Players:FindFirstChild(childType.Name) and LocalPlayer.Name ~= childType.Name then
 			if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") then
 				playerEspHandle(childType,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
 			end
@@ -7409,16 +9215,87 @@ if gameName == "Lore Game" then
 end
 
 local on = false
-UserInputService.InputBegan:connect(function(player, p9)
-	if p9 then
+local rrspectating
+local rroldNamesColors = {}
+UserInputService.InputBegan:connect(function(input, gameProcessed)
+	if gameProcessed then
 		return
 	end
-	if player.KeyCode == Enum.KeyCode.RightAlt or player.KeyCode == Enum.KeyCode.End then
+	if input.KeyCode == Enum.KeyCode.RightAlt or input.KeyCode == Enum.KeyCode.End then
 		if hashiden == false then
 			hashiden = true
 		end
 		HubGui.Enabled = not HubGui.Enabled
 		on = HubGui.Enabled
+	end
+	if input.UserInputType == Enum.UserInputType.MouseButton3 then
+		if not LocalPlayer.Character then
+			return
+		end
+		if LocalPlayer.Character then
+			local hasTool = LocalPlayer.Character:FindFirstChildOfClass("Tool")
+			if hasTool and hasTool.Name == "Artifactus" then
+				if CollectionService:HasTag(hasTool, "Used") then
+					return
+				end
+				CollectionService:AddTag(hasTool, "Used")
+				task.delay(3.5, function()
+					CollectionService:RemoveTag(hasTool, "Used")
+				end)
+				spawnArtifacts(LocalPlayer.Character)
+			end
+		end
+	end
+	if input.UserInputType ~= Enum.UserInputType.MouseButton2  then
+		return
+	end
+	if rogueleaderboardEsp == false then
+		return
+	end
+	if not LocalPlayer:FindFirstChild("PlayerGui") or not LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
+		return
+	end
+
+	local leaderboardPlayers = LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame:GetChildren()
+
+	local function getHoveredPlayer()
+		for i,v in next, leaderboardPlayers do
+			if v.TextTransparency ~= 0 then
+				return v
+			end
+		end
+	end
+
+	local label = getHoveredPlayer()
+	if not label then
+		return
+	end
+	
+	local labelTextWithoutSpace = string.gsub(label.Text, "^%s+", "")
+	local player = game:GetService("Players"):FindFirstChild(labelTextWithoutSpace:gsub('\226\128\142', ''))
+	if not player or not player.Character then
+		return
+	end
+
+	if player == LocalPlayer then
+		rrspectating = player
+	end
+
+	for i, v in next, leaderboardPlayers do
+		if not rroldNamesColors[v] then
+			rroldNamesColors[v] = v.TextColor3
+		end
+
+		v.TextColor3 = rroldNamesColors[v]
+	end
+
+	if rrspectating ~= player then
+		rrspectating = player
+		spectatePlayer(player.Name)
+		label.TextColor3 = Color3.fromRGB(111, 111, 165)
+	else
+		rrspectating = nil
+		spectatePlayer(LocalPlayer.Name)
 	end
 end)
 
@@ -7428,7 +9305,7 @@ task.spawn(function()
 	while true do
 		task.wait(1.75)
 		if not game:GetService("CoreGui"):FindFirstChild(HubGui.Name) then
-			game.Players.LocalPlayer:Kick("gui was deleted??")
+			LocalPlayer:Kick("gui was deleted??")
 		end
 		if gameName == "Rogue Lineage Copy" then
 
@@ -7508,7 +9385,7 @@ task.spawn(function()
 		end
 		if gameName == "Lore Game" then
 			for i, childType in pairs(game.Workspace:GetChildren()) do
-				if game.Players:FindFirstChild(childType.Name) and game.Players.LocalPlayer.Name ~= childType.Name then
+				if game.Players:FindFirstChild(childType.Name) and LocalPlayer.Name ~= childType.Name then
 					if childType:FindFirstChild("Humanoid") and childType:FindFirstChild("HumanoidRootPart") then
 						playerEspHandle(childType,loreplayerEsp,true,Color3.fromRGB(206, 61, 48))
 					end
@@ -7535,7 +9412,6 @@ task.spawn(function()
 		end
 	end
 end)
-print("Fully Loaded PotHub")
 -- Scripts:
 
 --[[local function Draggable1() -- Hold.Drag 
