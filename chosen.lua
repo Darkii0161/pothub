@@ -7490,14 +7490,25 @@ if gameName == "Rogue Lineage" then
 		local entityEspHolder
 		local entityEspLabel
 		local Player = game:GetService("Players"):GetPlayerFromCharacter(character)
-		local firstName, lastName = getRoguePlayerStats(Player)
+		--local firstName, lastName = getRoguePlayerStats(Player)
 		local nameHolder = nil
 		--local gameName = ""
 		--local gameNameSignal = nil
-		for _, v in pairs(character:GetChildren()) do
-			if string.find(v.Name, firstName) then
+		for _, v in pairs(character:GetDescendants()) do
+			--[[if string.find(v.Name, firstName) then
 				nameHolder = v
 				--gameName = v.Name
+				break
+			end]]
+			--[[if v:FindFirstChildOfClass("Humanoid") then
+				local foundFakeHumanoid = v:FindFirstChildOfClass("Humanoid")
+				if foundFakeHumanoid and foundFakeHumanoid.Name == "FakeHumanoid" then
+					nameHolder = v
+					break
+				end
+			end]]
+			if v.Name == "FakeHumanoid" then
+				nameHolder = v.Parent
 				break
 			end
 		end
@@ -7604,6 +7615,232 @@ if gameName == "Rogue Lineage" then
 			healthMeterFrame.ZIndex = 5
 		end
 	end
+	
+	local edictTextureIDs = {
+		["4072914434"] = {EdictType = "Seer", Color = Color3.fromRGB(0, 92, 134), Color2 = Color3.fromRGB(0, 67, 94)},
+		["4072968006"] = {EdictType = "Healer", Color = Color3.fromRGB(0, 214, 0), Color2 = Color3.fromRGB(0, 153, 0)},
+		["4072968656"] = {EdictType = "Blademaster", Color = Color3.fromRGB(238, 0, 0), Color2 = Color3.fromRGB(143, 0, 0)},
+		["4094417635"] = {EdictType = "Jester", Color = Color3.fromRGB(162, 0, 243), Color2 = Color3.fromRGB(96, 0, 144)},
+	}
+	local leaderBoardList = {}
+	local attributeList = {}
+	function retrieveAttributes(Player)
+		if not leaderBoardList[Player] then
+			leaderBoardList[Player] = true
+			local firstName = Player:GetAttribute("FirstName")
+			local uberTitle = Player:GetAttribute("UberTitle")
+			local lastName = Player:GetAttribute("LastName")
+			local houseRank = Player:GetAttribute("HouseRank")
+			local gender = Player:GetAttribute("Gender")
+			local hidden = Player:GetAttribute("Hidden")
+			local prestige = Player:GetAttribute("Prestige")
+			local maxEdict = Player:GetAttribute("MaxEdict")
+			attributeList[Player] = {
+				PlayerInstance = Player,
+				FirstName = firstName,
+				UberTitle = uberTitle,
+				LastName = lastName,
+				HouseRank = houseRank,
+				Gender = gender,
+				Hidden = hidden,
+				Prestige = prestige,
+				MaxEdict = maxEdict,
+			}
+		end
+	end
+	function leaderBoardHandle(leaderboardGui)
+		local function playerFrameHandle(playerFrame)
+			playerFrame:WaitForChild("Prestige")
+			local labelTextWithoutSpace = string.gsub(playerFrame.Text, "^%s+", "")
+			local Player = nil
+			local edictType = "None"
+			local isMax = false
+			if playerFrame.TextColor3 == Color3.fromRGB(255, 214, 81) then
+				isMax = true
+			end
+			if not game:GetService("Players"):FindFirstChild(labelTextWithoutSpace) then
+				for _, v in pairs(game.Workspace.Live:GetChildren()) do
+					if v:FindFirstChild(labelTextWithoutSpace) then
+						Player = game:GetService("Players"):GetPlayerFromCharacter(v)
+						break
+					end
+				end
+				if Player == nil then
+					if playerFrame.TextColor3 == Color3.fromRGB(255, 214, 81) then
+						isMax = true
+						playerFrame.TextColor3 = Color3.fromRGB(194, 155, 37)
+					elseif playerFrame.TextColor3 == Color3.fromRGB(255, 255, 255) then
+						playerFrame.TextColor3 = Color3.fromRGB(178, 178, 178)
+					end
+					local temporaryCharacterLoadSignal = nil
+					local charLoaded = false
+					temporaryCharacterLoadSignal = game.Workspace.Live.ChildAdded:Connect(function(entity)
+						task.wait(0.3)
+						if entity:FindFirstChild(labelTextWithoutSpace) then
+							charLoaded = true
+							Player = game:GetService("Players"):GetPlayerFromCharacter(entity)
+							temporaryCharacterLoadSignal:Disconnect()
+							temporaryCharacterLoadSignal = nil
+						end
+					end)
+					repeat task.wait(0.5) until charLoaded == true
+					if isMax then
+						playerFrame.TextColor3 = Color3.fromRGB(255, 214, 81)
+					elseif not isMax then
+						playerFrame.TextColor3 = Color3.fromRGB(255, 255, 255)
+					end
+				end
+				--[[for _, v in pairs(attributeList) do
+					--[[local firstName, lastName = getRoguePlayerStats(v)
+					if v:GetAttribute("FirstName") then
+						if string.find(labelTextWithoutSpace, firstName) then
+							Player = v
+							print("Player: "..Player.Name)
+							break
+						end
+					end
+					if string.find(labelTextWithoutSpace, v.FirstName) then
+						Player = v.PlayerInstance
+						print("Player: "..Player.Name)
+						break
+					end
+				end]]
+			else
+				Player = game:GetService("Players"):FindFirstChild(labelTextWithoutSpace)
+			end
+			if isMax then
+				if not game.Workspace.Live:FindFirstChild(Player.Name) then
+					playerFrame.TextColor3 = Color3.fromRGB(194, 155, 37)
+					if Player.Backpack:FindFirstChild("Analysis") then
+						edictType = "Seer"
+						playerFrame.TextColor3 = edictTextureIDs["4072914434"].Color2
+					elseif Player.Backpack:FindFirstChild("Mederi") then
+						edictType = "Healer"
+						playerFrame.TextColor3 = edictTextureIDs["4072968006"].Color2
+					elseif Player.Backpack:FindFirstChild("Verto") then
+						edictType = "Blademaster"
+						playerFrame.TextColor3 = edictTextureIDs["4072968656"].Color2
+					elseif Player.Backpack:FindFirstChild("Wallet Swipe") then
+						edictType = "Jester"
+						playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color2
+					end
+				else
+					if Player.Backpack:FindFirstChild("Analysis") then
+						edictType = "Seer"
+						playerFrame.TextColor3 = edictTextureIDs["4072914434"].Color
+					elseif Player.Backpack:FindFirstChild("Mederi") then
+						edictType = "Healer"
+						playerFrame.TextColor3 = edictTextureIDs["4072968006"].Color
+					elseif Player.Backpack:FindFirstChild("Verto") then
+						edictType = "Blademaster"
+						playerFrame.TextColor3 = edictTextureIDs["4072968656"].Color
+					elseif Player.Backpack:FindFirstChild("Wallet Swipe") then
+						edictType = "Jester"
+						playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color
+					end
+					--[[local character = Player.Character
+					for _, v in pairs(character.Head:GetChildren()) do
+						if v.Name == "FacialMarking" then
+							if edictTextureIDs[tostring(v.Texture)] then
+								edictType = edictTextureIDs[tostring(v.Texture)].EdictType
+								playerFrame.TextColor3 = edictTextureIDs[tostring(v.Texture)].Color
+								print("Colors1")
+								break
+							end
+						end
+					end]]
+				end
+			else
+				if not game.Workspace.Live:FindFirstChild(Player.Name) then
+					edictType = "None"
+					playerFrame.TextColor3 = Color3.fromRGB(178, 178, 178)
+				end
+			end
+			if Player.Backpack:FindFirstChild("Epitaph") or Player.Backpack:FindFirstChild("Wallet Swipe") or Player.Backpack:FindFirstChild("Snowball") or Player.Backpack:FindFirstChild("Time Halt") or Player.Backpack:FindFirstChild("Jester's Scheme") or Player.Backpack:FindFirstChild("Time Erase") or Player.Backpack:FindFirstChild("Jester's Ruse") then
+				edictType = edictTextureIDs["4094417635"].EdictType
+				if not game.Workspace.Live:FindFirstChild(Player.Name) then
+					playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color2
+				else
+					playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color
+				end
+			end
+			Player.CharacterAdded:Connect(function()
+				task.wait(0.5)
+				if Player.Backpack:FindFirstChild("Analysis") then
+					edictType = "Seer"
+					playerFrame.TextColor3 = edictTextureIDs["4072914434"].Color
+				elseif Player.Backpack:FindFirstChild("Mederi") then
+					edictType = "Healer"
+					playerFrame.TextColor3 = edictTextureIDs["4072968006"].Color
+				elseif Player.Backpack:FindFirstChild("Verto") then
+					edictType = "Blademaster"
+					playerFrame.TextColor3 = edictTextureIDs["4072968656"].Color
+				elseif Player.Backpack:FindFirstChild("Wallet Swipe") then
+					edictType = "Jester"
+					playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color
+				elseif edictType == "None" then
+					playerFrame.TextColor3 = Color3.fromRGB(255, 255, 255)
+				end
+				--[[local character = Player.Character
+				character:WaitForChild("Head", 5)
+				for _, v in pairs(character.Head:GetChildren()) do
+					if v.Name == "FacialMarking" then
+						if edictTextureIDs[tostring(v.Texture)] then
+							edictType = edictTextureIDs[tostring(v.Texture)].EdictType
+							playerFrame.TextColor3 = edictTextureIDs[tostring(v.Texture)].Color
+							print("Colors2")
+							break
+						end
+					end
+				end]]
+			end)
+			Player.CharacterRemoving:Connect(function()
+				if edictType == "Seer" then
+					playerFrame.TextColor3 = edictTextureIDs["4072914434"].Color2
+				elseif edictType == "Healer" then
+					playerFrame.TextColor3 = edictTextureIDs["4072968006"].Color2
+				elseif edictType == "Blademaster" then
+					playerFrame.TextColor3 = edictTextureIDs["4072968656"].Color2
+				elseif edictType == "Jester" then
+					playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color2
+				elseif edictType == "None" then
+					playerFrame.TextColor3 = Color3.fromRGB(178, 178, 178)
+				end
+			end)
+		end
+		task.spawn(function()
+			for _, v in pairs(leaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
+				task.spawn(function()
+					playerFrameHandle(v)
+				end)
+			end
+		end)
+		CollectionService:AddTag(leaderboardGui, "LBHandle")
+		leaderboardGui.MainFrame.ScrollingFrame.ChildAdded:Connect(function(playerFrame)
+			CollectionService:AddTag(playerFrame, "ViewCD")
+			if playerFrame.Parent ~= leaderboardGui.MainFrame.ScrollingFrame then
+				return
+			end
+			--playerFrame:GetPropertyChangedSignal("Text"):Once(function()
+				CollectionService:RemoveTag(playerFrame, "ViewCD")
+			task.spawn(function()
+				playerFrameHandle(playerFrame)
+			end)
+			--end)
+		end)
+	end
+	LocalPlayer.PlayerGui.ChildAdded:Connect(function(child)
+		if child.Name == "LeaderboardGui" then
+			if not CollectionService:HasTag(LocalPlayer.PlayerGui.LeaderboardGui, "LBHandle") then
+				leaderBoardHandle(child)
+			end
+		end
+	end)
+	if LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
+		if not CollectionService:HasTag(LocalPlayer.PlayerGui.LeaderboardGui, "LBHandle") then
+			leaderBoardHandle(LocalPlayer.PlayerGui.LeaderboardGui)
+		end
+	end
 	task.spawn(function()
 		while task.wait(1) do
 			local leaderboardGui = LocalPlayer:FindFirstChild("PlayerGui") and LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui")
@@ -7622,6 +7859,9 @@ if gameName == "Rogue Lineage" then
 	task.spawn(function()
 		if not LocalPlayer.Character and not LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
 			local newLeaderboardGui = game.StarterGui:FindFirstChild("LeaderboardGui"):Clone()
+			if rogueleaderboardEsp == false then
+				newLeaderboardGui.Enabled = false
+			end
 			newLeaderboardGui.Parent = LocalPlayer.PlayerGui
 
 			LocalPlayer.CharacterAdded:Wait()
@@ -7743,6 +7983,21 @@ if gameName == "Rogue Lineage" then
 	task.spawn(function()
 		for _, child in pairs(game.Workspace:GetChildren()) do
 			onChildAdded(child)
+		end
+	end)
+	game.Players.PlayerAdded:connect(function(Player)
+		retrieveAttributes(Player)
+	end)
+	game.Players.PlayerRemoving:connect(function(Player)
+		if leaderBoardList[Player] then
+			leaderBoardList[Player] = nil
+		end
+	end)
+	task.spawn(function()
+		for _, v in pairs(game.Players:GetPlayers()) do
+			task.spawn(function()
+				retrieveAttributes(v)
+			end)
 		end
 	end)
 	task.spawn(function()
@@ -9260,7 +9515,7 @@ UserInputService.InputBegan:connect(function(input, gameProcessed)
 
 	local function getHoveredPlayer()
 		for i,v in next, leaderboardPlayers do
-			if v.TextTransparency ~= 0 then
+			if v.TextTransparency ~= 0 and not CollectionService:HasTag(v, "ViewCD") then
 				return v
 			end
 		end
@@ -9283,16 +9538,16 @@ UserInputService.InputBegan:connect(function(input, gameProcessed)
 
 	for i, v in next, leaderboardPlayers do
 		if not rroldNamesColors[v] then
-			rroldNamesColors[v] = v.TextColor3
+			rroldNamesColors[v] = v.TextStrokeColor3
 		end
 
-		v.TextColor3 = rroldNamesColors[v]
+		v.TextStrokeColor3 = rroldNamesColors[v]
 	end
 
 	if rrspectating ~= player then
 		rrspectating = player
 		spectatePlayer(player.Name)
-		label.TextColor3 = Color3.fromRGB(111, 111, 165)
+		label.TextStrokeColor3 = Color3.fromRGB(111, 111, 165)
 	else
 		rrspectating = nil
 		spectatePlayer(LocalPlayer.Name)
