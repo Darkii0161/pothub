@@ -152,6 +152,7 @@ local BurialCapture = Instance.new("TextLabel")
 local JobIdHolder = Instance.new("Folder")
 local JobIdTitle = Instance.new("TextLabel")
 local JobIdBox = Instance.new("TextBox")
+local JobIdButton = Instance.new("TextButton")
 --//For Rogue Movement
 local MovementHolder = Instance.new("Folder")
 local MovementTitle = Instance.new("TextLabel")
@@ -211,8 +212,8 @@ local function selfNotification(title, text, duration, button1, button2, callbac
 		Title = title,
 		Text = text,
 		Duration = duration,
-		Button1 = button1,
-		Button2 = button2,
+		Button1 = button1 or nil,
+		Button2 = button2 or nil,
 	})
 end
 
@@ -276,7 +277,7 @@ local detFolder = Instance.new("Folder")
 detFolder.Name = randomString(15)
 detFolder.Parent = HubGui
 
-HubFrame.Name = "HubFrame"
+HubFrame.Name = randomString(math.random(7, 24))
 HubFrame.Parent = HubGui
 HubFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 HubFrame.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
@@ -285,7 +286,7 @@ HubFrame.BorderSizePixel = 0
 HubFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 HubFrame.Size = UDim2.new(0, 280, 0, 200)
 
-Overlay.Name = "Overlay"
+Overlay.Name = randomString(math.random(7, 14))
 Overlay.Parent = HubFrame
 Overlay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Overlay.BackgroundTransparency = 1.000
@@ -298,7 +299,7 @@ Overlay.ImageColor3 = Color3.fromRGB(183, 197, 211)
 Overlay.ScaleType = Enum.ScaleType.Slice
 Overlay.SliceCenter = Rect.new(14, 14, 18, 18)
 
-Background.Name = "Background"
+Background.Name = randomString(math.random(7, 14))
 Background.Parent = HubFrame
 Background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Background.BackgroundTransparency = 1.000
@@ -311,7 +312,7 @@ Background.ImageTransparency = 0.870
 Background.ScaleType = Enum.ScaleType.Tile
 Background.TileSize = UDim2.new(0, 32, 0, 32)
 
-Title.Name = "Title"
+Title.Name = randomString(math.random(7, 14))
 Title.Parent = HubFrame
 Title.AnchorPoint = Vector2.new(0.5, 0)
 Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -327,7 +328,7 @@ Title.TextStrokeTransparency = 0.500
 Title.TextTransparency = 0.100
 Title.TextWrapped = true
 
-DescSheet.Name = "DescSheet"
+DescSheet.Name = randomString(math.random(7, 14))
 DescSheet.Parent = HubFrame
 DescSheet.AnchorPoint = Vector2.new(0.5, 1)
 DescSheet.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
@@ -335,7 +336,7 @@ DescSheet.BorderSizePixel = 0
 DescSheet.Position = UDim2.new(0.5, 0, 1, 0)
 DescSheet.Size = UDim2.new(1, 0, 1, -30)
 
-Pipe.Name = "Pipe"
+Pipe.Name = randomString(math.random(7, 14))
 Pipe.Parent = DescSheet
 Pipe.AnchorPoint = Vector2.new(0, 1)
 Pipe.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -346,7 +347,7 @@ Pipe.Size = UDim2.new(1, 0, 0, 5)
 Pipe.Image = "http://www.roblox.com/asset/?id=5035647017"
 Pipe.ImageColor3 = Color3.fromRGB(183, 197, 211)
 
-Index.Name = "Index"
+Index.Name = randomString(math.random(7, 14))
 Index.Visible = false
 Index.Parent = HubFrame
 Index.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -359,7 +360,7 @@ UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 4)
 
-Desc.Name = "Desc"
+Desc.Name = randomString(math.random(7, 14))
 Desc.Parent = HubFrame
 Desc.AnchorPoint = Vector2.new(0.5, 0)
 Desc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -382,10 +383,11 @@ UITextSizeConstraint.MinTextSize = 12
 
 local totalwaitTime = 12
 local loadwaitTime = 0
+local gameFullLoaded = false
 while true do
 	task.wait(0.5)
-	if loadwaitTime >= totalwaitTime then
-		print("Loading has Finished".."--Pot")
+	if loadwaitTime >= totalwaitTime or gameFullLoaded then
+		print("Loading has Finished")
 		typeText(Desc,"Loading has Finished. Inserting layers.", 0.02)
 		break
 	end
@@ -401,9 +403,14 @@ while true do
 	task.wait(0.5)
 	Desc.Text = "Script Loading..."
 	loadwaitTime = loadwaitTime + 1
+	if game:IsLoaded() then
+		gameFullLoaded = true
+	end
 end
 
-Main.Name = "Main"
+local headingFrames = {}
+
+Main.Name = randomString(math.random(7, 14))
 Main.Parent = Index
 Main.Active = false
 Main.AnchorPoint = Vector2.new(0.5, 0)
@@ -421,7 +428,7 @@ Main.TextTransparency = 0.100
 Main.TextWrapped = true
 Main.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -446,7 +453,7 @@ Main.MouseButton1Down:connect(function()
 	end]]
 end)
 
-Underline.Name = "Underline"
+Underline.Name = randomString(math.random(7, 14))
 Underline.Parent = Main
 Underline.AnchorPoint = Vector2.new(0.5, 0)
 Underline.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -457,7 +464,7 @@ Underline.Size = UDim2.new(1, 0, 0, 1)
 UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 UIGradient.Parent = Underline
 
-Extras.Name = "Extras"
+Extras.Name = randomString(math.random(7, 14))
 Extras.Parent = Index
 Extras.Active = false
 Extras.AnchorPoint = Vector2.new(0.5, 0)
@@ -476,7 +483,7 @@ Extras.TextTransparency = 0.100
 Extras.TextWrapped = true
 Extras.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -490,13 +497,13 @@ Extras.MouseButton1Down:connect(function()
 	for i, r in pairs(Headings:GetChildren()) do
 		if r.Name ~= Extras.Name then
 			r.Visible = false
-			Headings.Extras.Visible = true
+			headingFrames["Extras"].Visible = true
 			HubFrame.Visible = false
 		end
 	end
 end)
 
-Underline_2.Name = "Underline"
+Underline_2.Name = randomString(math.random(7, 14))
 Underline_2.Parent = Extras
 Underline_2.AnchorPoint = Vector2.new(0.5, 0)
 Underline_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -507,7 +514,7 @@ Underline_2.Size = UDim2.new(1, 0, 0, 1)
 UIGradient_2.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 UIGradient_2.Parent = Underline_2
 
-Credits.Name = "Credits"
+Credits.Name = randomString(math.random(7, 14))
 Credits.Parent = Index
 Credits.Active = false
 Credits.AnchorPoint = Vector2.new(0.5, 0)
@@ -526,7 +533,7 @@ Credits.TextTransparency = 0.100
 Credits.TextWrapped = true
 Credits.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -540,13 +547,13 @@ Credits.MouseButton1Down:connect(function()
 	for i, r in pairs(Headings:GetChildren()) do
 		if r.Name ~= Credits.Name then
 			r.Visible = false
-			Headings.Credits.Visible = true
+			headingFrames["Credits"].Visible = true
 			HubFrame.Visible = false
 		end
 	end
 end)
 
-Underline_3.Name = "Underline"
+Underline_3.Name = randomString(math.random(7, 14))
 Underline_3.Parent = Credits
 Underline_3.AnchorPoint = Vector2.new(0.5, 0)
 Underline_3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -557,7 +564,7 @@ Underline_3.Size = UDim2.new(1, 0, 0, 1)
 UIGradient_3.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 UIGradient_3.Parent = Underline_3
 
-GameShow.Name = "Game"
+GameShow.Name = randomString(math.random(7, 14))
 --GameShow.Visible = false
 GameShow.Parent = Index
 GameShow.Active = false
@@ -595,7 +602,7 @@ GameShow.TextTransparency = 0.100
 GameShow.TextWrapped = true
 --[[GameShow.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -615,7 +622,7 @@ GameShow.TextWrapped = true
 	end
 end)]]
 
-Underline_4.Name = "Underline"
+Underline_4.Name = randomString(math.random(7, 14))
 Underline_4.Parent = GameShow
 Underline_4.AnchorPoint = Vector2.new(0.5, 0)
 Underline_4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -633,7 +640,7 @@ typeText(Title,'Pot Hub', 0.03)
 typeText(Desc,'Welcome, to the Pot Hub. If you want to view all the currently supported games go to the Credits & Info tab.', 0.02)
 Index.Visible = true -- Opens all the options after loaded
 
-DescHide.Name = "DescHide"
+DescHide.Name = randomString(math.random(7, 14))
 DescHide.Parent = HubFrame
 DescHide.AnchorPoint = Vector2.new(0.5, 0)
 DescHide.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -677,10 +684,10 @@ UITextSizeConstraintHide.Parent = DescHide
 UITextSizeConstraintHide.MaxTextSize = 12
 UITextSizeConstraintHide.MinTextSize = 8
 
-Headings.Name = "Headings"
+Headings.Name = randomString(math.random(7, 14))
 Headings.Parent = HubGui
 
-Main_2.Name = "Main"
+Main_2.Name = randomString(math.random(7, 14))
 Main_2.Parent = Headings
 Main_2.AnchorPoint = Vector2.new(0.5, 0.5)
 Main_2.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
@@ -690,7 +697,7 @@ Main_2.Position = UDim2.new(0.5, 0, 0.5, 0)
 Main_2.Size = UDim2.new(0, 300, 0, 260)
 Main_2.Visible = false
 
-Overlay_2.Name = "Overlay"
+Overlay_2.Name = randomString(math.random(7, 14))
 Overlay_2.Parent = Main_2
 Overlay_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Overlay_2.BackgroundTransparency = 1.000
@@ -703,7 +710,7 @@ Overlay_2.ImageColor3 = Color3.fromRGB(183, 197, 211)
 Overlay_2.ScaleType = Enum.ScaleType.Slice
 Overlay_2.SliceCenter = Rect.new(14, 14, 18, 18)
 
-Background_2.Name = "Background"
+Background_2.Name = randomString(math.random(7, 14))
 Background_2.Parent = Main_2
 Background_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Background_2.BackgroundTransparency = 1.000
@@ -716,7 +723,7 @@ Background_2.ImageTransparency = 0.870
 Background_2.ScaleType = Enum.ScaleType.Tile
 Background_2.TileSize = UDim2.new(0, 32, 0, 32)
 
-Title_2.Name = "Title"
+Title_2.Name = randomString(math.random(7, 14))
 Title_2.Parent = Main_2
 Title_2.AnchorPoint = Vector2.new(0.5, 0)
 Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -732,7 +739,7 @@ Title_2.TextStrokeTransparency = 0.500
 Title_2.TextTransparency = 0.100
 Title_2.TextWrapped = true
 
-DescSheet_2.Name = "DescSheet"
+DescSheet_2.Name = randomString(math.random(7, 14))
 DescSheet_2.Parent = Main_2
 DescSheet_2.AnchorPoint = Vector2.new(0.5, 1)
 DescSheet_2.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
@@ -740,7 +747,7 @@ DescSheet_2.BorderSizePixel = 0
 DescSheet_2.Position = UDim2.new(0.5, 0, 1, 0)
 DescSheet_2.Size = UDim2.new(1, 0, 1, -30)
 
-Pipe_2.Name = "Pipe"
+Pipe_2.Name = randomString(math.random(7, 14))
 Pipe_2.Parent = DescSheet_2
 Pipe_2.AnchorPoint = Vector2.new(0, 1)
 Pipe_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -751,7 +758,7 @@ Pipe_2.Size = UDim2.new(1, 0, 0, 5)
 Pipe_2.Image = "http://www.roblox.com/asset/?id=5035647017"
 Pipe_2.ImageColor3 = Color3.fromRGB(183, 197, 211)
 
-LeftControlDesc.Name = "LeftControlDesc"
+LeftControlDesc.Name = randomString(math.random(7, 14))
 LeftControlDesc.Parent = Main_2
 LeftControlDesc.AnchorPoint = Vector2.new(0.5, 0)
 LeftControlDesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -773,7 +780,7 @@ UITextSizeConstraint_2.Parent = LeftControlDesc
 UITextSizeConstraint_2.MaxTextSize = 14
 UITextSizeConstraint_2.MinTextSize = 12
 
-RightControlDesc.Name = "RightControlDesc"
+RightControlDesc.Name = randomString(math.random(7, 14))
 RightControlDesc.Parent = Main_2
 RightControlDesc.AnchorPoint = Vector2.new(0.5, 0)
 RightControlDesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -795,7 +802,7 @@ UITextSizeConstraint_3.Parent = RightControlDesc
 UITextSizeConstraint_3.MaxTextSize = 14
 UITextSizeConstraint_3.MinTextSize = 12
 
-Return.Name = "Return"
+Return.Name = randomString(math.random(7, 14))
 Return.Parent = Main_2
 Return.Active = false
 Return.AnchorPoint = Vector2.new(0.5, 1)
@@ -814,7 +821,7 @@ Return.TextTransparency = 0.100
 Return.TextWrapped = true
 Return.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -831,7 +838,7 @@ Return.MouseButton1Down:connect(function()
 	end
 end)
 
-Underline_5.Name = "Underline"
+Underline_5.Name = randomString(math.random(7, 14))
 Underline_5.Parent = Return
 Underline_5.AnchorPoint = Vector2.new(0.5, 0)
 Underline_5.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -842,7 +849,7 @@ Underline_5.Size = UDim2.new(1, 0, 0, 1)
 UIGradient_5.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.20, 0.00), NumberSequenceKeypoint.new(0.80, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
 UIGradient_5.Parent = Underline_5
 
-Extras_2.Name = "Extras"
+Extras_2.Name = randomString(math.random(7, 14))
 Extras_2.Parent = Headings
 Extras_2.AnchorPoint = Vector2.new(0.5, 0.5)
 Extras_2.BackgroundColor3 = Color3.fromRGB(59, 62, 67)
@@ -851,8 +858,9 @@ Extras_2.BorderSizePixel = 0
 Extras_2.Position = UDim2.new(0.5, 0, 0.5, 0)
 Extras_2.Size = UDim2.new(0, 400, 0, 370)
 Extras_2.Visible = false
+headingFrames["Extras"] = Extras_2
 
-Overlay_3.Name = "Overlay"
+Overlay_3.Name = randomString(math.random(7, 14))
 Overlay_3.Parent = Extras_2
 Overlay_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Overlay_3.BackgroundTransparency = 1.000
@@ -865,7 +873,7 @@ Overlay_3.ImageColor3 = Color3.fromRGB(183, 197, 211)
 Overlay_3.ScaleType = Enum.ScaleType.Slice
 Overlay_3.SliceCenter = Rect.new(14, 14, 18, 18)
 
-Background_3.Name = "Background"
+Background_3.Name = randomString(math.random(7, 14))
 Background_3.Parent = Extras_2
 Background_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Background_3.BackgroundTransparency = 1.000
@@ -878,7 +886,7 @@ Background_3.ImageTransparency = 0.870
 Background_3.ScaleType = Enum.ScaleType.Tile
 Background_3.TileSize = UDim2.new(0, 32, 0, 32)
 
-Title_3.Name = "Title"
+Title_3.Name = randomString(math.random(7, 14))
 Title_3.Parent = Extras_2
 Title_3.AnchorPoint = Vector2.new(0.5, 0)
 Title_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -894,7 +902,7 @@ Title_3.TextStrokeTransparency = 0.500
 Title_3.TextTransparency = 0.100
 Title_3.TextWrapped = true
 
-Pipe_3.Name = "Pipe"
+Pipe_3.Name = randomString(math.random(7, 14))
 Pipe_3.Parent = Extras_2
 Pipe_3.AnchorPoint = Vector2.new(0, 1)
 Pipe_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -905,7 +913,7 @@ Pipe_3.Size = UDim2.new(1, 0, 0, 5)
 Pipe_3.Image = "http://www.roblox.com/asset/?id=5035647017"
 Pipe_3.ImageColor3 = Color3.fromRGB(183, 197, 211)
 
-DescSheet_3.Name = "DescSheet"
+DescSheet_3.Name = randomString(math.random(7, 14))
 DescSheet_3.Parent = Extras_2
 DescSheet_3.AnchorPoint = Vector2.new(0.5, 1)
 DescSheet_3.BackgroundColor3 = Color3.fromRGB(229, 224, 202)
@@ -929,7 +937,7 @@ DescSheet_3.VerticalScrollBarInset = Enum.ScrollBarInset.None
 DescSheet_3.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
 
 --// This is for Extra Features
-Desc_2.Name = "Desc"
+Desc_2.Name = randomString(math.random(7, 14))
 Desc_2.Visible = false
 Desc_2.Parent = Extras_2
 Desc_2.AnchorPoint = Vector2.new(0.5, 0)
@@ -953,11 +961,11 @@ UITextSizeConstraint_4.MaxTextSize = 14
 UITextSizeConstraint_4.MinTextSize = 12
 
 if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 4602423680) and game.Workspace:FindFirstChild("CapturePoints") then
-	Captures.Name = "Captures"
+	Captures.Name = randomString(math.random(7, 14))
 	Captures.Parent = DescSheet_3
 
 	--// CaptureTitle
-	CaptureTitle.Name = "CaptureTitle"
+	CaptureTitle.Name = randomString(math.random(7, 14))
 	CaptureTitle.Parent = Captures
 	CaptureTitle.Active = false
 	CaptureTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -978,7 +986,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	CaptureTitle.TextXAlignment = Enum.TextXAlignment.Left
 
 	--// ForestPoint
-	ForestCapture.Name = "ForestPoint"
+	ForestCapture.Name = randomString(math.random(7, 14))
 	ForestCapture.Parent = Captures
 	ForestCapture.Active = false
 	ForestCapture.AnchorPoint = Vector2.new(0.5, 1)
@@ -1003,7 +1011,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	ForestCapture.TextXAlignment = Enum.TextXAlignment.Left
 
 	--// SkycastlePoint
-	SkycastleCapture.Name = "SkycastlePoint"
+	SkycastleCapture.Name = randomString(math.random(7, 14))
 	SkycastleCapture.Parent = Captures
 	SkycastleCapture.Active = false
 	SkycastleCapture.AnchorPoint = Vector2.new(0.5, 1)
@@ -1028,7 +1036,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	SkycastleCapture.TextXAlignment = Enum.TextXAlignment.Left
 
 	--// BurialPoint
-	BurialCapture.Name = "BurialPoint"
+	BurialCapture.Name = randomString(math.random(7, 14))
 	BurialCapture.Parent = Captures
 	BurialCapture.Active = false
 	BurialCapture.AnchorPoint = Vector2.new(0.5, 1)
@@ -1053,7 +1061,7 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	BurialCapture.TextXAlignment = Enum.TextXAlignment.Left
 
 	--// ShorePoint
-	ShoreCapture.Name = "ShorePoint"
+	ShoreCapture.Name = randomString(math.random(7, 14))
 	ShoreCapture.Parent = Captures
 	ShoreCapture.Active = false
 	ShoreCapture.AnchorPoint = Vector2.new(0.5, 1)
@@ -1078,10 +1086,10 @@ if (game.GameId == 4505104344 or game.GameId == 4582120535 or game.GameId == 460
 	ShoreCapture.TextXAlignment = Enum.TextXAlignment.Left
 end
 
-JobIdHolder.Name = "JobId"
+JobIdHolder.Name = randomString(math.random(7, 14))
 JobIdHolder.Parent = DescSheet_3
 
-JobIdTitle.Name = "JobIdTitle"
+JobIdTitle.Name = randomString(math.random(7, 14))
 JobIdTitle.Parent = JobIdHolder
 JobIdTitle.Active = false
 JobIdTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -1101,7 +1109,7 @@ JobIdTitle.TextTransparency = 0.100
 JobIdTitle.TextWrapped = true
 JobIdTitle.TextXAlignment = Enum.TextXAlignment.Right
 
-JobIdBox.Name = "JobIdBox"
+JobIdBox.Name = randomString(math.random(7, 14))
 JobIdBox.Parent = JobIdHolder
 JobIdBox.Active = false
 JobIdBox.AnchorPoint = Vector2.new(0.5, 1)
@@ -1127,6 +1135,46 @@ JobIdBox.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
 JobIdBox.TextTransparency = 0.100
 JobIdBox.TextWrapped = false
 JobIdBox.TextXAlignment = Enum.TextXAlignment.Right
+
+JobIdButton.Name = randomString(math.random(7, 14))
+JobIdButton.Parent = JobIdHolder
+JobIdButton.Active = true
+JobIdButton.AnchorPoint = Vector2.new(0.5, 1)
+JobIdButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+JobIdButton.BackgroundTransparency = 1.000
+JobIdButton.LayoutOrder = 1
+JobIdButton.Position = UDim2.new(0.5, 130, 1, -715)
+JobIdButton.Selectable = false
+JobIdButton.Size = UDim2.new(0.08, 0, 0, 20)
+JobIdButton.Font = Enum.Font.SourceSansSemibold
+JobIdButton.RichText = true
+JobIdButton.Text = "Copy"
+JobIdButton.TextColor3 = Color3.fromRGB(28, 36, 35)
+JobIdButton.TextSize = 11.000
+JobIdButton.TextStrokeColor3 = Color3.fromRGB(34, 34, 38)
+JobIdButton.TextTransparency = 0.100
+JobIdButton.TextStrokeTransparency = 0.900
+JobIdButton.TextWrapped = true
+JobIdButton.TextXAlignment = Enum.TextXAlignment.Center
+JobIdButton.MouseButton1Down:connect(function()
+	local ClickSound = Instance.new("Sound")
+	ClickSound.Name = randomString(math.random(7, 14))
+	ClickSound.SoundId = "rbxassetid://4729721770"
+	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
+	ClickSound.RollOffMaxDistance = 10000
+	ClickSound.RollOffMinDistance = 10
+	ClickSound.PlayOnRemove = false
+	ClickSound.Looped = false
+	ClickSound.Volume = 0.095
+	ClickSound.Parent = JobIdButton
+	ClickSound:Play()
+	game.Debris:AddItem(ClickSound, 0.3)
+	setclipboard(game.JobId)
+	JobIdButton.Text = "Copied"
+	task.delay(1.5, function()
+		JobIdButton.Text = "Copy"
+	end)
+end)
 
 --//Rogue Vars
 local roguetrinketEsp = false
@@ -1166,10 +1214,10 @@ local loreambienceLighting = false
 local loredofLighting = false
 if gameName == "Rogue Lineage" then
 	--// Real Rogue Esp
-	RogueEspHolder.Name = "RogueEsp"
+	RogueEspHolder.Name = randomString(math.random(7, 14))
 	RogueEspHolder.Parent = DescSheet_3
 
-	RogueEspTitle.Name = "EspTitle"
+	RogueEspTitle.Name = randomString(math.random(7, 14))
 	RogueEspTitle.Parent = RogueEspHolder
 	RogueEspTitle.Active = false
 	RogueEspTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -1189,7 +1237,7 @@ if gameName == "Rogue Lineage" then
 	RogueEspTitle.TextWrapped = true
 	RogueEspTitle.TextXAlignment = Enum.TextXAlignment.Right
 
-	RogueToolViewEspButton.Name = "Activator"
+	RogueToolViewEspButton.Name = randomString(math.random(7, 14))
 	RogueToolViewEspButton.Parent = RogueEspHolder
 	RogueToolViewEspButton.Active = false
 	RogueToolViewEspButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -1211,7 +1259,7 @@ if gameName == "Rogue Lineage" then
 	RogueToolViewEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -1246,7 +1294,7 @@ if gameName == "Rogue Lineage" then
 										toolEspHolder.ClipsDescendants = true
 
 										local toolEspLabel = Instance.new("TextLabel")
-										toolEspLabel.Name = "ToolView"
+										toolEspLabel.Name = randomString(math.random(7, 14))
 										toolEspLabel.Parent = toolEspHolder
 										toolEspLabel.Active = false
 										toolEspLabel.BackgroundTransparency = 1.000
@@ -1358,8 +1406,8 @@ if gameName == "Rogue Lineage" then
 			end
 		end
 	end)
-	
-	RogueLeaderboardEspButton.Name = "Activator2"
+
+	RogueLeaderboardEspButton.Name = randomString(math.random(7, 14))
 	RogueLeaderboardEspButton.Parent = RogueEspHolder
 	RogueLeaderboardEspButton.Active = false
 	RogueLeaderboardEspButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -1381,7 +1429,7 @@ if gameName == "Rogue Lineage" then
 	RogueLeaderboardEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD2") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -1459,8 +1507,8 @@ if gameName == "Rogue Lineage" then
 			end
 		end
 	end)
-	
-	RogueTrinketEspButton.Name = "Activator3"
+
+	RogueTrinketEspButton.Name = randomString(math.random(7, 14))
 	RogueTrinketEspButton.Parent = RogueEspHolder
 	RogueTrinketEspButton.Active = false
 	RogueTrinketEspButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -1482,7 +1530,7 @@ if gameName == "Rogue Lineage" then
 	RogueTrinketEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD3") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -1572,8 +1620,8 @@ if gameName == "Rogue Lineage" then
 			end
 		end
 	end)
-	
-	RoguePlayerEspButton.Name = "Activator4"
+
+	RoguePlayerEspButton.Name = randomString(math.random(7, 14))
 	RoguePlayerEspButton.Parent = RogueEspHolder
 	RoguePlayerEspButton.Active = false
 	RoguePlayerEspButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -1595,7 +1643,7 @@ if gameName == "Rogue Lineage" then
 	RoguePlayerEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD4") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -1698,10 +1746,10 @@ if gameName == "Rogue Lineage" then
 		end
 	end)
 	--// Auto
-	AutoHolder.Name = "Auto"
+	AutoHolder.Name = randomString(math.random(7, 14))
 	AutoHolder.Parent = DescSheet_3
 
-	AutoTitle.Name = "AutoTitle"
+	AutoTitle.Name = randomString(math.random(7, 14))
 	AutoTitle.Parent = AutoHolder
 	AutoTitle.Active = false
 	AutoTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -1721,7 +1769,7 @@ if gameName == "Rogue Lineage" then
 	AutoTitle.TextWrapped = true
 	AutoTitle.TextXAlignment = Enum.TextXAlignment.Right
 
-	AutoBardButton.Name = "AutoBard"
+	AutoBardButton.Name = randomString(math.random(7, 14))
 	AutoBardButton.Parent = AutoHolder
 	AutoBardButton.Active = false
 	AutoBardButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -1743,7 +1791,7 @@ if gameName == "Rogue Lineage" then
 	AutoBardButton.MouseButton1Down:connect(function()
 		if not AutoBardButton:FindFirstChild("Wait") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -1830,10 +1878,10 @@ if gameName == "Rogue Lineage" then
 		end
 	end)
 	--// Lighting
-	LightingHolder.Name = "Lighting"
+	LightingHolder.Name = randomString(math.random(7, 14))
 	LightingHolder.Parent = DescSheet_3
 
-	LightingTitle.Name = "LightingTitle"
+	LightingTitle.Name = randomString(math.random(7, 14))
 	LightingTitle.Parent = LightingHolder
 	LightingTitle.Active = false
 	LightingTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -1852,8 +1900,8 @@ if gameName == "Rogue Lineage" then
 	LightingTitle.TextTransparency = 0.100
 	LightingTitle.TextWrapped = true
 	LightingTitle.TextXAlignment = Enum.TextXAlignment.Right
-	
-	RogueFullBrightButton.Name = "Activator"
+
+	RogueFullBrightButton.Name = randomString(math.random(7, 14))
 	RogueFullBrightButton.Parent = LightingHolder
 	RogueFullBrightButton.Active = false
 	RogueFullBrightButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -1875,7 +1923,7 @@ if gameName == "Rogue Lineage" then
 	RogueFullBrightButton.MouseButton1Down:connect(function()
 		if not LightingHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -1960,8 +2008,8 @@ if gameName == "Rogue Lineage" then
 			end
 		end
 	end)
-	
-	RogueShadowsButton.Name = "Activator2"
+
+	RogueShadowsButton.Name = randomString(math.random(7, 14))
 	RogueShadowsButton.Parent = LightingHolder
 	RogueShadowsButton.Active = false
 	RogueShadowsButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -1983,7 +2031,7 @@ if gameName == "Rogue Lineage" then
 	RogueShadowsButton.MouseButton1Down:connect(function()
 		if not LightingHolder:FindFirstChild("ActivateCD2") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -2063,8 +2111,8 @@ if gameName == "Rogue Lineage" then
 			end
 		end
 	end)
-	
-	RogueNoFogButton.Name = "Activator3"
+
+	RogueNoFogButton.Name = randomString(math.random(7, 14))
 	RogueNoFogButton.Parent = LightingHolder
 	RogueNoFogButton.Active = false
 	RogueNoFogButton.AnchorPoint = Vector2.new(0.5, 1)
@@ -2086,7 +2134,7 @@ if gameName == "Rogue Lineage" then
 	RogueNoFogButton.MouseButton1Down:connect(function()
 		if not LightingHolder:FindFirstChild("ActivateCD3") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -2171,11 +2219,11 @@ if gameName == "Rogue Lineage" then
 		end
 	end)
 	--// Movement
-	MovementHolder.Name = "Movement"
+	MovementHolder.Name = randomString(math.random(7, 14))
 	MovementHolder.Parent = DescSheet_3
 
 	--// MovementTitle
-	MovementTitle.Name = "MovementTitle"
+	MovementTitle.Name = randomString(math.random(7, 14))
 	MovementTitle.Parent = MovementHolder
 	MovementTitle.Active = false
 	MovementTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -2196,7 +2244,7 @@ if gameName == "Rogue Lineage" then
 	MovementTitle.TextXAlignment = Enum.TextXAlignment.Left
 
 	--// SpeedTitle
-	SpeedTitle.Name = "SpeedTitle"
+	SpeedTitle.Name = randomString(math.random(7, 14))
 	SpeedTitle.Parent = MovementHolder
 	SpeedTitle.Active = false
 	SpeedTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -2215,9 +2263,9 @@ if gameName == "Rogue Lineage" then
 	SpeedTitle.TextTransparency = 0.100
 	SpeedTitle.TextWrapped = true
 	SpeedTitle.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	--// SpeedBox
-	SpeedBox.Name = "SpeedBox"
+	SpeedBox.Name = randomString(math.random(7, 14))
 	SpeedBox.Parent = MovementHolder
 	SpeedBox.Active = true
 	SpeedBox.AnchorPoint = Vector2.new(0, 1)
@@ -2251,9 +2299,9 @@ if gameName == "Rogue Lineage" then
 		end
 		applySpeedBoost(realroguespeedValue)
 	end)
-	
+
 	--// SpeedOverlay
-	SpeedOverlay.Name = "SpeedOverlay"
+	SpeedOverlay.Name = randomString(math.random(7, 14))
 	SpeedOverlay.Parent = SpeedBox
 	SpeedOverlay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	SpeedOverlay.BackgroundTransparency = 1.000
@@ -2265,9 +2313,9 @@ if gameName == "Rogue Lineage" then
 	SpeedOverlay.ImageColor3 = Color3.fromRGB(183, 197, 211)
 	SpeedOverlay.ScaleType = Enum.ScaleType.Slice
 	SpeedOverlay.SliceCenter = Rect.new(14, 14, 18, 18)
-	
+
 	--// ClimbTitle
-	ClimbTitle.Name = "SpeedTitle"
+	ClimbTitle.Name = randomString(math.random(7, 14))
 	ClimbTitle.Parent = MovementHolder
 	ClimbTitle.Active = false
 	ClimbTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -2288,7 +2336,7 @@ if gameName == "Rogue Lineage" then
 	ClimbTitle.TextXAlignment = Enum.TextXAlignment.Left
 
 	--// ClimbBox
-	ClimbBox.Name = "ClimbBox"
+	ClimbBox.Name = randomString(math.random(7, 14))
 	ClimbBox.Parent = MovementHolder
 	ClimbBox.Active = true
 	ClimbBox.AnchorPoint = Vector2.new(0, 1)
@@ -2324,7 +2372,7 @@ if gameName == "Rogue Lineage" then
 	end)
 
 	--// ClimbOverlay
-	ClimbOverlay.Name = "SpeedOverlay"
+	ClimbOverlay.Name = randomString(math.random(7, 14))
 	ClimbOverlay.Parent = ClimbBox
 	ClimbOverlay.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	ClimbOverlay.BackgroundTransparency = 1.000
@@ -2336,7 +2384,7 @@ if gameName == "Rogue Lineage" then
 	ClimbOverlay.ImageColor3 = Color3.fromRGB(183, 197, 211)
 	ClimbOverlay.ScaleType = Enum.ScaleType.Slice
 	ClimbOverlay.SliceCenter = Rect.new(14, 14, 18, 18)
-	
+
 	--//Check Triggers
 	if isGaia then
 		local triggers = workspace.MonsterSpawns.Triggers
@@ -2374,14 +2422,14 @@ if gameName == "Rogue Lineage" then
 		local function convertTime(dateTime)
 			return os.time({year=dateTime.Year,month=dateTime.Month,day=dateTime.Day,hour=dateTime.Hour,min=dateTime.Minute,sec=dateTime.Second})
 		end
-		
+
 		local TriggersHolder = Instance.new("Folder")
-		TriggersHolder.Name = "Triggers"
+		TriggersHolder.Name = randomString(math.random(7, 14))
 		TriggersHolder.Parent = DescSheet_3
-		
+
 		--// TriggersTitle
 		local TriggerTitle = Instance.new("TextLabel")
-		TriggerTitle.Name = "TriggersTitle"
+		TriggerTitle.Name = randomString(math.random(7, 14))
 		TriggerTitle.Parent = TriggersHolder
 		TriggerTitle.Active = false
 		TriggerTitle.AnchorPoint = Vector2.new(0.5, 1)
@@ -2400,12 +2448,12 @@ if gameName == "Rogue Lineage" then
 		TriggerTitle.TextTransparency = 0.100
 		TriggerTitle.TextWrapped = true
 		TriggerTitle.TextXAlignment = Enum.TextXAlignment.Left
-		
+
 		local numLabels = 0
 		for name, lastSpawned in next, triggeredLocations do
 			numLabels = numLabels + 20
 			local label = Instance.new("TextLabel")
-			label.Name = name
+			label.Name = randomString(math.random(7, 14))
 			label.Parent = TriggersHolder
 			label.Active = false
 			label.AnchorPoint = Vector2.new(0.5, 1)
@@ -2494,7 +2542,7 @@ elseif gameName == "Rogue Lineage Copy" then
 	RogueTrinketEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -2917,7 +2965,7 @@ elseif gameName == "Rogue Lineage Copy" then
 	RogueGemScrollEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD2") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -3248,7 +3296,7 @@ elseif gameName == "Rogue Lineage Copy" then
 	RogueArtifactEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD3") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -3679,7 +3727,7 @@ elseif gameName == "Rogue Lineage Copy" then
 	RogueToolViewEspButton.MouseButton1Down:connect(function()
 		if not RogueEspHolder:FindFirstChild("ActivateCD4") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -3873,7 +3921,7 @@ elseif gameName == "Rogue Lineage Copy" then
 	RogueNotifierButton.MouseButton1Down:connect(function()
 		if not RogueNotifierHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -3987,7 +4035,7 @@ elseif gameName == "Rogue Lineage Copy" then
 	AutoBardButton.MouseButton1Down:connect(function()
 		if not AutoBardButton:FindFirstChild("Wait") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -4119,7 +4167,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlEnemyEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -4344,7 +4392,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlNpcEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD2") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -4538,7 +4586,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlCraftingEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD3") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -4731,7 +4779,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlShopEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD4") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -4924,7 +4972,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlShrineEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD5") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -5115,7 +5163,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlInfuserEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD6") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -5306,7 +5354,7 @@ elseif gameName == "VoxlBlade" then
 	VoxlSnailsmanEspButton.MouseButton1Down:connect(function()
 		if not VoxlEspHolder:FindFirstChild("ActivateCD7") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -5523,7 +5571,7 @@ elseif gameName == "Lore Game" then
 	LorePlayerEspButton.MouseButton1Down:connect(function()
 		if not LoreEspHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -5698,7 +5746,7 @@ elseif gameName == "Lore Game" then
 	LoreMobEspButton.MouseButton1Down:connect(function()
 		if not LoreEspHolder:FindFirstChild("ActivateCD2") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -5869,7 +5917,7 @@ elseif gameName == "Lore Game" then
 	LoreNPCEspButton.MouseButton1Down:connect(function()
 		if not LoreEspHolder:FindFirstChild("ActivateCD3") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -6063,7 +6111,7 @@ elseif gameName == "Lore Game" then
 	LoreAmbienceButton.MouseButton1Down:connect(function()
 		if not LoreLightingHolder:FindFirstChild("ActivateCD") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -6215,7 +6263,7 @@ elseif gameName == "Lore Game" then
 	LoreDOFButton.MouseButton1Down:connect(function()
 		if not LoreLightingHolder:FindFirstChild("ActivateCD2") then
 			local ClickSound = Instance.new("Sound")
-			ClickSound.Name = "Click"
+			ClickSound.Name = randomString(math.random(7, 14))
 			ClickSound.SoundId = "rbxassetid://4729721770"
 			ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 			ClickSound.RollOffMaxDistance = 10000
@@ -6368,7 +6416,7 @@ Return_2.TextTransparency = 0.100
 Return_2.TextWrapped = true
 Return_2.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -6509,7 +6557,7 @@ Return_3.TextTransparency = 0.100
 Return_3.TextWrapped = true
 Return_3.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -6546,6 +6594,7 @@ Credits_2.BorderSizePixel = 0
 Credits_2.Position = UDim2.new(0.5, 0, 0.5, 0)
 Credits_2.Size = UDim2.new(0, 350, 0, 320)
 Credits_2.Visible = false
+headingFrames["Credits"] = Credits_2
 
 Overlay_5.Name = "Overlay"
 Overlay_5.Parent = Credits_2
@@ -6649,7 +6698,7 @@ Return_4.TextTransparency = 0.100
 Return_4.TextWrapped = true
 Return_4.MouseButton1Down:connect(function()
 	local ClickSound = Instance.new("Sound")
-	ClickSound.Name = "Click"
+	ClickSound.Name = randomString(math.random(7, 14))
 	ClickSound.SoundId = "rbxassetid://4729721770"
 	ClickSound.RollOffMode = Enum.RollOffMode.Inverse
 	ClickSound.RollOffMaxDistance = 10000
@@ -7120,7 +7169,7 @@ if gameName == "Rogue Lineage" then
 				end
 			end
 		end
-		
+
 		local playerToReturn = getPlayerFromName(playerName)
 		return playerToReturn
 	end
@@ -7348,7 +7397,7 @@ if gameName == "Rogue Lineage" then
 					return trinketsData["Rift Gem"]
 				end
 			end
-			
+
 			if (className == "UnionOperation" and Color == "Fossil" and Material == Enum.Material.Mud) then
 				return trinketsData["Idol Of War"]
 			end
@@ -7422,14 +7471,14 @@ if gameName == "Rogue Lineage" then
 		if not trinketType or not object:FindFirstChildWhichIsA("ClickDetector", true) then
 			return
 		end
-		
+
 		if CollectionService:HasTag(object, "HasB1") then
 			return
 		end
 
 		local location = workspace:Raycast(object.Position, Vector3.new(0, 5000, 0), objectsRaycastFilter)
 		location = location and location.Instance.Name or "???"
-		
+
 		local trinketEspHolder = Instance.new("BillboardGui")
 		trinketEspHolder.Parent = b1
 		trinketEspHolder.Active = false
@@ -7462,7 +7511,7 @@ if gameName == "Rogue Lineage" then
 		trinketEspLabel.TextTransparency = 0
 		trinketEspLabel.TextSize = 13.000
 		trinketEspLabel.TextWrapped = true
-		
+
 		CollectionService:AddTag(object, "HasB1")
 		if trinketType.Rare then
 			local artifactFound = Instance.new("Sound")
@@ -7471,7 +7520,7 @@ if gameName == "Rogue Lineage" then
 			artifactFound:Play()
 			game.Debris:AddItem(artifactFound, 2)
 		end
-		
+
 		local checkParentSignal
 		checkParentSignal = object:GetPropertyChangedSignal("Parent"):Connect(function()
 			if (object.Parent) then
@@ -7483,19 +7532,34 @@ if gameName == "Rogue Lineage" then
 	end
 	function getRoguePlayerStats(Player)
 		if (isGaia) then
-			return Player:GetAttribute('FirstName') or 'Unknown', Player:GetAttribute('LastName') or 'Unknown'
+			return Player:GetAttribute('FirstName') or 'Unknown', Player:GetAttribute('LastName') or 'Unknown', Player:GetAttribute('Gender') or 'Unknown', Player:GetAttribute('HouseRank') or 'Unknown'
 		else
 			local leaderstats = Player:FindFirstChild('leaderstats')
 			local firstName = leaderstats and leaderstats:FindFirstChild('FirstName')
 			local lastName = leaderstats and leaderstats:FindFirstChild('LastName')
+			local gender = leaderstats and leaderstats:FindFirstChild('Gender')
+			local houseRank = leaderstats and leaderstats:FindFirstChild('HouseRank')
 
-			if (not leaderstats or not firstName or not lastName) then
-				return 'Unknown', 'Unknown'
+			if (not leaderstats or not firstName or not lastName or not gender or not houseRank) then
+				return 'Unknown', 'Unknown', 'Unknown', 'Unknown'
 			end
 
-			return firstName.Value, lastName.Value
+			return firstName.Value, lastName.Value, gender.Value, houseRank.Value
 		end
 	end
+	function nameDangerCheck(character, text)
+		local textToReturn: string
+		if character:FindFirstChild("MortalDanger") or CollectionService:HasTag(character, "MortalDanger") then
+			textToReturn = '<font color="rgb(170, 0, 255)">CT - </font>'..text
+		elseif character:FindFirstChild("Danger") or CollectionService:HasTag(character, "Danger") then
+			textToReturn = '<font color="rgb(255, 74, 77)">CT - </font>'..text
+		else
+			textToReturn = text
+		end
+		return textToReturn
+	end
+
+	local playerCTagged = {}
 	function rogueEntityEspHandle(character, espType, ismob, chosenColor)
 		local entityEspHolder
 		local entityEspLabel
@@ -7504,7 +7568,7 @@ if gameName == "Rogue Lineage" then
 		local nameHolder = nil
 		--local gameName = ""
 		--local gameNameSignal = nil
-		for _, v in pairs(character:GetDescendants()) do
+		--[[for _, v in pairs(character:GetDescendants()) do
 			--[[if string.find(v.Name, firstName) then
 				nameHolder = v
 				--gameName = v.Name
@@ -7516,125 +7580,319 @@ if gameName == "Rogue Lineage" then
 					nameHolder = v
 					break
 				end
-			end]]
+			end
 			if v.Name == "FakeHumanoid" then
 				nameHolder = v.Parent
 				break
 			end
-		end
+		end]]
 		if not character:FindFirstChild("HumanoidRootPart") then
 			return
 		end
-		if nameHolder ~= nil then
-			nameHolder:GetPropertyChangedSignal("Name"):Connect(function()
-				--gameName = nameHolder.Name
-				if nameHolder.Name ~= "" then
-					entityEspLabel.Text = nameHolder.Name..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']'
+		task.spawn(function()
+			task.wait(0.15)
+			if character:GetAttribute("CName") then
+				nameHolder = character:GetAttribute("CName")
+			elseif not character:FindFirstChild("MonsterInfo") then
+				repeat
+					task.wait(0.1)
+				until character:GetAttribute("CName") ~= nil
+				nameHolder = character:GetAttribute("CName")
+			end
+			if nameHolder ~= nil then
+				character:GetAttributeChangedSignal("CName"):Connect(function()
+					--gameName = nameHolder.Name
+					nameHolder = character:GetAttribute("CName")
+					if nameHolder ~= "" then
+						entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+					end
+				end)
+				character.ChildAdded:Connect(function(child)
+					if child.Name == "Danger" or child.Name == "MortalDanger" then
+						playerCTagged[Player.Name] = {CombatTagged = true}
+						entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+					end
+				end)
+				character.ChildRemoved:Connect(function(child)
+					if child.Name == "Danger" or child.Name == "MortalDanger" then
+						if not character:FindFirstChild("Danger") and not character:FindFirstChild("MortalDanger") then
+							playerCTagged[Player.Name] = {CombatTagged = false}
+						end
+						entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+					end
+				end)
+			else
+				return
+			end
+			if not CollectionService:HasTag(character.HumanoidRootPart, "HasB2") then
+				CollectionService:AddTag(character.HumanoidRootPart, "HasB2")
+				entityEspHolder = Instance.new("BillboardGui")
+				entityEspHolder.Name = randomString(math.random(5, 13))
+				entityEspHolder.Parent = b2
+				entityEspHolder.Active = false
+				entityEspHolder.Adornee = character.HumanoidRootPart
+				entityEspHolder.AlwaysOnTop = true
+				if espType == true then
+					entityEspHolder.Enabled = true
+				elseif espType == false then
+					entityEspHolder.Enabled = false
 				end
-			end)
-		else
-			return
-		end
-		if not CollectionService:HasTag(character.HumanoidRootPart, "HasB2") then
-			CollectionService:AddTag(character.HumanoidRootPart, "HasB2")
-			
-			entityEspHolder = Instance.new("BillboardGui")
-			entityEspHolder.Parent = b2
-			entityEspHolder.Active = false
-			entityEspHolder.Adornee = character.HumanoidRootPart
-			entityEspHolder.AlwaysOnTop = true
-			if espType == true then
-				entityEspHolder.Enabled = true
-			elseif espType == false then
-				entityEspHolder.Enabled = false
-			end
-			entityEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
-			entityEspHolder.ResetOnSpawn = false
-			entityEspHolder.Size = UDim2.new(10, 0, 1, 0)
-			entityEspHolder.StudsOffset = Vector3.new(0, -3.5, 0)
-			entityEspHolder.ClipsDescendants = false
+				entityEspHolder.MaxDistance = 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368
+				entityEspHolder.ResetOnSpawn = false
+				entityEspHolder.Size = UDim2.new(10, 0, 1, 0)
+				entityEspHolder.StudsOffset = Vector3.new(0, -3.5, 0)
+				entityEspHolder.ClipsDescendants = false
 
-			entityEspLabel = Instance.new("TextLabel")
-			entityEspLabel.Parent = entityEspHolder
-			entityEspLabel.Active = false
-			entityEspLabel.BackgroundTransparency = 1.000
-			entityEspLabel.Position = UDim2.new(0, 0, 0, 0)
-			entityEspLabel.Size = UDim2.new(1, 0, 1, 0)
-			entityEspLabel.ZIndex = 6
-			entityEspLabel.FontFace = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
-			entityEspLabel.RichText = true
-			entityEspLabel.LineHeight = 1.1
-			entityEspLabel.Text = nameHolder.Name..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']'
-			entityEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-			entityEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-			entityEspLabel.TextStrokeTransparency = 0
-			entityEspLabel.TextTransparency = 0
-			entityEspLabel.TextSize = 14.000
-			entityEspLabel.TextScaled = false
-			entityEspLabel.TextWrapped = false
-			Player.CharacterRemoving:Once(function()
-				entityEspHolder:Destroy()
-			end)
-		end
-		if not CollectionService:HasTag(character.HumanoidRootPart, "HasB3") --[[and ismob]] then
-			CollectionService:AddTag(character.HumanoidRootPart, "HasB3")
-			local healthBarHolder = Instance.new("BillboardGui")
-			healthBarHolder.Parent = b3
-			healthBarHolder.Active = false
-			healthBarHolder.Adornee = character.HumanoidRootPart
-			healthBarHolder.AlwaysOnTop = true
-			if espType == true then
-				healthBarHolder.Enabled = true
-			elseif espType == false then
-				healthBarHolder.Enabled = false
+				entityEspLabel = Instance.new("TextLabel")
+				entityEspLabel.Name = randomString(math.random(5, 13))
+				entityEspLabel.Parent = entityEspHolder
+				entityEspLabel.Active = false
+				entityEspLabel.BackgroundTransparency = 1.000
+				entityEspLabel.Position = UDim2.new(0, 0, 0, 0)
+				entityEspLabel.Size = UDim2.new(1, 0, 1, 0)
+				entityEspLabel.ZIndex = 6
+				entityEspLabel.FontFace = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
+				entityEspLabel.RichText = true
+				entityEspLabel.LineHeight = 1.1
+				entityEspLabel.Text = nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']'
+				entityEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+				entityEspLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+				entityEspLabel.TextStrokeTransparency = 0
+				entityEspLabel.TextTransparency = 0
+				entityEspLabel.TextSize = 14.000
+				entityEspLabel.TextScaled = false
+				entityEspLabel.TextWrapped = false
+				Player.CharacterRemoving:Once(function()
+					entityEspHolder:Destroy()
+				end)
 			end
-			healthBarHolder.MaxDistance = 1000
-			healthBarHolder.ResetOnSpawn = false
-			healthBarHolder.Size = UDim2.new(0.4, 0, 5, 0)
-			healthBarHolder.SizeOffset = Vector2.new(-7, 0)
-			healthBarHolder.ClipsDescendants = false
+			if not CollectionService:HasTag(character.HumanoidRootPart, "HasB3") --[[and ismob]] then
+				CollectionService:AddTag(character.HumanoidRootPart, "HasB3")
+				local healthBarHolder = Instance.new("BillboardGui")
+				healthBarHolder.Name = randomString(math.random(5, 13))
+				healthBarHolder.Parent = b3
+				healthBarHolder.Active = false
+				healthBarHolder.Adornee = character.HumanoidRootPart
+				healthBarHolder.AlwaysOnTop = true
+				if espType == true then
+					healthBarHolder.Enabled = true
+				elseif espType == false then
+					healthBarHolder.Enabled = false
+				end
+				healthBarHolder.MaxDistance = 1000
+				healthBarHolder.ResetOnSpawn = false
+				healthBarHolder.Size = UDim2.new(0.4, 0, 5, 0)
+				healthBarHolder.SizeOffset = Vector2.new(-7, 0)
+				healthBarHolder.ClipsDescendants = false
 
-			local healthBarFrame = Instance.new("Frame")
-			healthBarFrame.Parent = healthBarHolder
-			healthBarFrame.Active = false
-			healthBarFrame.BackgroundColor3 = Color3.fromRGB(70, 23, 0)
-			healthBarFrame.BackgroundTransparency = 0
-			healthBarFrame.BorderSizePixel = 1.000
-			healthBarFrame.Position = UDim2.new(0, 0, 0, 0)
-			healthBarFrame.Rotation = 180
-			healthBarFrame.Size = UDim2.new(1, 0, 1, 0)
-			healthBarFrame.ZIndex = 5
+				local healthBarFrame = Instance.new("Frame")
+				healthBarFrame.Name = randomString(math.random(5, 13))
+				healthBarFrame.Parent = healthBarHolder
+				healthBarFrame.Active = false
+				healthBarFrame.BackgroundColor3 = Color3.fromRGB(70, 23, 0)
+				healthBarFrame.BackgroundTransparency = 0
+				healthBarFrame.BorderSizePixel = 1.000
+				healthBarFrame.Position = UDim2.new(0, 0, 0, 0)
+				healthBarFrame.Rotation = 180
+				healthBarFrame.Size = UDim2.new(1, 0, 1, 0)
+				healthBarFrame.ZIndex = 5
 
-			local healthMeterFrame = Instance.new("Frame")
-			healthMeterFrame.Parent = healthBarFrame
-			healthMeterFrame.Active = false
-			healthMeterFrame.BackgroundColor3 = chosenColor
-			healthMeterFrame.BackgroundTransparency = 0
-			healthMeterFrame.BorderSizePixel = 0
-			healthMeterFrame.Position = UDim2.new(0, 0, 0, 0)
-			healthMeterFrame.Rotation = 0
-			Player.CharacterRemoving:Once(function()
-				healthBarHolder:Destroy()
-			end)
-			local CurrentHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
-			healthMeterFrame.Size = UDim2.new(1, 0, CurrentHealth, 0)
-			local NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
-			local function HealthApply()
-				NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
-				game.TweenService:Create(healthMeterFrame, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {
-					Size = UDim2.new(1, 0, NewHealth, 0)
-				}):Play()
-				entityEspLabel.Text = nameHolder.Name..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']'
+				local healthMeterFrame = Instance.new("Frame")
+				healthMeterFrame.Name = randomString(math.random(5, 13))
+				healthMeterFrame.Parent = healthBarFrame
+				healthMeterFrame.Active = false
+				healthMeterFrame.BackgroundColor3 = chosenColor
+				healthMeterFrame.BackgroundTransparency = 0
+				healthMeterFrame.BorderSizePixel = 0
+				healthMeterFrame.Position = UDim2.new(0, 0, 0, 0)
+				healthMeterFrame.Rotation = 0
+				healthMeterFrame.ZIndex = 5
+
+				local stomachBarFrame = Instance.new("Frame")
+				stomachBarFrame.Name = randomString(math.random(5, 13))
+				stomachBarFrame.Parent = healthBarHolder
+				stomachBarFrame.Active = false
+				stomachBarFrame.BackgroundColor3 = Color3.fromRGB(75, 50, 0)
+				stomachBarFrame.BackgroundTransparency = 0
+				stomachBarFrame.BorderSizePixel = 1.000
+				stomachBarFrame.Position = UDim2.new(-0.35, 0, 0.125, 0)
+				stomachBarFrame.Rotation = 180
+				stomachBarFrame.Size = UDim2.new(1, 0, 0.75, 0)
+				stomachBarFrame.ZIndex = 3
+
+				local stomachMeterFrame = Instance.new("Frame")
+				stomachMeterFrame.Name = randomString(math.random(5, 13))
+				stomachMeterFrame.Parent = stomachBarFrame
+				stomachMeterFrame.Active = false
+				stomachMeterFrame.BackgroundColor3 = Color3.fromRGB(240, 208, 26)
+				stomachMeterFrame.BackgroundTransparency = 0
+				stomachMeterFrame.BorderSizePixel = 0
+				stomachMeterFrame.Position = UDim2.new(0, 0, 0, 0)
+				stomachMeterFrame.Rotation = 0
+				stomachMeterFrame.ZIndex = 3
+
+				local overStomachMeterFrame = Instance.new("Frame")
+				overStomachMeterFrame.Name = randomString(math.random(5, 13))
+				overStomachMeterFrame.Parent = stomachBarFrame
+				overStomachMeterFrame.Active = false
+				overStomachMeterFrame.BackgroundColor3 = Color3.fromRGB(240, 157, 40)
+				overStomachMeterFrame.BackgroundTransparency = 0
+				overStomachMeterFrame.BorderSizePixel = 0
+				overStomachMeterFrame.Position = UDim2.new(0, 0, 0, 0)
+				overStomachMeterFrame.Rotation = 0
+				overStomachMeterFrame.ZIndex = 4
+
+				local toxicityBarFrame = Instance.new("Frame")
+				toxicityBarFrame.Name = randomString(math.random(5, 13))
+				toxicityBarFrame.Parent = healthBarHolder
+				toxicityBarFrame.Active = false
+				toxicityBarFrame.BackgroundColor3 = Color3.fromRGB(26, 53, 22)
+				toxicityBarFrame.BackgroundTransparency = 0
+				toxicityBarFrame.BorderSizePixel = 1.000
+				toxicityBarFrame.Position = UDim2.new(0.35, 0, 0.125, 0)
+				toxicityBarFrame.Rotation = 180
+				toxicityBarFrame.Size = UDim2.new(1, 0, 0.75, 0)
+				toxicityBarFrame.ZIndex = 3
+
+				local toxicityMeterFrame = Instance.new("Frame")
+				toxicityMeterFrame.Name = randomString(math.random(5, 13))
+				toxicityMeterFrame.Parent = toxicityBarFrame
+				toxicityMeterFrame.Active = false
+				toxicityMeterFrame.BackgroundColor3 = Color3.fromRGB(89, 186, 78)
+				toxicityMeterFrame.BackgroundTransparency = 0
+				toxicityMeterFrame.BorderSizePixel = 0
+				toxicityMeterFrame.Position = UDim2.new(0, 0, 0, 0)
+				toxicityMeterFrame.Rotation = 0
+				toxicityMeterFrame.ZIndex = 3
+				
+				local temperatureBarFrame = Instance.new("Frame")
+				temperatureBarFrame.Name = randomString(math.random(5, 13))
+				temperatureBarFrame.Parent = healthBarHolder
+				temperatureBarFrame.Active = false
+				temperatureBarFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+				temperatureBarFrame.BackgroundTransparency = 0
+				temperatureBarFrame.BorderSizePixel = 1.000
+				temperatureBarFrame.Position = UDim2.new(0.65, 0, 0.25, 0)
+				temperatureBarFrame.Rotation = 180
+				temperatureBarFrame.Size = UDim2.new(1, 0, 0.5, 0)
+				temperatureBarFrame.ZIndex = 1
+
+				local heatMeterFrame = Instance.new("Frame")
+				heatMeterFrame.Name = randomString(math.random(5, 13))
+				heatMeterFrame.Parent = temperatureBarFrame
+				heatMeterFrame.AnchorPoint = Vector2.new(0, 0)
+				heatMeterFrame.Active = false
+				heatMeterFrame.BackgroundColor3 = Color3.fromRGB(240, 0, 0)
+				heatMeterFrame.BackgroundTransparency = 0
+				heatMeterFrame.BorderSizePixel = 0
+				heatMeterFrame.Position = UDim2.new(0, 0, 0.5, 0)
+				heatMeterFrame.Size = UDim2.new(1, 0, 0.5, 0)
+				heatMeterFrame.Rotation = 0
+				heatMeterFrame.ZIndex = 1
+				
+				local coldMeterFrame = Instance.new("Frame")
+				coldMeterFrame.Name = randomString(math.random(5, 13))
+				coldMeterFrame.Parent = temperatureBarFrame
+				coldMeterFrame.AnchorPoint = Vector2.new(0, 1)
+				coldMeterFrame.Active = false
+				coldMeterFrame.BackgroundColor3 = Color3.fromRGB(0, 235, 235)
+				coldMeterFrame.BackgroundTransparency = 0
+				coldMeterFrame.BorderSizePixel = 0
+				coldMeterFrame.Position = UDim2.new(0, 0, 0.5, 0)
+				coldMeterFrame.Size = UDim2.new(1, 0, 0.5, 0)
+				coldMeterFrame.Rotation = 0
+				coldMeterFrame.ZIndex = 1
+				
+				local sliderFrame = Instance.new("Frame")
+				sliderFrame.Name = randomString(math.random(5, 13))
+				sliderFrame.Parent = temperatureBarFrame
+				sliderFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+				sliderFrame.Active = false
+				sliderFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				sliderFrame.BorderColor3 = Color3.fromRGB(72, 57, 37)
+				sliderFrame.BackgroundTransparency = 0
+				sliderFrame.BorderSizePixel = 1
+				sliderFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+				sliderFrame.Size = UDim2.new(1, 0, 0.025, 0)
+				sliderFrame.Rotation = 0
+				sliderFrame.ZIndex = 2
+				Player.CharacterRemoving:Once(function()
+					healthBarHolder:Destroy()
+				end)
+				--Health Vars
+				local CurrentHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+				healthMeterFrame.Size = UDim2.new(1, 0, CurrentHealth, 0)
+				local NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+				--Stomach Vars
+				local CurrentStomach = math.clamp(character.Stomach.Value / character.Humanoid.MaxHealth, 0, 1)
+				stomachMeterFrame.Size = UDim2.new(1, 0, CurrentStomach, 0)
+				local NewStomach = math.clamp(character.Stomach.Value / character.Humanoid.MaxHealth, 0, 1)
+
+				local CurrentOverStomach = math.clamp(character.Overstomach.Value / 50, 0, 1)
+				overStomachMeterFrame.Size = UDim2.new(1, 0, CurrentOverStomach, 0)
+				local NewOverStomach = math.clamp(character.Overstomach.Value / 50, 0, 1)
+				--Toxicity Vars
+				local CurrentToxicity = math.clamp(character.Toxicity.Value / character.Toxicity.MaxValue, 0, 1)
+				toxicityMeterFrame.Size = UDim2.new(1, 0, CurrentToxicity, 0)
+				local NewToxicity = math.clamp(character.Toxicity.Value / character.Toxicity.MaxValue, 0, 1)
+				--Temperature Vars
+				local CurrentTemperature = math.clamp(character.Temperature.Value, -1, 1)
+				sliderFrame.Position = UDim2.new(0.5, 0, (CurrentTemperature + 1) / 2, 0)
+				local NewTemperature = math.clamp(character.Temperature.Value, -1, 1)
+				local function HealthApply()
+					NewHealth = math.clamp(character.Humanoid.Health / character.Humanoid.MaxHealth, 0, 1)
+					game.TweenService:Create(healthMeterFrame, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {
+						Size = UDim2.new(1, 0, NewHealth, 0)
+					}):Play()
+					entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+				end
+				local function StomachApply()
+					NewStomach = math.clamp(character.Stomach.Value / character.Humanoid.MaxHealth, 0, 1)
+					game.TweenService:Create(stomachMeterFrame, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {
+						Size = UDim2.new(1, 0, NewStomach, 0)
+					}):Play()
+				end
+				local function OverStomachApply()
+					NewOverStomach = math.clamp(character.Overstomach.Value / 50, 0, 1)
+					game.TweenService:Create(overStomachMeterFrame, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {
+						Size = UDim2.new(1, 0, NewOverStomach, 0)
+					}):Play()
+				end
+				local function ToxicityApply()
+					NewToxicity = math.clamp(character.Toxicity.Value / character.Toxicity.MaxValue, 0, 1)
+					game.TweenService:Create(toxicityMeterFrame, TweenInfo.new(0.1, Enum.EasingStyle.Sine), {
+						Size = UDim2.new(1, 0, NewToxicity, 0)
+					}):Play()
+				end
+				local function TemperatureApply()
+					NewTemperature = math.clamp(character.Temperature.Value, -1, 1)
+					game.TweenService:Create(sliderFrame, TweenInfo.new(0.2, Enum.EasingStyle.Sine), {
+						Position = UDim2.new(0.5, 0, (NewTemperature + 1) / 2, 0)
+					}):Play()
+				end
+				character.Humanoid.HealthChanged:Connect(HealthApply)
+				character.Humanoid:GetPropertyChangedSignal("MaxHealth"):Connect(function()
+					HealthApply()
+					StomachApply()
+					OverStomachApply()
+					ToxicityApply()
+				end)
+				character.Stomach:GetPropertyChangedSignal("Value"):Connect(StomachApply)
+				character.Overstomach:GetPropertyChangedSignal("Value"):Connect(OverStomachApply)
+				character.Toxicity:GetPropertyChangedSignal("MaxValue"):Connect(ToxicityApply)
+				character.Toxicity:GetPropertyChangedSignal("Value"):Connect(ToxicityApply)
+				character.Temperature:GetPropertyChangedSignal("Value"):Connect(TemperatureApply)
+				HealthApply()
+				StomachApply()
+				OverStomachApply()
+				ToxicityApply()
+				TemperatureApply()
 			end
-			character.Humanoid.HealthChanged:connect(HealthApply)
-			character.Humanoid:GetPropertyChangedSignal("MaxHealth"):connect(HealthApply)
-			HealthApply()
-			healthMeterFrame.ZIndex = 5
-		end
+		end)
 	end
-	
+
 	local edictTextureIDs = {
-		["4072914434"] = {EdictType = "Seer", Color = Color3.fromRGB(0, 92, 134), Color2 = Color3.fromRGB(0, 67, 94)},
+		["4072914434"] = {EdictType = "Seer", Color = Color3.fromRGB(0, 127, 182), Color2 = Color3.fromRGB(0, 92, 134)},
 		["4072968006"] = {EdictType = "Healer", Color = Color3.fromRGB(0, 214, 0), Color2 = Color3.fromRGB(0, 153, 0)},
 		["4072968656"] = {EdictType = "Blademaster", Color = Color3.fromRGB(238, 0, 0), Color2 = Color3.fromRGB(143, 0, 0)},
 		["4094417635"] = {EdictType = "Jester", Color = Color3.fromRGB(162, 0, 243), Color2 = Color3.fromRGB(96, 0, 144)},
@@ -7665,6 +7923,103 @@ if gameName == "Rogue Lineage" then
 			}
 		end
 	end
+	local playerGameNames = {}
+	local function determineHouseStatus(houseRank, gender)
+		if houseRank == "Owner" then
+			if gender == "Male" then
+				return "Lord"
+			elseif gender == "Female" then
+				return "Lady"
+			end
+		else
+			return ""
+		end
+	end
+	local function determineFullName(firstName, lastName, houseRank, gender)
+		if houseRank == "Owner" then
+			return tostring(determineHouseStatus(houseRank, gender).." "..firstName.." "..lastName)
+		else
+			return tostring(firstName.." "..lastName)
+		end
+	end
+	local function playerNameOverHeadAttributeHandle(Player, firstName, lastName, houseRank, gender)
+		local attributeValue = determineFullName(firstName, lastName, houseRank, gender)
+		if Player.Character then
+			Player.Character:SetAttribute("CName", attributeValue)
+			local instancedCName = Instance.new("Accessory")
+			instancedCName.Name = attributeValue
+			instancedCName.Parent = Player.Character:WaitForChild("HumanoidRootPart")
+			Player.Character:GetAttributeChangedSignal("CName"):Connect(function()
+				instancedCName.Name = Player.Character:GetAttribute("CName")
+			end)
+		end
+		Player.CharacterAdded:Connect(function(character)
+			if character then
+				character:SetAttribute("CName", attributeValue)
+				local instancedCName = Instance.new("Accessory")
+				instancedCName.Name = attributeValue
+				instancedCName.Parent = character:WaitForChild("HumanoidRootPart")
+				character:GetAttributeChangedSignal("CName"):Connect(function()
+					instancedCName.Name = character:GetAttribute("CName")
+				end)
+			end
+		end)
+		if (isGaia) then
+			Player:GetAttributeChangedSignal("FirstName"):Connect(function()
+				firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+				playerGameNames[Player.Name] = {FirstName = firstName, LastName = lastName, PlayerInstance = Player, PlayerInstName = Player.Name}
+				if Player.Character then
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+			Player:GetAttributeChangedSignal("LastName"):Connect(function()
+				firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+				playerGameNames[Player.Name] = {FirstName = firstName, LastName = lastName, PlayerInstance = Player, PlayerInstName = Player.Name}
+				if Player.Character then
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+			Player:GetAttributeChangedSignal("Gender"):Connect(function()
+				if Player.Character then
+					firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+			Player:GetAttributeChangedSignal("HouseRank"):Connect(function()
+				if Player.Character then
+					firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+		else
+			Player.leaderstats.FirstName:GetPropertyChangedSignal("Value"):Connect(function()
+				firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+				playerGameNames[Player.Name] = {FirstName = firstName, LastName = lastName, PlayerInstance = Player, PlayerInstName = Player.Name}
+				if Player.Character then
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+			Player.leaderstats.LastName:GetPropertyChangedSignal("Value"):Connect(function()
+				firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+				playerGameNames[Player.Name] = {FirstName = firstName, LastName = lastName, PlayerInstance = Player, PlayerInstName = Player.Name}
+				if Player.Character then
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+			Player.leaderstats.Gender:GetPropertyChangedSignal("Value"):Connect(function()
+				if Player.Character then
+					firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+			Player.leaderstats.HouseRank:GetPropertyChangedSignal("Value"):Connect(function()
+				if Player.Character then
+					firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+					Player.Character:SetAttribute("CName", determineFullName(firstName, lastName, houseRank, gender))
+				end
+			end)
+		end
+	end
 	--function leaderBoardHandle(leaderboardGui)
 	local function playerFrameHandle(playerFrame)
 		if not playerFrame:FindFirstChild("Prestige") then
@@ -7687,11 +8042,11 @@ if gameName == "Rogue Lineage" then
 			temporaryCharacterLoadSignal = nil
 		end
 
-		task.wait(0.5)
-		if playerFrame.TextTransparency ~= 0 and not playerFrame:GetAttribute("CName") then
+		--task.wait(0.5)
+		--[[if playerFrame.TextTransparency ~= 0 and not playerFrame:GetAttribute("CName") then
 			return
-		end
-		if (playerFrame.TextColor3 ~= Color3.fromRGB(255, 255, 255) and playerFrame.TextColor3 ~= Color3.fromRGB(178, 178, 178)) then
+		end]]
+		if (playerFrame.TextColor3 ~= Color3.fromRGB(255, 255, 255) and playerFrame.TextColor3 ~= Color3.fromRGB(178, 178, 178) and playerFrame.TextColor3 ~= Color3.fromRGB(111, 111, 111) and playerFrame.TextColor3 ~= Color3.fromRGB(124, 248, 255) and playerFrame.TextColor3 ~= Color3.fromRGB(83, 166, 170)) or playerFrame:GetAttribute("IsMax") and playerFrame:GetAttribute("IsMax") == "true" then
 			isMax = true
 		end
 		local function adjustColor(color, decrement)
@@ -7700,29 +8055,101 @@ if gameName == "Rogue Lineage" then
 			local newBlue = math.clamp(color.B * 255 - decrement, 0, 255)
 			return Color3.fromRGB(newRed, newGreen, newBlue)
 		end
-		if not playerFrame:GetAttribute("CName") then
+		--[[if not playerFrame:GetAttribute("CName") then
 			if playerFrame.TextTransparency == 0 then
 				playerFrame:SetAttribute("CName", labelTextWithoutSpace)
 			end
 			playerFrame:GetPropertyChangedSignal("Text"):Connect(function()
-				labelTextWithoutSpace = string.gsub(playerFrame.Text, "^%s+", "")
-				labelTextWithoutSpace = string.gsub(labelTextWithoutSpace, ",", "")
+				local newTextWithoutSpace = string.gsub(playerFrame.Text, "^%s+", "")
+				newTextWithoutSpace = string.gsub(newTextWithoutSpace, ",", "")
 				task.wait()
 				if playerFrame.TextTransparency == 0 then
 					playerFrame:SetAttribute("CName", labelTextWithoutSpace)
 				end
 			end)
+		end]]
+		if not playerFrame:GetAttribute("PName") and playerFrame.TextTransparency ~= 0 then
+			playerFrame:SetAttribute("PName", string.gsub(playerFrame.Text, "^%s+", ""))
 		end
+		--[[if not playerFrame:FindFirstChildWhichIsA("StringValue") and playerFrame.TextTransparency ~= 0 then
+			local pNameLabel = Instance.new("StringValue")
+			pNameLabel.Name = randomString(math.random(6, 13))
+			pNameLabel.Value = string.gsub(playerFrame.Text, "^%s+", "")
+			pNameLabel.Parent = playerFrame
+		end]]
 
 		if not game.Players:FindFirstChild(labelTextWithoutSpace) then
-			for _, v in pairs(game.Workspace.Live:GetChildren()) do
-				if v:FindFirstChild(labelTextWithoutSpace) or (playerFrame:GetAttribute("CName") and v:FindFirstChild(playerFrame:GetAttribute("CName"))) then
-					Player = game:GetService("Players"):GetPlayerFromCharacter(v)
-					break
+			local multipleNameTable = {}
+			if Player == nil then
+				for index, playerName in playerGameNames do
+					local hasLastName = false
+					if playerName.LastName ~= "" and playerName.LastName ~= " " then
+						hasLastName = true
+					end
+					if playerFrame:GetAttribute("PName") and playerFrame:GetAttribute("PName") == playerName.PlayerInstance.Name then
+						Player = playerName.PlayerInstance
+						break
+					end
+					--local pNameLabel = playerFrame:FindFirstChildWhichIsA("StringValue")
+					--if (pNameLabel and string.find(pNameLabel.Value, playerName.PlayerInstName)--[[pNameLabel.Value == playerName.PlayerInstName]]) --[[or (pNameLabel and --[[string.find(string.gsub(playerFrame.Text, "^%s+", ""), pNameLabel.Value)string.gsub(playerFrame.Text, "^%s+", "") == pNameLabel.Value)]] then
+					--	Player = playerGameNames[pNameLabel.Value].PlayerInstance
+					--	print(pNameLabel.Value.."/"..playerName.PlayerInstance.Name.." found")
+					--	break
+					--end
+					if hasLastName then
+						if string.find(playerFrame.Text, playerName.FirstName) and string.find(playerFrame.Text, playerName.LastName) then
+							table.insert(multipleNameTable, playerName.PlayerInstance)
+							--Player = playerName.PlayerInstance
+							--break
+						end
+					else
+						if string.find(playerFrame.Text, playerName.FirstName) then
+							table.insert(multipleNameTable, playerName.PlayerInstance)
+							--Player = playerName.PlayerInstance
+							--break
+						end
+					end
+				end
+			end
+			if #multipleNameTable == 1 then
+				Player = multipleNameTable[1]
+			end
+			--[[for _, player in pairs(game.Players:GetPlayers()) do
+				if player.Character then
+					player.Character:WaitForChild("HumanoidRootPart")
+					if player.Character.HumanoidRootPart:FindFirstChild(player.Character:GetAttribute("CName")) then
+						Player = player
+						break
+					end
 				end
 			end
 			if Player == nil then
-				if --[[playerFrame.TextColor3 == Color3.fromRGB(255, 214, 81)]](playerFrame.TextColor3 ~= Color3.fromRGB(255, 255, 255) and playerFrame.TextColor3 ~= Color3.fromRGB(178, 178, 178)) then
+				for _, v in pairs(game.Workspace.Live:GetChildren()) do
+					if game.Players:FindFirstChild(v.Name) then
+						--print(v:GetAttribute("CName").."/"..labelTextWithoutSpace.."/"..v.Name)
+						if --[[v.HumanoidRootPart:FindFirstChild(v:GetAttribute("CName"))]] --[[or v.HumanoidRootPart:FindFirstChild(labelTextWithoutSpace) or v.HumanoidRootPart:FindFirstChild(playerFrame:GetAttribute("CName"))]] --[[v:GetAttribute("CName") == labelTextWithoutSpace or v:GetAttribute("CName") == playerFrame:GetAttribute("CName") or v:FindFirstChild(v:GetAttribute("CName"))]] --[[v:FindFirstChild(labelTextWithoutSpace) or (playerFrame:GetAttribute("CName") and v:FindFirstChild(playerFrame:GetAttribute("CName"))) then]]
+			--				Player = game:GetService("Players"):GetPlayerFromCharacter(v)
+			--				break
+			--			end
+			--		end
+			--	end
+			--end
+			if Player == nil then
+				if #multipleNameTable > 1 then
+					--local colorToChange = playerFrame.TextColor3
+					--local frameTextColor = adjustColor(colorToChange, 60)
+					if isMax then
+						if not playerFrame:GetAttribute("IsMax") then
+							playerFrame:SetAttribute("IsMax", "true")
+						end
+					end
+					if not CollectionService:HasTag(playerFrame, "ColorAdjusted") then
+						CollectionService:AddTag(playerFrame, "ColorAdjusted")
+						playerFrame.TextColor3 = Color3.fromRGB(111, 111, 111)
+					end
+					return
+				end
+				if --[[playerFrame.TextColor3 == Color3.fromRGB(255, 214, 81)]](playerFrame.TextColor3 ~= Color3.fromRGB(255, 255, 255) and playerFrame.TextColor3 ~= Color3.fromRGB(178, 178, 178) and playerFrame.TextColor3 ~= Color3.fromRGB(111, 111, 111) and playerFrame.TextColor3 ~= Color3.fromRGB(124, 248, 255) and playerFrame.TextColor3 ~= Color3.fromRGB(83, 166, 170)) then
 					isMax = true
 					local colorToChange = playerFrame.TextColor3
 					local frameTextColor = adjustColor(colorToChange, 60)
@@ -7817,6 +8244,7 @@ if gameName == "Rogue Lineage" then
 			Player = game.Players:FindFirstChild(labelTextWithoutSpace)
 		end
 		charLoaded = true
+		Player:WaitForChild("Backpack")
 
 		if isMax then
 			if not game.Workspace.Live:FindFirstChild(Player.Name) then
@@ -7827,10 +8255,10 @@ if gameName == "Rogue Lineage" then
 				elseif Player.Backpack:FindFirstChild("Mederi") then
 					edictType = "Healer"
 					playerFrame.TextColor3 = edictTextureIDs["4072968006"].Color2
-				elseif Player.Backpack:FindFirstChild("Verto") then
+				elseif Player.Backpack:FindFirstChild("Verto")then
 					edictType = "Blademaster"
 					playerFrame.TextColor3 = edictTextureIDs["4072968656"].Color2
-				elseif Player.Backpack:FindFirstChild("Wallet Swipe") then
+				elseif Player.Backpack:FindFirstChild("Epitaph") or Player.Backpack:FindFirstChild("Wallet Swipe") or Player.Backpack:FindFirstChild("Snowball") or Player.Backpack:FindFirstChild("Time Halt") or Player.Backpack:FindFirstChild("Jester's Scheme") or Player.Backpack:FindFirstChild("Time Erase") or Player.Backpack:FindFirstChild("Jester's Ruse") then
 					edictType = "Jester"
 					playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color2
 				end
@@ -7838,16 +8266,16 @@ if gameName == "Rogue Lineage" then
 					CollectionService:AddTag(playerFrame, "ColorAdjusted")
 				end
 			else
-				if Player.Backpack:FindFirstChild("Analysis") then
+				if Player.Backpack:FindFirstChild("Analysis") or Player.Character:FindFirstChild("Analysis") then
 					edictType = "Seer"
 					playerFrame.TextColor3 = edictTextureIDs["4072914434"].Color
-				elseif Player.Backpack:FindFirstChild("Mederi") then
+				elseif Player.Backpack:FindFirstChild("Mederi") or Player.Character:FindFirstChild("Mederi") then
 					edictType = "Healer"
 					playerFrame.TextColor3 = edictTextureIDs["4072968006"].Color
-				elseif Player.Backpack:FindFirstChild("Verto") then
+				elseif Player.Backpack:FindFirstChild("Verto") or Player.Character:FindFirstChild("Verto") then
 					edictType = "Blademaster"
 					playerFrame.TextColor3 = edictTextureIDs["4072968656"].Color
-				elseif Player.Backpack:FindFirstChild("Wallet Swipe") then
+				elseif Player.Backpack:FindFirstChild("Epitaph") or Player.Backpack:FindFirstChild("Wallet Swipe") or Player.Backpack:FindFirstChild("Snowball") or Player.Backpack:FindFirstChild("Time Halt") or Player.Backpack:FindFirstChild("Jester's Scheme") or Player.Backpack:FindFirstChild("Time Erase") or Player.Backpack:FindFirstChild("Jester's Ruse") then
 					edictType = "Jester"
 					playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color
 				end
@@ -7890,6 +8318,34 @@ if gameName == "Rogue Lineage" then
 				end
 			else
 				playerFrame.TextColor3 = edictTextureIDs["4094417635"].Color
+				if CollectionService:HasTag(playerFrame, "ColorAdjusted") then
+					CollectionService:RemoveTag(playerFrame, "ColorAdjusted")
+				end
+			end
+		end
+		if Player.Backpack:FindFirstChild("Observe") or Player.Character and Player.Character:FindFirstChild("Observe") then
+			if not CollectionService:HasTag(Player, "IsMod") and edictType ~= "Jester" then
+				if not game.Workspace.Live:FindFirstChild(Player.Name) then
+					playerFrame.TextColor3 = Color3.fromRGB(83, 166, 170)
+					if not CollectionService:HasTag(playerFrame, "ColorAdjusted") then
+						CollectionService:AddTag(playerFrame, "ColorAdjusted")
+					end
+				else
+					playerFrame.TextColor3 = Color3.fromRGB(124, 248, 255)
+					if CollectionService:HasTag(playerFrame, "ColorAdjusted") then
+						CollectionService:RemoveTag(playerFrame, "ColorAdjusted")
+					end
+				end
+			end
+		end
+		if CollectionService:HasTag(Player, "IsHidden") then
+			if not game.Workspace.Live:FindFirstChild(Player.Name) then
+				playerFrame.TextColor3 = Color3.fromRGB(173, 70, 164)
+				if not CollectionService:HasTag(playerFrame, "ColorAdjusted") then
+					CollectionService:AddTag(playerFrame, "ColorAdjusted")
+				end
+			else
+				playerFrame.TextColor3 = Color3.fromRGB(255, 103, 240)
 				if CollectionService:HasTag(playerFrame, "ColorAdjusted") then
 					CollectionService:RemoveTag(playerFrame, "ColorAdjusted")
 				end
@@ -7973,9 +8429,42 @@ if gameName == "Rogue Lineage" then
 			--end)
 		end)]]
 	--end
+	local function healthNumberAdd()
+		if not LocalPlayer.Character then
+			repeat task.wait() until LocalPlayer.Character
+		end
+		LocalPlayer.Character:WaitForChild("Humanoid")
+		local healthNumber = Instance.new("TextLabel")
+		healthNumber.Name = randomString(math.random(5, 15))
+		healthNumber.BackgroundTransparency = 1
+		healthNumber.BorderColor3 = Color3.fromRGB(27, 42, 53)
+		healthNumber.BorderSizePixel = 1
+		healthNumber.Position = UDim2.new(0.325, 0, 0.167, 0)
+		healthNumber.Size = UDim2.new(0, 140, 0, 16)
+		healthNumber.ZIndex = 4
+		healthNumber.FontFace = Font.new("rbxasset://fonts/families/Balthazar.json", Enum.FontWeight.Bold)
+		healthNumber.RichText = true
+		if LocalPlayer.Character then
+			healthNumber.Text = "[ "..math.round(LocalPlayer.Character.Humanoid.Health).." | "..math.round(LocalPlayer.Character.Humanoid.MaxHealth).." ]"
+		else
+			healthNumber.Text = "[ 100 | 100 ]"
+		end
+		healthNumber.TextSize = 14
+		healthNumber.TextColor3 = Color3.fromRGB(255, 255, 255)
+		healthNumber.TextStrokeTransparency = 0
+		if LocalPlayer.Character then
+			healthNumber.TextTransparency = 0
+		else
+			healthNumber.TextTransparency = 1
+		end
+		healthNumber.TextScaled = true
+		healthNumber.TextWrapped = true
+		healthNumber.TextStrokeColor3 = Color3.fromRGB(124, 124, 124)
+		return healthNumber
+	end
 	local leaderBoardHandleSignal = nil
-	--[[LocalPlayer.PlayerGui.ChildAdded:Connect(function(child)
-		if child.Name == "LeaderboardGui" then
+	LocalPlayer.PlayerGui.ChildAdded:Connect(function(child)
+		--[[if child.Name == "LeaderboardGui" then
 			if not CollectionService:HasTag(child, "LBHandle") then
 				CollectionService:AddTag(child, "LBHandle")
 				if leaderBoardHandleSignal then
@@ -7990,8 +8479,26 @@ if gameName == "Rogue Lineage" then
 					playerFrameHandle(playerFrame)
 				end)
 			end
+		end]]
+		if child.Name == "StatGui" then
+			local statGui = child
+			local healthContainer = statGui.Container:FindFirstChild("Health")
+			if not healthContainer:FindFirstChildWhichIsA("TextLabel") then
+				local healthNumber = healthNumberAdd()
+				healthNumber.Parent = healthContainer
+				if not LocalPlayer.Character then
+					LocalPlayer.CharacterAdded:Wait()
+				end
+				healthNumber.Text = "[ "..math.round(LocalPlayer.Character.Humanoid.Health).." | "..math.round(LocalPlayer.Character.Humanoid.MaxHealth).." ]"
+				LocalPlayer.Character.Humanoid.HealthChanged:Connect(function()
+					healthNumber.Text = "[ "..math.round(LocalPlayer.Character.Humanoid.Health).." | "..math.round(LocalPlayer.Character.Humanoid.MaxHealth).." ]"
+				end)
+				LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MaxHealth"):Connect(function()
+					healthNumber.Text = "[ "..math.round(LocalPlayer.Character.Humanoid.Health).." | "..math.round(LocalPlayer.Character.Humanoid.MaxHealth).." ]"
+				end)
+			end
 		end
-	end)]]
+	end)
 	if LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui") then
 		if not CollectionService:HasTag(LocalPlayer.PlayerGui.LeaderboardGui, "LBHandle") then
 			CollectionService:AddTag(LocalPlayer.PlayerGui.LeaderboardGui, "LBHandle")
@@ -8000,7 +8507,7 @@ if gameName == "Rogue Lineage" then
 				leaderBoardHandleSignal = nil
 			end
 			task.spawn(function()
-				for _, v in pairs(LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
+				for _, v in ipairs(LocalPlayer.PlayerGui.LeaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
 					task.spawn(function()
 						playerFrameHandle(v)
 					end)
@@ -8015,10 +8522,28 @@ if gameName == "Rogue Lineage" then
 			end)]]
 		end
 	end
+	if LocalPlayer.PlayerGui:FindFirstChild("StatGui") then
+		local statGui = LocalPlayer.PlayerGui:FindFirstChild("StatGui")
+		local healthContainer = statGui.Container:FindFirstChild("Health")
+		if not healthContainer:FindFirstChildWhichIsA("TextLabel") then
+			local healthNumber = healthNumberAdd()
+			healthNumber.Parent = healthContainer
+			if not LocalPlayer.Character then
+				LocalPlayer.CharacterAdded:Wait()
+			end
+			healthNumber.Text = "[ "..math.round(LocalPlayer.Character.Humanoid.Health).." | "..math.round(LocalPlayer.Character.Humanoid.MaxHealth).." ]"
+			LocalPlayer.Character.Humanoid.HealthChanged:Connect(function()
+				healthNumber.Text = "[ "..math.round(LocalPlayer.Character.Humanoid.Health).." | "..math.round(LocalPlayer.Character.Humanoid.MaxHealth).." ]"
+			end)
+			LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MaxHealth"):Connect(function()
+				healthNumber.Text = "[ "..math.round(LocalPlayer.Character.Humanoid.Health).." | "..math.round(LocalPlayer.Character.Humanoid.MaxHealth).." ]"
+			end)
+		end
+	end
 	task.spawn(function()
 		while task.wait(1) do
 			local leaderboardGui = LocalPlayer:FindFirstChild("PlayerGui") and LocalPlayer.PlayerGui:FindFirstChild("LeaderboardGui")
-			
+
 			if leaderboardGui then
 				task.spawn(function()
 					for _, v in pairs(leaderboardGui.MainFrame.ScrollingFrame:GetChildren()) do
@@ -8049,7 +8574,7 @@ if gameName == "Rogue Lineage" then
 			newLeaderboardGui:Destroy()
 		end
 	end)
-	
+
 	if game.Workspace.Live:FindFirstChild(LocalPlayer.Name) then
 		createBoosts(LocalPlayer.Character)
 		if not LocalPlayer.Backpack:FindFirstChild("Artifactus") then
@@ -8061,6 +8586,12 @@ if gameName == "Rogue Lineage" then
 		end
 	end
 	game.Workspace.Live.ChildAdded:Connect(function(character)
+		local Player = game:GetService("Players"):GetPlayerFromCharacter(character)
+		if (Player) then
+			local firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+			local attributeValue = determineFullName(firstName, lastName, houseRank, gender)
+			character:SetAttribute("CName", attributeValue)
+		end
 		if character.Name ~= LocalPlayer.Name then
 			if character:FindFirstChild("Head") then
 				if not character.Head:FindFirstChild("ToolviewHolder") then
@@ -8144,6 +8675,37 @@ if gameName == "Rogue Lineage" then
 					)
 				end
 			end
+			if (Player) and (Player:GetAttribute("Hidden") == true or Player:IsInGroup(4556484) or Player.Backpack:FindFirstChild("Epitaph") or Player.Backpack:FindFirstChild("Wallet Swipe") or Player.Backpack:FindFirstChild("Snowball") or Player.Backpack:FindFirstChild("Time Halt") or Player.Backpack:FindFirstChild("Jester's Scheme") or Player.Backpack:FindFirstChild("Time Erase") or Player.Backpack:FindFirstChild("Jester's Ruse")) then
+				if Player:GetAttribute("Hidden") == true then
+					if not CollectionService:HasTag(Player, "IsHidden") then
+						CollectionService:AddTag(Player, "IsHidden")
+						Player:SetAttribute("Hidden", false)
+					end
+				end
+				if not CollectionService:HasTag(Player, "IsMod") then
+					CollectionService:AddTag(Player, "IsMod")
+					local firstName, lastName = getRoguePlayerStats(Player)
+					local nameHolder = nil
+					for _, v in pairs(character:GetChildren()) do
+						if string.find(v.Name, firstName) then
+							nameHolder = v
+							break
+						end
+					end
+					selfNotification(
+						"Moderator Found",
+						tostring(nameHolder.Name.."["..Player.Name.."] may be a moderator."),
+						60,
+						"Panic",
+						"Dismiss"
+					)
+					local modFound = Instance.new("Sound")
+					modFound.SoundId = "rbxassetid://243702801"
+					modFound.Parent = HubGui
+					modFound:Play()
+					game.Debris:AddItem(modFound, 1.5)
+				end
+			end
 		elseif character.Name == LocalPlayer.Name then
 			createBoosts(character)
 			if not LocalPlayer.Backpack:FindFirstChild("Artifactus") then
@@ -8156,6 +8718,14 @@ if gameName == "Rogue Lineage" then
 		end
 	end)
 	game.Workspace.Live.ChildRemoved:Connect(function(character)
+		local Player = game:GetService("Players"):GetPlayerFromCharacter(character)
+		if Player then
+			task.delay(0.5, function()
+				if playerCTagged[Player.Name] and playerCTagged[Player.Name].CombatTagged == true then
+					playerCTagged[Player.Name] = nil
+				end
+			end)
+		end
 		if character.Name == LocalPlayer.Name then
 			realroguespeedBoost = nil
 			realrogueclimbBoost = nil
@@ -8168,16 +8738,65 @@ if gameName == "Rogue Lineage" then
 	end)
 	game.Players.PlayerAdded:connect(function(Player)
 		retrieveAttributes(Player)
+		task.spawn(function()
+			local firstName, lastName, gender, houseRank
+			repeat
+				task.wait(0.2)
+				firstName, lastName, gender, houseRank = getRoguePlayerStats(Player)
+			until firstName ~= "Unknown" and lastName ~= "Unknown" and gender ~= "Unknown" and houseRank ~= "Unknown"
+			playerGameNames[Player.Name] = {FirstName = firstName, LastName = lastName, PlayerInstance = Player, PlayerInstName = Player.Name}
+			playerNameOverHeadAttributeHandle(Player, firstName, lastName, houseRank, gender)
+		end)
 	end)
 	game.Players.PlayerRemoving:connect(function(Player)
+		if playerCTagged[Player.Name] and playerCTagged[Player.Name].CombatTagged == true then
+			selfNotification(
+				"Combat Log",
+				tostring("["..Player.Name.."] has combat logged."),
+				10,
+				"Dismiss"
+			)
+			playerCTagged[Player.Name] = nil
+		end
 		if leaderBoardList[Player] then
 			leaderBoardList[Player] = nil
+		end
+		if playerGameNames[Player.Name] then
+			playerGameNames[Player.Name] = nil
 		end
 	end)
 	task.spawn(function()
 		for _, v in pairs(game.Players:GetPlayers()) do
 			task.spawn(function()
 				retrieveAttributes(v)
+				local firstName, lastName, gender, houseRank
+				repeat
+					task.wait(0.2)
+					firstName, lastName, gender, houseRank = getRoguePlayerStats(v)
+				until firstName ~= "Unknown" and lastName ~= "Unknown" and gender ~= "Unknown" and houseRank ~= "Unknown"
+				playerGameNames[v.Name] = {FirstName = firstName, LastName = lastName, PlayerInstance = v, PlayerInstName = v.Name}
+				if v:GetAttribute("Hidden") == true then
+					if not CollectionService:HasTag(v, "IsHidden") then
+						CollectionService:AddTag(v, "IsHidden")
+					end
+				end
+				if (v:GetAttribute("Hidden") or v:IsInGroup(4556484)) and not CollectionService:HasTag(v, "IsMod") then
+					v:SetAttribute("Hidden", false)
+					CollectionService:AddTag(v, "IsMod")
+					selfNotification(
+						"Moderator Found",
+						tostring(determineFullName(firstName, lastName, houseRank, gender).."["..v.Name.."] may be a moderator."),
+						60,
+						"Panic",
+						"Dismiss"
+					)
+					local modFound = Instance.new("Sound")
+					modFound.SoundId = "rbxassetid://243702801"
+					modFound.Parent = HubGui
+					modFound:Play()
+					game.Debris:AddItem(modFound, 1.5)
+				end
+				playerNameOverHeadAttributeHandle(v, firstName, lastName, houseRank, gender)
 			end)
 		end
 	end)
@@ -8204,6 +8823,37 @@ if gameName == "Rogue Lineage" then
 							"Panic",
 							"Dismiss"
 						)
+					end
+				end
+				if (Player) and (Player:GetAttribute("Hidden") == true or Player:IsInGroup(4556484) or Player.Backpack:FindFirstChild("Epitaph") or Player.Backpack:FindFirstChild("Wallet Swipe") or Player.Backpack:FindFirstChild("Snowball") or Player.Backpack:FindFirstChild("Time Halt") or Player.Backpack:FindFirstChild("Jester's Scheme") or Player.Backpack:FindFirstChild("Time Erase") or Player.Backpack:FindFirstChild("Jester's Ruse")) then
+					if Player:GetAttribute("Hidden") == true then
+						if not CollectionService:HasTag(Player, "IsHidden") then
+							CollectionService:AddTag(Player, "IsHidden")
+							Player:SetAttribute("Hidden", false)
+						end
+					end
+					if not CollectionService:HasTag(Player, "IsMod") then
+						CollectionService:AddTag(Player, "IsMod")
+						local firstName, lastName = getRoguePlayerStats(Player)
+						local nameHolder = nil
+						for _, v in pairs(entity:GetChildren()) do
+							if string.find(v.Name, firstName) then
+								nameHolder = v
+								break
+							end
+						end
+						selfNotification(
+							"Moderator Found",
+							tostring(nameHolder.Name.."["..Player.Name.."] may be a moderator."),
+							60,
+							"Panic",
+							"Dismiss"
+						)
+						local modFound = Instance.new("Sound")
+						modFound.SoundId = "rbxassetid://243702801"
+						modFound.Parent = HubGui
+						modFound:Play()
+						game.Debris:AddItem(modFound, 1.5)
 					end
 				end
 			end
@@ -9238,7 +9888,7 @@ if gameName == "Rogue Lineage Copy" then
 										artifactEspLabel.TextWrapped = true
 										if roguenotifierOn == true then
 											local NotifySound = Instance.new("Sound")
-											NotifySound.Name = "Click"
+											NotifySound.Name = randomString(math.random(7, 14))
 											NotifySound.SoundId = "rbxassetid://1862043663"
 											NotifySound.RollOffMode = Enum.RollOffMode.Inverse
 											NotifySound.RollOffMaxDistance = 10000
@@ -9706,7 +10356,7 @@ UserInputService.InputBegan:connect(function(input, gameProcessed)
 	if not label then
 		return
 	end
-	
+
 	local labelTextWithoutSpace = string.gsub(label.Text, "^%s+", "")
 	local player = game:GetService("Players"):FindFirstChild(labelTextWithoutSpace:gsub('\226\128\142', ''))
 	if not player or not player.Character then
