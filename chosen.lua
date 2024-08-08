@@ -16,10 +16,10 @@ getgenv().b23knv8key = true--tostring(randomString(15))
 end]]
 print("Game is loaded!".." Checking supported gameList.")
 
-local gameName = ""
+gameName = ""
 local scr1 = ''
 local scr2 = ''
-local fullSupp = false
+fullSupp = false
 if game.GameId == 1087859240 then
 	gameName = "Rogue Lineage"
 	scr2 = "https://raw.githubusercontent.com/Darkii0161/autobard/main/auto"
@@ -207,7 +207,7 @@ local LoreDOFButton = Instance.new("TextButton")
 
 --Some Functions:
 
-local function selfNotification(title, text, duration, button1, button2, callback)
+function selfNotification(title, text, duration, button1, button2, callback)
 	game:GetService("StarterGui"):SetCore("SendNotification",{
 		Title = title,
 		Text = text,
@@ -217,11 +217,11 @@ local function selfNotification(title, text, duration, button1, button2, callbac
 	})
 end
 
-local function isNumber(input)
+function isNumber(input)
 	return tonumber(input) ~= nil
 end
 
-local function isWholeNumber(number)
+function isWholeNumber(number)
 	return number % 1 == 0
 end
 
@@ -243,7 +243,7 @@ function randomString(length)
 end
 
 -- Function to type the text into the TextLabel
-local function typeText(chosentext,textload, charDelay)
+function typeText(chosentext,textload, charDelay)
 	task.spawn(function()
 		local typedText = ""
 		for i = 1, #textload do
@@ -254,7 +254,7 @@ local function typeText(chosentext,textload, charDelay)
 	end)
 end
 
-local randomText = randomString(12) -- Generate a random string of length 12
+randomText = randomString(12) -- Generate a random string of length 12
 
 -- Main Transparency Tween:
 
@@ -1190,6 +1190,8 @@ local roguenofogOn = false
 local setNoFogSignal = nil
 local roguenotifierOn = false
 local isGaia = game.PlaceId == 5208655184
+local usedAutoBard = randomString(math.random(4, 11))
+local rogueEspBFolderTable = {}
 
 --//Real Rogue Vars
 local realroguespeedBoost
@@ -1274,16 +1276,21 @@ if gameName == "Rogue Lineage" then
 				if LocalPlayer then
 					task.spawn(function()
 						roguetoolEsp = true
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[4]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[4])
+						end
+						for _, v in pairs(HubGui[rogueEspBFolderTable[4]]:GetChildren()) do
+							v.Enabled = true
+						end
 						for i, v in pairs(game.Workspace.Live:GetChildren()) do
-							if v.Name ~= LocalPlayer.Name then
+							local Player = game.Players:GetPlayerFromCharacter(v)
+							if Player and v.Name ~= LocalPlayer.Name then
 								if v:FindFirstChild("Head") then
-									if v.Head:FindFirstChild("ToolviewHolder") then
-										v.Head.ToolviewHolder.Enabled = true
-									end
-									if not v.Head:FindFirstChild("ToolviewHolder") then
+									if not CollectionService:HasTag(v.Head, "HasB4") then
+										CollectionService:AddTag(v.Head, "HasB4")
 										local toolEspHolder = Instance.new("BillboardGui")
-										toolEspHolder.Name = "ToolviewHolder"
-										toolEspHolder.Parent = v.Head
+										toolEspHolder.Name = randomString(math.random(7, 14))
+										toolEspHolder.Parent = HubGui[rogueEspBFolderTable[4]]
 										toolEspHolder.Active = false
 										toolEspHolder.Adornee = v.Head
 										toolEspHolder.AlwaysOnTop = true
@@ -1314,11 +1321,16 @@ if gameName == "Rogue Lineage" then
 										toolEspLabel.TextTransparency = 0
 										toolEspLabel.TextSize = 21.000
 										toolEspLabel.TextWrapped = true
+										if Player then
+											Player.CharacterRemoving:Once(function()
+												toolEspHolder:Destroy()
+											end)
+										end
 										v.ChildAdded:Connect(function(tool)
 											if tool.ClassName == "Tool" then
 												if v:FindFirstChild("Head") then
-													if v.Head:FindFirstChild("ToolviewHolder") then
-														v.Head.ToolviewHolder.ToolView.Text = tool.Name
+													if CollectionService:HasTag(v.Head, "HasB4") then
+														toolEspLabel.Text = tool.Name
 													end
 												end
 											end
@@ -1326,8 +1338,8 @@ if gameName == "Rogue Lineage" then
 										v.ChildRemoved:Connect(function(tool)
 											if tool.ClassName == "Tool" then
 												if v:FindFirstChild("Head") then
-													if v.Head:FindFirstChild("ToolviewHolder") then
-														v.Head.ToolviewHolder.ToolView.Text = ""
+													if CollectionService:HasTag(v.Head, "HasB4") then
+														toolEspLabel.Text = ""
 													end
 												end
 											end
@@ -1368,12 +1380,15 @@ if gameName == "Rogue Lineage" then
 				if LocalPlayer then
 					task.spawn(function()
 						roguetoolEsp = false
-						for i, v in pairs(game.Workspace.Live:GetChildren()) do
+						--[[for i, v in pairs(game.Workspace.Live:GetChildren()) do
 							if v:FindFirstChild("Head") then
-								if v.Head:FindFirstChild("ToolviewHolder") then
+								if CollectionService:HasTag(v.Head, "HasB4") then
 									v.Head.ToolviewHolder.Enabled = false
 								end
 							end
+						end]]
+						for _, v in pairs(HubGui[rogueEspBFolderTable[4]]:GetChildren()) do
+							v.Enabled = false
 						end
 					end)
 					RogueToolViewEspButton.Text = '<stroke color="#d80000" joins="miter" thickness="1.5" transparency="0.45">Tool Turned Off</stroke>'
@@ -1545,10 +1560,10 @@ if gameName == "Rogue Lineage" then
 				if LocalPlayer then
 					task.spawn(function()
 						roguetrinketEsp = true
-						if not HubGui:FindFirstChild("B1") then
-							HubGui:WaitForChild("B1")
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[1]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[1])
 						end
-						for _, v in pairs(HubGui.B1:GetChildren()) do
+						for _, v in pairs(HubGui[rogueEspBFolderTable[1]]:GetChildren()) do
 							v.Enabled = true
 						end
 					end)
@@ -1583,10 +1598,10 @@ if gameName == "Rogue Lineage" then
 				if LocalPlayer then
 					task.spawn(function()
 						roguetrinketEsp = false
-						if not HubGui:FindFirstChild("B1") then
-							HubGui:WaitForChild("B1")
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[1]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[1])
 						end
-						for _, v in pairs(HubGui.B1:GetChildren()) do
+						for _, v in pairs(HubGui[rogueEspBFolderTable[1]]:GetChildren()) do
 							v.Enabled = false
 						end
 					end)
@@ -1658,16 +1673,16 @@ if gameName == "Rogue Lineage" then
 				if LocalPlayer then
 					task.spawn(function()
 						rogueplayerEsp = true
-						if not HubGui:FindFirstChild("B2") then
-							HubGui:WaitForChild("B2")
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[2]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[2])
 						end
-						if not HubGui:FindFirstChild("B3") then
-							HubGui:WaitForChild("B3")
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[3]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[3])
 						end
-						for _, v in pairs(HubGui.B2:GetChildren()) do
+						for _, v in pairs(HubGui[rogueEspBFolderTable[2]]:GetChildren()) do
 							v.Enabled = true
 						end
-						for _, v in pairs(HubGui.B3:GetChildren()) do
+						for _, v in pairs(HubGui[rogueEspBFolderTable[3]]:GetChildren()) do
 							v.Enabled = true
 						end
 					end)
@@ -1702,16 +1717,16 @@ if gameName == "Rogue Lineage" then
 				if LocalPlayer then
 					task.spawn(function()
 						rogueplayerEsp = false
-						if not HubGui:FindFirstChild("B2") then
-							HubGui:WaitForChild("B2")
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[2]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[2])
 						end
-						if not HubGui:FindFirstChild("B3") then
-							HubGui:WaitForChild("B3")
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[3]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[3])
 						end
-						for _, v in pairs(HubGui.B2:GetChildren()) do
+						for _, v in pairs(HubGui[rogueEspBFolderTable[2]]:GetChildren()) do
 							v.Enabled = false
 						end
-						for _, v in pairs(HubGui.B3:GetChildren()) do
+						for _, v in pairs(HubGui[rogueEspBFolderTable[3]]:GetChildren()) do
 							v.Enabled = false
 						end
 					end)
@@ -1814,12 +1829,12 @@ if gameName == "Rogue Lineage" then
 			if scr2 ~= "" then
 				if game.Workspace.Live:FindFirstChild(LocalPlayer.Name) then
 					if game.Workspace.Live[LocalPlayer.Name]:FindFirstChild("HumanoidRootPart") then
-						if not game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart:FindFirstChild("ZOobjc4ccPtui9fcbmp34YW28VkB") then
+						if not game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart:FindFirstChild(usedAutoBard) then
 							pcall(function()
 								loadstring(game:HttpGet(scr2))()
-								local usedautoBard = Instance.new("Folder")
-								usedautoBard.Name = "ZOobjc4ccPtui9fcbmp34YW28VkB"
-								usedautoBard.Parent = game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart
+								local usedautoBardAccess = Instance.new("Accessory")
+								usedautoBardAccess.Name = usedAutoBard
+								usedautoBardAccess.Parent = game.Workspace.Live[LocalPlayer.Name].HumanoidRootPart
 							end)
 						else
 							local alreadyusedbardText = Instance.new("TextLabel")
@@ -2395,7 +2410,7 @@ if gameName == "Rogue Lineage" then
 			["Sunken Passage"] = triggers.evileye1.LastSpawned,
 		}
 
-		local function formatTime(seconds)
+		function formatTime(seconds)
 			local minutes = math.floor(seconds / 60)
 			local hours = math.floor(minutes / 60)
 			local days = math.floor(hours / 24)
@@ -2419,7 +2434,7 @@ if gameName == "Rogue Lineage" then
 			return formattedTime
 		end
 
-		local function convertTime(dateTime)
+		function convertTime(dateTime)
 			return os.time({year=dateTime.Year,month=dateTime.Month,day=dateTime.Day,hour=dateTime.Hour,min=dateTime.Minute,sec=dateTime.Second})
 		end
 
@@ -2472,7 +2487,7 @@ if gameName == "Rogue Lineage" then
 			label.TextWrapped = true
 			label.TextXAlignment = Enum.TextXAlignment.Left
 
-			local function onLastSpawnedChanged()
+			function onLastSpawnedChanged()
 				if (lastSpawned.Value == 0) then
 					label.Text = string.format('%s - Never taken', name)
 					return
@@ -6767,16 +6782,23 @@ if gameName == "Deepwoken" then
 end
 
 if gameName == "Rogue Lineage" then
-	local b1 = Instance.new("Folder")
-	b1.Name = "B1"
+	b1 = Instance.new("Folder")
+	b1.Name = randomString(math.random(5, 12))
 	b1.Parent = HubGui
-	local b2 = Instance.new("Folder")
-	b2.Name = "B2"
+	table.insert(rogueEspBFolderTable, b1.Name)
+	b2 = Instance.new("Folder")
+	b2.Name = randomString(math.random(5, 12))
 	b2.Parent = HubGui
-	local b3 = Instance.new("Folder")
-	b3.Name = "B3"
+	table.insert(rogueEspBFolderTable, b2.Name)
+	b3 = Instance.new("Folder")
+	b3.Name = randomString(math.random(5, 12))
 	b3.Parent = HubGui
-	local artifactTable = {
+	table.insert(rogueEspBFolderTable, b3.Name)
+	b4 = Instance.new("Folder")
+	b4.Name = randomString(math.random(5, 12))
+	b4.Parent = HubGui
+	table.insert(rogueEspBFolderTable, b4.Name)
+	artifactTable = {
 		"Rift Gem",
 		"Fairfrozen",
 		"Scroom Key",
@@ -7183,7 +7205,7 @@ if gameName == "Rogue Lineage" then
 			workspace.CurrentCamera.CameraSubject = playerHumanoid
 		end
 	end
-	local trinketsData = {}
+	trinketsData = {}
 	do --// Set Trinkets
 		Trinkets = {
 			{
@@ -7334,10 +7356,10 @@ if gameName == "Rogue Lineage" then
 			trinketsData[trinket.Name] = trinket
 		end
 	end
-	local function getId(id)
+	function getId(id)
 		return id:gsub('%%20', ''):gsub('%D', '')
 	end
-	local function findInTable(tab, index, value)
+	function findInTable(tab, index, value)
 		for i, v in next, tab do
 			if v[index] == value then
 				return v
@@ -7455,10 +7477,10 @@ if gameName == "Rogue Lineage" then
 			end
 		end
 	end
-	local objectsRaycastFilter = RaycastParams.new();
+	objectsRaycastFilter = RaycastParams.new();
 	objectsRaycastFilter.FilterType = Enum.RaycastFilterType.Whitelist
 	objectsRaycastFilter.FilterDescendantsInstances = {workspace.AreaMarkers}
-	local function onChildAdded(object)
+	function onChildAdded(object)
 		task.wait(1)
 		if not object:IsA("BasePart") then
 			return
@@ -7559,7 +7581,7 @@ if gameName == "Rogue Lineage" then
 		return textToReturn
 	end
 
-	local playerCTagged = {}
+	playerCTagged = {}
 	function rogueEntityEspHandle(character, espType, ismob, chosenColor)
 		local entityEspHolder
 		local entityEspLabel
@@ -7604,13 +7626,17 @@ if gameName == "Rogue Lineage" then
 					--gameName = nameHolder.Name
 					nameHolder = character:GetAttribute("CName")
 					if nameHolder ~= "" then
-						entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+						if entityEspLabel ~= nil then
+							entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+						end
 					end
 				end)
 				character.ChildAdded:Connect(function(child)
 					if child.Name == "Danger" or child.Name == "MortalDanger" then
 						playerCTagged[Player.Name] = {CombatTagged = true}
-						entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+						if entityEspLabel ~= nil then
+							entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+						end
 					end
 				end)
 				character.ChildRemoved:Connect(function(child)
@@ -7618,7 +7644,9 @@ if gameName == "Rogue Lineage" then
 						if not character:FindFirstChild("Danger") and not character:FindFirstChild("MortalDanger") then
 							playerCTagged[Player.Name] = {CombatTagged = false}
 						end
-						entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+						if entityEspLabel ~= nil then
+							entityEspLabel.Text = nameDangerCheck(character, nameHolder..'['..Player.Name..']<br />['..math.round(character.Humanoid.Health)..'/'..math.round(character.Humanoid.MaxHealth)..']')
+						end
 					end
 				end)
 			else
@@ -7891,14 +7919,14 @@ if gameName == "Rogue Lineage" then
 		end)
 	end
 
-	local edictTextureIDs = {
+	edictTextureIDs = {
 		["4072914434"] = {EdictType = "Seer", Color = Color3.fromRGB(0, 127, 182), Color2 = Color3.fromRGB(0, 92, 134)},
 		["4072968006"] = {EdictType = "Healer", Color = Color3.fromRGB(0, 214, 0), Color2 = Color3.fromRGB(0, 153, 0)},
 		["4072968656"] = {EdictType = "Blademaster", Color = Color3.fromRGB(238, 0, 0), Color2 = Color3.fromRGB(143, 0, 0)},
 		["4094417635"] = {EdictType = "Jester", Color = Color3.fromRGB(162, 0, 243), Color2 = Color3.fromRGB(96, 0, 144)},
 	}
-	local leaderBoardList = {}
-	local attributeList = {}
+	leaderBoardList = {}
+	attributeList = {}
 	function retrieveAttributes(Player)
 		if not leaderBoardList[Player] then
 			leaderBoardList[Player] = true
@@ -7923,8 +7951,8 @@ if gameName == "Rogue Lineage" then
 			}
 		end
 	end
-	local playerGameNames = {}
-	local function determineHouseStatus(houseRank, gender)
+	playerGameNames = {}
+	function determineHouseStatus(houseRank, gender)
 		if houseRank == "Owner" then
 			if gender == "Male" then
 				return "Lord"
@@ -7935,14 +7963,14 @@ if gameName == "Rogue Lineage" then
 			return ""
 		end
 	end
-	local function determineFullName(firstName, lastName, houseRank, gender)
+	function determineFullName(firstName, lastName, houseRank, gender)
 		if houseRank == "Owner" then
 			return tostring(determineHouseStatus(houseRank, gender).." "..firstName.." "..lastName)
 		else
 			return tostring(firstName.." "..lastName)
 		end
 	end
-	local function playerNameOverHeadAttributeHandle(Player, firstName, lastName, houseRank, gender)
+	function playerNameOverHeadAttributeHandle(Player, firstName, lastName, houseRank, gender)
 		local attributeValue = determineFullName(firstName, lastName, houseRank, gender)
 		if Player.Character then
 			Player.Character:SetAttribute("CName", attributeValue)
@@ -8021,7 +8049,7 @@ if gameName == "Rogue Lineage" then
 		end
 	end
 	--function leaderBoardHandle(leaderboardGui)
-	local function playerFrameHandle(playerFrame)
+	function playerFrameHandle(playerFrame)
 		if not playerFrame:FindFirstChild("Prestige") then
 			return
 		end
@@ -8429,7 +8457,7 @@ if gameName == "Rogue Lineage" then
 			--end)
 		end)]]
 	--end
-	local function healthNumberAdd()
+	function healthNumberAdd()
 		if not LocalPlayer.Character then
 			repeat task.wait() until LocalPlayer.Character
 		end
@@ -8462,7 +8490,7 @@ if gameName == "Rogue Lineage" then
 		healthNumber.TextStrokeColor3 = Color3.fromRGB(124, 124, 124)
 		return healthNumber
 	end
-	local leaderBoardHandleSignal = nil
+	leaderBoardHandleSignal = nil
 	LocalPlayer.PlayerGui.ChildAdded:Connect(function(child)
 		--[[if child.Name == "LeaderboardGui" then
 			if not CollectionService:HasTag(child, "LBHandle") then
@@ -8594,10 +8622,11 @@ if gameName == "Rogue Lineage" then
 		end
 		if character.Name ~= LocalPlayer.Name then
 			if character:FindFirstChild("Head") then
-				if not character.Head:FindFirstChild("ToolviewHolder") then
+				if not CollectionService:HasTag(character.Head, "HasB4") then
+					CollectionService:AddTag(character.Head, "HasB4")
 					local toolEspHolder = Instance.new("BillboardGui")
-					toolEspHolder.Name = "ToolviewHolder"
-					toolEspHolder.Parent = character.Head
+					toolEspHolder.Name = randomString(math.random(7, 14))
+					toolEspHolder.Parent = b4
 					toolEspHolder.Active = false
 					toolEspHolder.Adornee = character.Head
 					toolEspHolder.AlwaysOnTop = true
@@ -8613,7 +8642,7 @@ if gameName == "Rogue Lineage" then
 					toolEspHolder.ClipsDescendants = true
 
 					local toolEspLabel = Instance.new("TextLabel")
-					toolEspLabel.Name = "ToolView"
+					toolEspLabel.Name = randomString(math.random(7, 14))
 					toolEspLabel.Parent = toolEspHolder
 					toolEspLabel.Active = false
 					toolEspLabel.BackgroundTransparency = 1.000
@@ -8633,11 +8662,14 @@ if gameName == "Rogue Lineage" then
 					toolEspLabel.TextTransparency = 0
 					toolEspLabel.TextSize = 21.000
 					toolEspLabel.TextWrapped = true
+					Player.CharacterRemoving:Once(function()
+						toolEspHolder:Destroy()
+					end)
 					character.ChildAdded:Connect(function(tool)
 						if tool.ClassName == "Tool" then
 							if character:FindFirstChild("Head") then
-								if character.Head:FindFirstChild("ToolviewHolder") then
-									character.Head.ToolviewHolder.ToolView.Text = tool.Name
+								if CollectionService:HasTag(character.Head, "HasB4") then
+									toolEspLabel.Text = tool.Name
 								end
 							end
 						end
@@ -8645,8 +8677,8 @@ if gameName == "Rogue Lineage" then
 					character.ChildRemoved:Connect(function(tool)
 						if tool.ClassName == "Tool" then
 							if character:FindFirstChild("Head") then
-								if character.Head:FindFirstChild("ToolviewHolder") then
-									character.Head.ToolviewHolder.ToolView.Text = ""
+								if CollectionService:HasTag(character.Head, "HasB4") then
+									toolEspLabel.Text = ""
 								end
 							end
 						end
@@ -9975,7 +10007,7 @@ if gameName == "Rogue Lineage Copy" then
 	end)
 	local CurrentlyViewing = nil
 	local spectateValue
-	local function spectatePlayer(PlayerSpectateName)
+	function spectatePlayer(PlayerSpectateName)
 		PlayerSpectateName = tostring(PlayerSpectateName)
 		if not LocalPlayer:FindFirstChild("SpectateValue") then
 			spectateValue = Instance.new("StringValue")
