@@ -7284,6 +7284,10 @@ if gameName == "Rogue Lineage" then
 				["Color"] = Color3.fromRGB(194, 87, 87);
 			},
 			{
+				["Name"] = "Bound Book";
+				["Color"] = Color3.fromRGB(118, 64, 16);
+			},
+			{
 				["Texture"] = "20443483";
 				["Name"] = "Ya'alda";
 				--["Rare"] = true;
@@ -7404,6 +7408,10 @@ if gameName == "Rogue Lineage" then
 			if(className == "MeshPart" and getId(v.MeshId) == "2520762076") then
 				return trinketsData["Howler Friend"]
 			end
+			
+			if(className == "MeshPart" and v.MeshId == "rbxassetid://4027112893") then
+				return trinketsData["Bound Book"]
+			end
 
 			if(Mesh and getId(Mesh.MeshId) == "2877143560") then
 				if(string.find(Color, "green")) then
@@ -7412,7 +7420,7 @@ if gameName == "Rogue Lineage" then
 					return trinketsData["Ruby"]
 				elseif(Color == "Lapis") then
 					return trinketsData["Sapphire"]
-				elseif(string.find(Color, "blue")) then
+				elseif(string.find(Color, "blue") or string.find(Color, "white")) then
 					return trinketsData["Diamond"]
 				else
 					return trinketsData["Rift Gem"]
