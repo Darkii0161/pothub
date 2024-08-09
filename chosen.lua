@@ -1283,67 +1283,63 @@ if gameName == "Rogue Lineage" then
 							v.Enabled = true
 						end
 						for i, v in pairs(game.Workspace.Live:GetChildren()) do
-							local Player = game.Players:GetPlayerFromCharacter(v)
-							if Player and v.Name ~= LocalPlayer.Name then
-								if v:FindFirstChild("Head") then
-									if not CollectionService:HasTag(v.Head, "HasB4") then
-										CollectionService:AddTag(v.Head, "HasB4")
-										local toolEspHolder = Instance.new("BillboardGui")
-										toolEspHolder.Name = randomString(math.random(7, 14))
-										toolEspHolder.Parent = HubGui[rogueEspBFolderTable[4]]
-										toolEspHolder.Active = false
-										toolEspHolder.Adornee = v.Head
-										toolEspHolder.AlwaysOnTop = true
-										toolEspHolder.MaxDistance = 125
-										toolEspHolder.ResetOnSpawn = false
-										toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
-										toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
-										toolEspHolder.ClipsDescendants = true
+							if v.Name ~= LocalPlayer.Name then
+								local Player = game.Players:GetPlayerFromCharacter(v)
+								if Player then
+									if v:FindFirstChild("Head") then
+										if not CollectionService:HasTag(v.HumanoidRootPart, "HasB4") then
+											CollectionService:AddTag(v.HumanoidRootPart, "HasB4")
+											local toolEspHolder = Instance.new("BillboardGui")
+											toolEspHolder.Name = randomString(math.random(7, 14))
+											toolEspHolder.Parent = HubGui[rogueEspBFolderTable[4]]
+											toolEspHolder.Active = false
+											toolEspHolder.Adornee = v.Head
+											toolEspHolder.AlwaysOnTop = true
+											toolEspHolder.MaxDistance = 125
+											toolEspHolder.ResetOnSpawn = false
+											toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
+											toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
+											toolEspHolder.ClipsDescendants = true
 
-										local toolEspLabel = Instance.new("TextLabel")
-										toolEspLabel.Name = randomString(math.random(7, 14))
-										toolEspLabel.Parent = toolEspHolder
-										toolEspLabel.Active = false
-										toolEspLabel.BackgroundTransparency = 1.000
-										toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
-										toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
-										toolEspLabel.ZIndex = 5
-										toolEspLabel.Font = Enum.Font.SpecialElite
-										toolEspLabel.RichText = true
-										if v:FindFirstChildWhichIsA("Tool") then
-											toolEspLabel.Text = v:FindFirstChildWhichIsA("Tool").Name
-										elseif not v:FindFirstChildWhichIsA("Tool") then
-											toolEspLabel.Text = ""
-										end
-										toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-										toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
-										toolEspLabel.TextStrokeTransparency = 0
-										toolEspLabel.TextTransparency = 0
-										toolEspLabel.TextSize = 21.000
-										toolEspLabel.TextWrapped = true
-										if Player then
+											local toolEspLabel = Instance.new("TextLabel")
+											toolEspLabel.Name = randomString(math.random(7, 14))
+											toolEspLabel.Parent = toolEspHolder
+											toolEspLabel.Active = false
+											toolEspLabel.BackgroundTransparency = 1.000
+											toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
+											toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
+											toolEspLabel.ZIndex = 5
+											toolEspLabel.Font = Enum.Font.SpecialElite
+											toolEspLabel.RichText = true
+											if v:FindFirstChildWhichIsA("Tool") then
+												toolEspLabel.Text = v:FindFirstChildWhichIsA("Tool").Name
+											elseif not v:FindFirstChildWhichIsA("Tool") then
+												toolEspLabel.Text = ""
+											end
+											toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+											toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
+											toolEspLabel.TextStrokeTransparency = 0
+											toolEspLabel.TextTransparency = 0
+											toolEspLabel.TextSize = 21.000
+											toolEspLabel.TextWrapped = true
 											Player.CharacterRemoving:Once(function()
 												toolEspHolder:Destroy()
 											end)
-										end
-										v.ChildAdded:Connect(function(tool)
-											if tool.ClassName == "Tool" then
-												if v:FindFirstChild("Head") then
-													if CollectionService:HasTag(v.Head, "HasB4") then
+											v.ChildAdded:Connect(function(tool)
+												if tool.ClassName == "Tool" then
+													if v:FindFirstChild("Head") then
 														toolEspLabel.Text = tool.Name
 													end
 												end
-											end
-										end)
-										v.ChildRemoved:Connect(function(tool)
-											if tool.ClassName == "Tool" then
-												if v:FindFirstChild("Head") then
-													if CollectionService:HasTag(v.Head, "HasB4") then
+											end)
+											v.ChildRemoved:Connect(function(tool)
+												if tool.ClassName == "Tool" then
+													if v:FindFirstChild("Head") then
 														toolEspLabel.Text = ""
 													end
 												end
-											end
-										end)
+											end)
+										end
 									end
 								end
 							end
@@ -1387,6 +1383,9 @@ if gameName == "Rogue Lineage" then
 								end
 							end
 						end]]
+						if not HubGui:FindFirstChild(rogueEspBFolderTable[4]) then
+							HubGui:WaitForChild(rogueEspBFolderTable[4])
+						end
 						for _, v in pairs(HubGui[rogueEspBFolderTable[4]]:GetChildren()) do
 							v.Enabled = false
 						end
@@ -7572,7 +7571,7 @@ if gameName == "Rogue Lineage" then
 	function nameDangerCheck(character, text)
 		local textToReturn: string
 		if character:FindFirstChild("MortalDanger") or CollectionService:HasTag(character, "MortalDanger") then
-			textToReturn = '<font color="rgb(170, 0, 255)">CT - </font>'..text
+			textToReturn = '<font color="rgb(170, 0, 255)">MT - </font>'..text
 		elseif character:FindFirstChild("Danger") or CollectionService:HasTag(character, "Danger") then
 			textToReturn = '<font color="rgb(255, 74, 77)">CT - </font>'..text
 		else
@@ -8621,68 +8620,66 @@ if gameName == "Rogue Lineage" then
 			character:SetAttribute("CName", attributeValue)
 		end
 		if character.Name ~= LocalPlayer.Name then
-			if character:FindFirstChild("Head") then
-				if not CollectionService:HasTag(character.Head, "HasB4") then
-					CollectionService:AddTag(character.Head, "HasB4")
-					local toolEspHolder = Instance.new("BillboardGui")
-					toolEspHolder.Name = randomString(math.random(7, 14))
-					toolEspHolder.Parent = b4
-					toolEspHolder.Active = false
-					toolEspHolder.Adornee = character.Head
-					toolEspHolder.AlwaysOnTop = true
-					if roguetoolEsp == true then
-						toolEspHolder.Enabled = true
-					elseif roguetoolEsp == false then
-						toolEspHolder.Enabled = false
-					end
-					toolEspHolder.MaxDistance = 125
-					toolEspHolder.ResetOnSpawn = false
-					toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
-					toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
-					toolEspHolder.ClipsDescendants = true
+			if (Player) then
+				if character:FindFirstChild("Head") then
+					if not CollectionService:HasTag(character.HumanoidRootPart, "HasB4") then
+						CollectionService:AddTag(character.HumanoidRootPart, "HasB4")
+						local toolEspHolder = Instance.new("BillboardGui")
+						toolEspHolder.Name = randomString(math.random(7, 14))
+						toolEspHolder.Parent = b4
+						toolEspHolder.Active = false
+						toolEspHolder.Adornee = character.Head
+						toolEspHolder.AlwaysOnTop = true
+						if roguetoolEsp == true then
+							toolEspHolder.Enabled = true
+						elseif roguetoolEsp == false then
+							toolEspHolder.Enabled = false
+						end
+						toolEspHolder.MaxDistance = 125
+						toolEspHolder.ResetOnSpawn = false
+						toolEspHolder.Size = UDim2.new(0, 200, 0, 50)
+						toolEspHolder.StudsOffset = Vector3.new(0, 3, 0)
+						toolEspHolder.ClipsDescendants = true
 
-					local toolEspLabel = Instance.new("TextLabel")
-					toolEspLabel.Name = randomString(math.random(7, 14))
-					toolEspLabel.Parent = toolEspHolder
-					toolEspLabel.Active = false
-					toolEspLabel.BackgroundTransparency = 1.000
-					toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
-					toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
-					toolEspLabel.ZIndex = 5
-					toolEspLabel.Font = Enum.Font.SpecialElite
-					toolEspLabel.RichText = true
-					if character:FindFirstChildWhichIsA("Tool") then
-						toolEspLabel.Text = character:FindFirstChildWhichIsA("Tool").Name
-					elseif not character:FindFirstChildWhichIsA("Tool") then
-						toolEspLabel.Text = ""
-					end
-					toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-					toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
-					toolEspLabel.TextStrokeTransparency = 0
-					toolEspLabel.TextTransparency = 0
-					toolEspLabel.TextSize = 21.000
-					toolEspLabel.TextWrapped = true
-					Player.CharacterRemoving:Once(function()
-						toolEspHolder:Destroy()
-					end)
-					character.ChildAdded:Connect(function(tool)
-						if tool.ClassName == "Tool" then
-							if character:FindFirstChild("Head") then
-								if CollectionService:HasTag(character.Head, "HasB4") then
+						local toolEspLabel = Instance.new("TextLabel")
+						toolEspLabel.Name = randomString(math.random(7, 14))
+						toolEspLabel.Parent = toolEspHolder
+						toolEspLabel.Active = false
+						toolEspLabel.BackgroundTransparency = 1.000
+						toolEspLabel.Position = UDim2.new(0, 0, 0, 0)
+						toolEspLabel.Size = UDim2.new(0, 200, 0, 50)
+						toolEspLabel.ZIndex = 5
+						toolEspLabel.Font = Enum.Font.SpecialElite
+						toolEspLabel.RichText = true
+						if character:FindFirstChildWhichIsA("Tool") then
+							toolEspLabel.Text = character:FindFirstChildWhichIsA("Tool").Name
+						elseif not character:FindFirstChildWhichIsA("Tool") then
+							toolEspLabel.Text = ""
+						end
+						toolEspLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+						toolEspLabel.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
+						toolEspLabel.TextStrokeTransparency = 0
+						toolEspLabel.TextTransparency = 0
+						toolEspLabel.TextSize = 21.000
+						toolEspLabel.TextWrapped = true
+						Player.CharacterRemoving:Once(function()
+							toolEspHolder:Destroy()
+						end)
+						character.ChildAdded:Connect(function(tool)
+							if tool.ClassName == "Tool" then
+								if character:FindFirstChild("Head") then
 									toolEspLabel.Text = tool.Name
 								end
 							end
-						end
-					end)
-					character.ChildRemoved:Connect(function(tool)
-						if tool.ClassName == "Tool" then
-							if character:FindFirstChild("Head") then
-								if CollectionService:HasTag(character.Head, "HasB4") then
+						end)
+						character.ChildRemoved:Connect(function(tool)
+							if tool.ClassName == "Tool" then
+								if character:FindFirstChild("Head") then
 									toolEspLabel.Text = ""
 								end
 							end
-						end
-					end)
+						end)
+					end
 				end
 			end
 			rogueEntityEspHandle(character, rogueplayerEsp, nil, Color3.fromRGB(206, 61, 48))
